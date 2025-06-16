@@ -1422,6 +1422,6 @@ export default {
   "components.Blocks.blocks.image": "Imagen"
       },
     },
-  },
+  };
   bootstrap() {},
 };
