@@ -37,7 +37,7 @@ export default {
   config: {
 
     translations: {
-      en: {
+      es: {
          "Analytics": "Analytics",
   "Auth.components.Oops.text": "Your account has been suspended.",
   "Auth.components.Oops.text.admin": "If this is a mistake, please contact your administrator.",
@@ -837,7 +837,7 @@ export default {
   "skipToContent": "Skip to content",
   "submit": "Submit"
       },
-      es: {
+      en: {
         "Analytics": "Analytics",
   "Auth.components.Oops.text": "Tu cuenta ha sido suspendida",
   "Auth.components.Oops.text.admin": "Si se trata de un error, comuníquese con su administrador.",
