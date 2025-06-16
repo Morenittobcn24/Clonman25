@@ -36,7 +36,7 @@ const bootstrap = (app) => {
 export default {
   config: {
     translations: {
-      es: {
+      en: {
         "Analytics": "Analytics",
   "Auth.components.Oops.text": "Your account has been suspended.",
   "Auth.components.Oops.text.admin": "If this is a mistake, please contact your administrator.",
