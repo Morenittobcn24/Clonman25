@@ -35,7 +35,18 @@ const bootstrap = (app) => {
 
 export default {
   config: {
-    
+    theme: {
+  light: {
+    colors: {
+      primary100: "#feecec",  // Rojo muy claro (pastel)
+      primary200: "#f8c1c1",  // Rojo claro (similar al original primary200 pero en rojo)
+      primary500: "#e67373",  // Rojo medio (coral)
+      primary600: "#df1e18",  // Rojo intenso (tu color base)
+      primary700: "#b31813",  // Rojo oscuro (variante shade)
+      danger700: "#8a130f",   // Rojo vino (para errores, más oscuro)
+    },
+  },
+}
     translations: {
       en: {
          "Analytics": "Analytics",
