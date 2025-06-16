@@ -38,7 +38,7 @@ export default {
     theme: {
   light: {
     colors: {
-      primary100: "#feecec",
+      primary100: "#b31813",
       primary200: "#f8c1c1",
       primary500: "#e67373",
       primary600: "#df1e18",
