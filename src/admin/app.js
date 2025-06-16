@@ -1,6 +1,6 @@
 const config = {
   locales: [
-    // 'ar',
+    'en',
     // 'fr',
     // 'cs',
     // 'de',
@@ -36,7 +36,7 @@ const bootstrap = (app) => {
 export default {
   config: {
     translations: {
-      es: {
+      en: {
         "Auth.form.welcome.title": "Bienvenido",
         "Auth.form.welcome.subtitle": "Inicie sesión en su cuenta",
       },
