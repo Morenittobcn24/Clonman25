@@ -34,6 +34,13 @@ const bootstrap = (app) => {
 };
 
 export default {
-  config,
-  bootstrap,
+  config: {
+    translations: {
+      en: {
+        "Auth.form.welcome.title": "Bienvenido",
+        "Auth.form.welcome.subtitle": "Inicie sesión en su cuenta de Manaslu",
+      },
+    },
+  },
+  bootstrap() {},
 };
