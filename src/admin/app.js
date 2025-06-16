@@ -37,7 +37,7 @@ export default {
   config: {
 theme: {
       // overwrite light theme properties
-      Manaslu: {
+      light: {
         colors: {
           primary100: "#feecec",
           primary200: "#f8c1c1",
