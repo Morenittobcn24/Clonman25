@@ -36,7 +36,7 @@ const bootstrap = (app) => {
 export default {
   config: {
     translations: {
-      en: {
+      es: {
         "Auth.form.welcome.title": "Bienvenido",
         "Auth.form.welcome.subtitle": "Inicie sesión en su cuenta de Manaslu",
       },
