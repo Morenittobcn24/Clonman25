@@ -35,7 +35,18 @@ const bootstrap = (app) => {
 
 export default {
   config: {
-
+theme: {
+      // overwrite light theme properties
+      Manaslu: {
+        colors: {
+          primary100: "#feecec",
+          primary200: "#f8c1c1",
+          primary500: "#e67373",
+          primary600: "#df1e18",
+          primary700: "#b31813",
+          danger700: "#8a130f",
+        },
+      },
     translations: {
       es: {
          "Analytics": "Analytics",
