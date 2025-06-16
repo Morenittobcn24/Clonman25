@@ -35,12 +35,12 @@ const bootstrap = (app) => {
 
 export default {
   config: {
-    locales: ["en","es"],
+    
     translations: {
-      en: {
+      es: {
         "Auth.form.button.forgot-password": "Send Email",
       },
-      es: {
+      en: {
         "Analytics": "Analytics",
   "Auth.components.Oops.text": "Tu cuenta ha sido suspendida",
   "Auth.components.Oops.text.admin": "Si se trata de un error, comuníquese con su administrador.",
