@@ -36,19 +36,19 @@ const bootstrap = (app) => {
 export default {
   config: {
     theme: {
-      // overwrite light theme properties
-      light: {
-        colors: {
-          primary100: "#feecec",
-          primary200: "#f8c1c1",
-          primary500: "#e67373",
-          primary600: "#df1e18",
-          primary700: "#b31813",
-          danger700: "#8a130f",
-        },
-      },
+  light: {
+    colors: {
+      primary100: "#feecec",
+      primary200: "#f8c1c1",
+      primary500: "#e67373",
+      primary600: "#df1e18",
+      primary700: "#b31813",
+      danger700: "#8a130f",
+    },
+  },
+},
     translations: {
-      es: {
+      en: {
          "Analytics": "Analytics",
   "Auth.components.Oops.text": "Your account has been suspended.",
   "Auth.components.Oops.text.admin": "If this is a mistake, please contact your administrator.",
@@ -848,7 +848,7 @@ export default {
   "skipToContent": "Skip to content",
   "submit": "Submit"
       },
-      en: {
+      es: {
         "Analytics": "Analytics",
   "Auth.components.Oops.text": "Tu cuenta ha sido suspendida",
   "Auth.components.Oops.text.admin": "Si se trata de un error, comuníquese con su administrador.",
