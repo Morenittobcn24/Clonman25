@@ -35,7 +35,7 @@ const bootstrap = (app) => {
 
 export default {
   config: {
-theme: {
+    theme: {
       // overwrite light theme properties
       light: {
         colors: {
