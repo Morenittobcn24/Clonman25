@@ -1,11 +1,11 @@
 const config = {
   locales: [
-     'en',
+     'es',
     // 'fr',
     // 'cs',
     // 'de',
     // 'dk',
-     'es',
+     'en',
     // 'he',
     // 'id',
     // 'it',
