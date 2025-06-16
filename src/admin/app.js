@@ -38,7 +38,7 @@ export default {
     translations: {
       es: {
         "Auth.form.welcome.title": "Bienvenido",
-        "Auth.form.welcome.subtitle": "Inicie sesión en su cuenta de Manaslu",
+        "Auth.form.welcome.subtitle": "Inicie sesión en su cuenta",
       },
     },
   },
