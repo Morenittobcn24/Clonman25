@@ -1,0 +1,64 @@
+{
+  "kind": "collectionType",
+  "collectionName": "reservas",
+  "info": {
+    "singularName": "reserva",
+    "pluralName": "reservas",
+    "displayName": "Reserva",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "cliente_nombre": {
+      "type": "string"
+    },
+    "cliente_email": {
+      "type": "email"
+    },
+    "cliente_tel": {
+      "type": "string"
+    },
+    "integrantes": {
+      "type": "component",
+      "repeatable": true,
+      "component": "reservas.integrante-grupo"
+    },
+    "viaje": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::viaje.viaje"
+    },
+    "salida": {
+      "type": "string"
+    },
+    "personas": {
+      "type": "integer"
+    },
+    "canal": {
+      "type": "enumeration",
+      "enum": [
+        "web",
+        "interno",
+        "agencia",
+        "whatsapp"
+      ]
+    },
+    "estado": {
+      "type": "enumeration",
+      "enum": [
+        "pendiente",
+        "confirmada",
+        "cancelada"
+      ]
+    },
+    "fecha_reserva": {
+      "type": "date"
+    },
+    "localizador": {
+      "type": "uid",
+      "targetField": "cliente_nombre"
+    }
+  }
+}

@@ -1,0 +1,41 @@
+{
+  "collectionName": "components_viajes_salidas",
+  "info": {
+    "displayName": "salida",
+    "icon": "plane",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "fecha_inicio": {
+      "type": "date"
+    },
+    "fecha_fin": {
+      "type": "date"
+    },
+    "precio": {
+      "type": "biginteger"
+    },
+    "cupo_total": {
+      "type": "integer"
+    },
+    "cupo_disponible": {
+      "type": "integer"
+    },
+    "estado": {
+      "type": "enumeration",
+      "enum": [
+        "Disponible",
+        "Confirmado",
+        "Últimas plazas",
+        "Completo",
+        "Cancelado"
+      ]
+    },
+    "proveedores_asignados": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::proveedor.proveedor"
+    }
+  }
+}

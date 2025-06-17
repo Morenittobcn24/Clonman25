@@ -1,0 +1,26 @@
+{
+  "collectionName": "components_reservas_integrante_grupos",
+  "info": {
+    "displayName": "integrante_grupo",
+    "icon": "user"
+  },
+  "options": {},
+  "attributes": {
+    "nombre": {
+      "type": "string",
+      "required": true
+    },
+    "email": {
+      "type": "email"
+    },
+    "telefono": {
+      "type": "string"
+    },
+    "documento_id": {
+      "type": "string"
+    },
+    "observaciones": {
+      "type": "string"
+    }
+  }
+}

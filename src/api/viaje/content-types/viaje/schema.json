@@ -1,0 +1,116 @@
+{
+  "kind": "collectionType",
+  "collectionName": "viajes",
+  "info": {
+    "singularName": "viaje",
+    "pluralName": "viajes",
+    "displayName": "Viaje",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "nombre": {
+      "type": "string"
+    },
+    "slug": {
+      "type": "uid",
+      "targetField": "nombre"
+    },
+    "tipo_de_viaje": {
+      "type": "enumeration",
+      "enum": [
+        "Trekking",
+        "Alpinismo",
+        "Esquí",
+        "Bici",
+        "Yoga",
+        "Aventura",
+        "Montañismo",
+        "Mixto"
+      ]
+    },
+    "forma_viajar": {
+      "type": "enumeration",
+      "enum": [
+        "Grupo Abierto",
+        "Grupo Privado",
+        "Familia",
+        "Individual",
+        "A medida"
+      ]
+    },
+    "estilo": {
+      "type": "enumeration",
+      "enum": [
+        "Explorer",
+        "Confort",
+        "Luxury",
+        "Clásico",
+        "Minimal"
+      ]
+    },
+    "continente": {
+      "type": "enumeration",
+      "enum": [
+        "África",
+        "América",
+        "Asia",
+        "Europa",
+        "Oceanía",
+        "Antártida"
+      ]
+    },
+    "pais": {
+      "type": "string",
+      "required": true
+    },
+    "cordillera": {
+      "type": "string"
+    },
+    "salidas": {
+      "type": "component",
+      "repeatable": true,
+      "component": "viajes.salida"
+    },
+    "precio_base": {
+      "type": "biginteger"
+    },
+    "extra_noche_hotel": {
+      "type": "string"
+    },
+    "transfer_aeropuerto": {
+      "type": "string"
+    },
+    "actividad_extra": {
+      "type": "string"
+    },
+    "descuento_reserva_anticipada": {
+      "type": "string"
+    },
+    "descuento_por_personas": {
+      "type": "string"
+    },
+    "forma_pago": {
+      "type": "blocks"
+    },
+    "financiacion": {
+      "type": "string"
+    },
+    "incluye_billetes_avion": {
+      "type": "boolean",
+      "default": true
+    },
+    "descripcion_billetes": {
+      "type": "string"
+    },
+    "seguro_cancelacion_asistencia": {
+      "type": "boolean",
+      "default": true
+    },
+    "descripcion_seguro": {
+      "type": "string"
+    }
+  }
+}
