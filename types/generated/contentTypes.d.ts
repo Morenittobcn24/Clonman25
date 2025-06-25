@@ -572,7 +572,7 @@ export interface ApiViajeViaje extends Struct.CollectionTypeSchema {
       Schema.Attribute.DefaultTo<true>;
     Servicios_incluidos: Schema.Attribute.RichText;
     Servicios_no_incluidos: Schema.Attribute.RichText;
-    Slug: Schema.Attribute.UID;
+    Slug: Schema.Attribute.UID<'Nombre'>;
     Temporada: Schema.Attribute.Enumeration<
       ['Invierno', 'Verano', 'Todo el a\u00F1o']
     >;
