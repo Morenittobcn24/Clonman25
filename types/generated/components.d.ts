@@ -1,17 +1,33 @@
 import type { Schema, Struct } from '@strapi/strapi';
 
+export interface ReservasFechaAsignada extends Struct.ComponentSchema {
+  collectionName: 'components_reservas_fecha_asignadas';
+  info: {
+    displayName: 'Fecha_asignada';
+    icon: 'calendar';
+  };
+  attributes: {
+    Fecha: Schema.Attribute.Date & Schema.Attribute.Required;
+    Nota: Schema.Attribute.String;
+    Viaje_relacionado: Schema.Attribute.Relation<
+      'oneToOne',
+      'api::viaje.viaje'
+    >;
+  };
+}
+
 export interface ReservasIntegranteGrupo extends Struct.ComponentSchema {
   collectionName: 'components_reservas_integrante_grupos';
   info: {
-    displayName: 'integrante_grupo';
+    displayName: 'Integrante_grupo';
     icon: 'user';
   };
   attributes: {
-    documento_id: Schema.Attribute.String;
-    email: Schema.Attribute.Email;
-    nombre: Schema.Attribute.String & Schema.Attribute.Required;
-    observaciones: Schema.Attribute.String;
-    telefono: Schema.Attribute.String;
+    Documento_id: Schema.Attribute.String;
+    Email: Schema.Attribute.Email;
+    Nombre: Schema.Attribute.String & Schema.Attribute.Required;
+    Observaciones: Schema.Attribute.String;
+    Telefono: Schema.Attribute.String;
   };
 }
 
@@ -81,13 +97,13 @@ export interface ViajesSalida extends Struct.ComponentSchema {
   collectionName: 'components_viajes_salidas';
   info: {
     description: '';
-    displayName: 'salida';
+    displayName: 'Salida';
     icon: 'plane';
   };
   attributes: {
-    cupo_disponible: Schema.Attribute.Integer;
-    cupo_total: Schema.Attribute.Integer;
-    estado: Schema.Attribute.Enumeration<
+    Cupo_disponible: Schema.Attribute.Integer;
+    Cupo_total: Schema.Attribute.Integer;
+    Estado: Schema.Attribute.Enumeration<
       [
         'Disponible',
         'Confirmado',
@@ -96,10 +112,10 @@ export interface ViajesSalida extends Struct.ComponentSchema {
         'Cancelado',
       ]
     >;
-    fecha_fin: Schema.Attribute.Date;
-    fecha_inicio: Schema.Attribute.Date;
-    precio: Schema.Attribute.BigInteger;
-    proveedores_asignados: Schema.Attribute.Relation<
+    Fecha_fin: Schema.Attribute.Date;
+    Fecha_inicio: Schema.Attribute.Date;
+    Precio: Schema.Attribute.BigInteger;
+    Proveedores_asignados: Schema.Attribute.Relation<
       'oneToMany',
       'api::proveedor.proveedor'
     >;
@@ -109,6 +125,7 @@ export interface ViajesSalida extends Struct.ComponentSchema {
 declare module '@strapi/strapi' {
   export module Public {
     export interface ComponentSchemas {
+      'reservas.fecha-asignada': ReservasFechaAsignada;
       'reservas.integrante-grupo': ReservasIntegranteGrupo;
       'shared.media': SharedMedia;
       'shared.quote': SharedQuote;

@@ -10,55 +10,77 @@
   "options": {
     "draftAndPublish": true
   },
+  "pluginOptions": {},
   "attributes": {
-    "cliente_nombre": {
+    "Localizador": {
+      "type": "uid",
+      "targetField": "Cliente_nombre"
+    },
+    "Fecha_reserva": {
+      "type": "date",
+      "required": true
+    },
+    "Cliente_nombre": {
       "type": "string"
     },
-    "cliente_email": {
+    "Cliente_email": {
       "type": "email"
     },
-    "cliente_tel": {
+    "Cliente_tel": {
       "type": "string"
     },
-    "integrantes": {
-      "type": "component",
-      "repeatable": true,
-      "component": "reservas.integrante-grupo"
+    "Personas": {
+      "type": "integer"
     },
-    "viaje": {
+    "Estado": {
+      "type": "enumeration",
+      "enum": [
+        "Pendiente",
+        "Confirmada",
+        "Cancelada"
+      ]
+    },
+    "Precio_total": {
+      "type": "biginteger"
+    },
+    "Forma_pago": {
+      "type": "enumeration",
+      "enum": [
+        "Online",
+        "Transferencia",
+        "Manual"
+      ]
+    },
+    "Reserva_pagada": {
+      "type": "boolean",
+      "default": false
+    },
+    "Canal": {
+      "type": "enumeration",
+      "enum": [
+        "Web",
+        "Interno",
+        "Agencia",
+        "Whatsapp"
+      ]
+    },
+    "Notas_internas": {
+      "type": "string"
+    },
+    "Viaje": {
       "type": "relation",
       "relation": "oneToOne",
       "target": "api::viaje.viaje"
     },
-    "salida": {
-      "type": "string"
+    "Integrantes": {
+      "type": "component",
+      "component": "reservas.integrante-grupo",
+      "repeatable": true
     },
-    "personas": {
-      "type": "integer"
-    },
-    "canal": {
-      "type": "enumeration",
-      "enum": [
-        "web",
-        "interno",
-        "agencia",
-        "whatsapp"
-      ]
-    },
-    "estado": {
-      "type": "enumeration",
-      "enum": [
-        "pendiente",
-        "confirmada",
-        "cancelada"
-      ]
-    },
-    "fecha_reserva": {
-      "type": "date"
-    },
-    "localizador": {
-      "type": "uid",
-      "targetField": "cliente_nombre"
+    "Salida": {
+      "type": "component",
+      "component": "viajes.salida",
+      "repeatable": false
     }
   }
 }

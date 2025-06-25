@@ -1,0 +1,23 @@
+{
+  "collectionName": "components_reservas_fecha_asignadas",
+  "info": {
+    "displayName": "Fecha_asignada",
+    "icon": "calendar"
+  },
+  "options": {},
+  "attributes": {
+    "Fecha": {
+      "type": "date",
+      "required": true
+    },
+    "Viaje_relacionado": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::viaje.viaje"
+    },
+    "Nota": {
+      "type": "string"
+    }
+  },
+  "config": {}
+}

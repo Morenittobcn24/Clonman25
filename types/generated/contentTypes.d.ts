@@ -420,18 +420,22 @@ export interface ApiProveedorProveedor extends Struct.CollectionTypeSchema {
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
-    email: Schema.Attribute.Email;
+    Email: Schema.Attribute.Email;
+    Fechas_asignadas: Schema.Attribute.Component<
+      'reservas.fecha-asignada',
+      true
+    >;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
       'api::proveedor.proveedor'
     > &
       Schema.Attribute.Private;
-    nombre: Schema.Attribute.String;
-    pais: Schema.Attribute.String;
+    Nombre: Schema.Attribute.String;
+    Pais: Schema.Attribute.String;
     publishedAt: Schema.Attribute.DateTime;
-    rating_interno: Schema.Attribute.Integer;
-    telefono: Schema.Attribute.String;
+    Rating_interno: Schema.Attribute.Integer;
+    Telefono: Schema.Attribute.String;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -450,34 +454,41 @@ export interface ApiReservaReserva extends Struct.CollectionTypeSchema {
     draftAndPublish: true;
   };
   attributes: {
-    canal: Schema.Attribute.Enumeration<
-      ['web', 'interno', 'agencia', 'whatsapp']
+    Canal: Schema.Attribute.Enumeration<
+      ['Web', 'Interno', 'Agencia', 'Whatsapp']
     >;
-    cliente_email: Schema.Attribute.Email;
-    cliente_nombre: Schema.Attribute.String;
-    cliente_tel: Schema.Attribute.String;
+    Cliente_email: Schema.Attribute.Email;
+    Cliente_nombre: Schema.Attribute.String;
+    Cliente_tel: Schema.Attribute.String;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
-    estado: Schema.Attribute.Enumeration<
-      ['pendiente', 'confirmada', 'cancelada']
+    Estado: Schema.Attribute.Enumeration<
+      ['Pendiente', 'Confirmada', 'Cancelada']
     >;
-    fecha_reserva: Schema.Attribute.Date;
-    integrantes: Schema.Attribute.Component<'reservas.integrante-grupo', true>;
+    Fecha_reserva: Schema.Attribute.Date & Schema.Attribute.Required;
+    Forma_pago: Schema.Attribute.Enumeration<
+      ['Online', 'Transferencia', 'Manual']
+    >;
+    Integrantes: Schema.Attribute.Component<'reservas.integrante-grupo', true>;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
-    localizador: Schema.Attribute.UID<'cliente_nombre'>;
+    Localizador: Schema.Attribute.UID<'Cliente_nombre'>;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
       'api::reserva.reserva'
     > &
       Schema.Attribute.Private;
-    personas: Schema.Attribute.Integer;
+    Notas_internas: Schema.Attribute.String;
+    Personas: Schema.Attribute.Integer;
+    Precio_total: Schema.Attribute.BigInteger;
     publishedAt: Schema.Attribute.DateTime;
-    salida: Schema.Attribute.String;
+    Reserva_pagada: Schema.Attribute.Boolean &
+      Schema.Attribute.DefaultTo<false>;
+    Salida: Schema.Attribute.Component<'viajes.salida', false>;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
-    viaje: Schema.Attribute.Relation<'oneToOne', 'api::viaje.viaje'>;
+    Viaje: Schema.Attribute.Relation<'oneToOne', 'api::viaje.viaje'>;
   };
 }
 
@@ -493,8 +504,12 @@ export interface ApiViajeViaje extends Struct.CollectionTypeSchema {
     draftAndPublish: true;
   };
   attributes: {
-    actividad_extra: Schema.Attribute.String;
-    continente: Schema.Attribute.Enumeration<
+    Actividad_extra: Schema.Attribute.String;
+    Alojamiento: Schema.Attribute.RichText;
+    Archivo_PDF: Schema.Attribute.Media<
+      'images' | 'files' | 'videos' | 'audios'
+    >;
+    Continente: Schema.Attribute.Enumeration<
       [
         '\u00C1frica',
         'Am\u00E9rica',
@@ -504,37 +519,64 @@ export interface ApiViajeViaje extends Struct.CollectionTypeSchema {
         'Ant\u00E1rtida',
       ]
     >;
-    cordillera: Schema.Attribute.String;
+    Cordillera: Schema.Attribute.String;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
-    descripcion_billetes: Schema.Attribute.String;
-    descripcion_seguro: Schema.Attribute.String;
-    descuento_por_personas: Schema.Attribute.String;
-    descuento_reserva_anticipada: Schema.Attribute.String;
-    estilo: Schema.Attribute.Enumeration<
+    Descripcion: Schema.Attribute.RichText;
+    Descripcion_billetes: Schema.Attribute.String;
+    Descripcion_corta: Schema.Attribute.String;
+    Descripcion_larga: Schema.Attribute.RichText;
+    Descripcion_seguro: Schema.Attribute.String;
+    Descuento_por_personas: Schema.Attribute.String;
+    Descuento_reserva_anticipada: Schema.Attribute.String;
+    Duracion_total: Schema.Attribute.Integer;
+    Estilo: Schema.Attribute.Enumeration<
       ['Explorer', 'Confort', 'Luxury', 'Cl\u00E1sico', 'Minimal']
     >;
-    extra_noche_hotel: Schema.Attribute.String;
-    financiacion: Schema.Attribute.String;
-    forma_pago: Schema.Attribute.Blocks;
-    forma_viajar: Schema.Attribute.Enumeration<
+    Extra_hab_individual: Schema.Attribute.String;
+    Extra_noche_hotel: Schema.Attribute.String;
+    Financiacion: Schema.Attribute.String;
+    Forma_pago: Schema.Attribute.RichText;
+    Forma_viajar: Schema.Attribute.Enumeration<
       ['Grupo Abierto', 'Grupo Privado', 'Familia', 'Individual', 'A medida']
     >;
-    incluye_billetes_avion: Schema.Attribute.Boolean &
+    Foto_portada: Schema.Attribute.Media<
+      'images' | 'files' | 'videos' | 'audios'
+    >;
+    Galeria: Schema.Attribute.Media<
+      'images' | 'files' | 'videos' | 'audios',
+      true
+    >;
+    Grupo_maximo: Schema.Attribute.Integer;
+    Grupo_minimo: Schema.Attribute.Integer;
+    Icono: Schema.Attribute.Media<'images' | 'files' | 'videos' | 'audios'>;
+    Incluye_billetes_avion: Schema.Attribute.Boolean &
       Schema.Attribute.DefaultTo<true>;
+    Info_adicional: Schema.Attribute.String;
+    Itinerario: Schema.Attribute.RichText;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<'oneToMany', 'api::viaje.viaje'> &
       Schema.Attribute.Private;
-    nombre: Schema.Attribute.String;
-    pais: Schema.Attribute.String & Schema.Attribute.Required;
-    precio_base: Schema.Attribute.BigInteger;
+    Mapa: Schema.Attribute.Media<'images' | 'files' | 'videos' | 'audios'>;
+    Material_recomendado: Schema.Attribute.String;
+    Nivel_dificultad: Schema.Attribute.Enumeration<
+      ['F\u00E1cil', 'Media', 'Alta', 'T\u00E9cnica']
+    >;
+    Nombre: Schema.Attribute.String;
+    Pais: Schema.Attribute.String & Schema.Attribute.Required;
+    Precio_base: Schema.Attribute.BigInteger;
     publishedAt: Schema.Attribute.DateTime;
-    salidas: Schema.Attribute.Component<'viajes.salida', true>;
-    seguro_cancelacion_asistencia: Schema.Attribute.Boolean &
+    Salidas: Schema.Attribute.Component<'viajes.salida', true>;
+    Seguro_cancelacion_asistencia: Schema.Attribute.Boolean &
       Schema.Attribute.DefaultTo<true>;
-    slug: Schema.Attribute.UID<'nombre'>;
-    tipo_de_viaje: Schema.Attribute.Enumeration<
+    Servicios_incluidos: Schema.Attribute.RichText;
+    Servicios_no_incluidos: Schema.Attribute.RichText;
+    Slug: Schema.Attribute.UID;
+    Temporada: Schema.Attribute.Enumeration<
+      ['Invierno', 'Verano', 'Todo el a\u00F1o']
+    >;
+    Tipo_de_viaje: Schema.Attribute.Enumeration<
       [
         'Trekking',
         'Alpinismo',
@@ -546,7 +588,7 @@ export interface ApiViajeViaje extends Struct.CollectionTypeSchema {
         'Mixto',
       ]
     >;
-    transfer_aeropuerto: Schema.Attribute.String;
+    Transfer_aeropuerto: Schema.Attribute.String;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;

@@ -10,21 +10,27 @@
   "options": {
     "draftAndPublish": true
   },
+  "pluginOptions": {},
   "attributes": {
-    "nombre": {
+    "Nombre": {
       "type": "string"
     },
-    "email": {
+    "Email": {
       "type": "email"
     },
-    "telefono": {
+    "Telefono": {
       "type": "string"
     },
-    "pais": {
+    "Pais": {
       "type": "string"
     },
-    "rating_interno": {
+    "Rating_interno": {
       "type": "integer"
+    },
+    "Fechas_asignadas": {
+      "type": "component",
+      "component": "reservas.fecha-asignada",
+      "repeatable": true
     }
   }
 }

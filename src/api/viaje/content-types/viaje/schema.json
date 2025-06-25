@@ -10,15 +10,80 @@
   "options": {
     "draftAndPublish": true
   },
+  "pluginOptions": {},
   "attributes": {
-    "nombre": {
+    "Nombre": {
       "type": "string"
     },
-    "slug": {
-      "type": "uid",
-      "targetField": "nombre"
+    "Slug": {
+      "type": "uid"
     },
-    "tipo_de_viaje": {
+    "Descripcion": {
+      "type": "richtext"
+    },
+    "Info_adicional": {
+      "type": "string"
+    },
+    "Descripcion_corta": {
+      "type": "string"
+    },
+    "Descripcion_larga": {
+      "type": "richtext"
+    },
+    "Itinerario": {
+      "type": "richtext"
+    },
+    "Foto_portada": {
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ]
+    },
+    "Icono": {
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ]
+    },
+    "Galeria": {
+      "type": "media",
+      "multiple": true,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ]
+    },
+    "Mapa": {
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ]
+    },
+    "Archivo_PDF": {
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ]
+    },
+    "Tipo_de_viaje": {
       "type": "enumeration",
       "enum": [
         "Trekking",
@@ -31,17 +96,24 @@
         "Mixto"
       ]
     },
-    "forma_viajar": {
+    "Temporada": {
       "type": "enumeration",
       "enum": [
-        "Grupo Abierto",
-        "Grupo Privado",
-        "Familia",
-        "Individual",
-        "A medida"
+        "Invierno",
+        "Verano",
+        "Todo el año"
       ]
     },
-    "estilo": {
+    "Nivel_dificultad": {
+      "type": "enumeration",
+      "enum": [
+        "Fácil",
+        "Media",
+        "Alta",
+        "Técnica"
+      ]
+    },
+    "Estilo": {
       "type": "enumeration",
       "enum": [
         "Explorer",
@@ -51,7 +123,17 @@
         "Minimal"
       ]
     },
-    "continente": {
+    "Forma_viajar": {
+      "type": "enumeration",
+      "enum": [
+        "Grupo Abierto",
+        "Grupo Privado",
+        "Familia",
+        "Individual",
+        "A medida"
+      ]
+    },
+    "Continente": {
       "type": "enumeration",
       "enum": [
         "África",
@@ -62,55 +144,79 @@
         "Antártida"
       ]
     },
-    "pais": {
+    "Pais": {
       "type": "string",
       "required": true
     },
-    "cordillera": {
+    "Cordillera": {
       "type": "string"
     },
-    "salidas": {
-      "type": "component",
-      "repeatable": true,
-      "component": "viajes.salida"
+    "Alojamiento": {
+      "type": "richtext"
     },
-    "precio_base": {
+    "Servicios_incluidos": {
+      "type": "richtext"
+    },
+    "Servicios_no_incluidos": {
+      "type": "richtext"
+    },
+    "Material_recomendado": {
+      "type": "string"
+    },
+    "Grupo_minimo": {
+      "type": "integer"
+    },
+    "Grupo_maximo": {
+      "type": "integer"
+    },
+    "Duracion_total": {
+      "type": "integer"
+    },
+    "Precio_base": {
       "type": "biginteger"
     },
-    "extra_noche_hotel": {
+    "Forma_pago": {
+      "type": "richtext"
+    },
+    "Financiacion": {
       "type": "string"
     },
-    "transfer_aeropuerto": {
+    "Descuento_reserva_anticipada": {
       "type": "string"
     },
-    "actividad_extra": {
+    "Descuento_por_personas": {
       "type": "string"
     },
-    "descuento_reserva_anticipada": {
-      "type": "string"
-    },
-    "descuento_por_personas": {
-      "type": "string"
-    },
-    "forma_pago": {
-      "type": "blocks"
-    },
-    "financiacion": {
-      "type": "string"
-    },
-    "incluye_billetes_avion": {
+    "Seguro_cancelacion_asistencia": {
       "type": "boolean",
       "default": true
     },
-    "descripcion_billetes": {
+    "Descripcion_seguro": {
       "type": "string"
     },
-    "seguro_cancelacion_asistencia": {
+    "Incluye_billetes_avion": {
       "type": "boolean",
       "default": true
     },
-    "descripcion_seguro": {
+    "Descripcion_billetes": {
       "type": "string"
+    },
+    "Actividad_extra": {
+      "type": "string"
+    },
+    "Extra_hab_individual": {
+      "type": "string"
+    },
+    "Extra_noche_hotel": {
+      "type": "string"
+    },
+    "Transfer_aeropuerto": {
+      "type": "string"
+    },
+    "Salidas": {
+      "type": "component",
+      "component": "viajes.salida",
+      "repeatable": true
     }
   }
 }
