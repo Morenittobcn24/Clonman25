@@ -559,7 +559,7 @@ export interface ApiViajeViaje extends Struct.CollectionTypeSchema {
     localizations: Schema.Attribute.Relation<'oneToMany', 'api::viaje.viaje'> &
       Schema.Attribute.Private;
     Mapa: Schema.Attribute.Media<'images' | 'files' | 'videos' | 'audios'>;
-    Material_recomendado: Schema.Attribute.String;
+    Material_recomendado: Schema.Attribute.RichText;
     Nivel_dificultad: Schema.Attribute.Enumeration<
       ['F\u00E1cil', 'Media', 'Alta', 'T\u00E9cnica']
     >;

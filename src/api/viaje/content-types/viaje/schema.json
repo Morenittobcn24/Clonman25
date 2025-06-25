@@ -162,7 +162,7 @@
       "type": "richtext"
     },
     "Material_recomendado": {
-      "type": "string"
+      "type": "richtext"
     },
     "Grupo_minimo": {
       "type": "integer"
