@@ -373,6 +373,43 @@ export interface AdminUser extends Struct.CollectionTypeSchema {
   };
 }
 
+export interface ApiClienteCliente extends Struct.CollectionTypeSchema {
+  collectionName: 'clientes';
+  info: {
+    displayName: 'Cliente';
+    pluralName: 'clientes';
+    singularName: 'cliente';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    Ciudad: Schema.Attribute.String;
+    Creado_por_web: Schema.Attribute.Boolean &
+      Schema.Attribute.DefaultTo<false>;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    Email: Schema.Attribute.Email &
+      Schema.Attribute.Required &
+      Schema.Attribute.Unique;
+    Idioma: Schema.Attribute.Enumeration<['Espa\u00F1ol', 'Ingles', 'Frances']>;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::cliente.cliente'
+    > &
+      Schema.Attribute.Private;
+    Nombre: Schema.Attribute.String & Schema.Attribute.Required;
+    Notas: Schema.Attribute.RichText;
+    publishedAt: Schema.Attribute.DateTime;
+    Telefono: Schema.Attribute.String & Schema.Attribute.Required;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
 export interface ApiGlobalGlobal extends Struct.SingleTypeSchema {
   collectionName: 'globals';
   info: {
@@ -457,9 +494,7 @@ export interface ApiReservaReserva extends Struct.CollectionTypeSchema {
     Canal: Schema.Attribute.Enumeration<
       ['Web', 'Interno', 'Agencia', 'Whatsapp']
     >;
-    Cliente_email: Schema.Attribute.Email;
-    Cliente_nombre: Schema.Attribute.String;
-    Cliente_tel: Schema.Attribute.String;
+    cliente: Schema.Attribute.Relation<'oneToOne', 'api::cliente.cliente'>;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -472,7 +507,7 @@ export interface ApiReservaReserva extends Struct.CollectionTypeSchema {
     >;
     Integrantes: Schema.Attribute.Component<'reservas.integrante-grupo', true>;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
-    Localizador: Schema.Attribute.UID<'Cliente_nombre'>;
+    Localizador: Schema.Attribute.UID;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
       'api::reserva.reserva'
@@ -1104,6 +1139,7 @@ declare module '@strapi/strapi' {
       'admin::transfer-token': AdminTransferToken;
       'admin::transfer-token-permission': AdminTransferTokenPermission;
       'admin::user': AdminUser;
+      'api::cliente.cliente': ApiClienteCliente;
       'api::global.global': ApiGlobalGlobal;
       'api::proveedor.proveedor': ApiProveedorProveedor;
       'api::reserva.reserva': ApiReservaReserva;

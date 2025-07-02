@@ -13,21 +13,16 @@
   "pluginOptions": {},
   "attributes": {
     "Localizador": {
-      "type": "uid",
-      "targetField": "Cliente_nombre"
+      "type": "uid"
     },
     "Fecha_reserva": {
       "type": "date",
       "required": true
     },
-    "Cliente_nombre": {
-      "type": "string"
-    },
-    "Cliente_email": {
-      "type": "email"
-    },
-    "Cliente_tel": {
-      "type": "string"
+    "cliente": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::cliente.cliente"
     },
     "Personas": {
       "type": "integer"
