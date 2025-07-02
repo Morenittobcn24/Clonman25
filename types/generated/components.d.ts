@@ -1,61 +1,60 @@
-import type { Attribute, Schema } from '@strapi/strapi';
+import type { Schema, Struct } from '@strapi/strapi';
 
-export interface ReservasFechaAsignada extends Schema.Component {
+export interface ReservasFechaAsignada extends Struct.ComponentSchema {
   collectionName: 'components_reservas_fecha_asignadas';
   info: {
     displayName: 'Fecha_asignada';
     icon: 'calendar';
   };
   attributes: {
-    Fecha: Attribute.Date & Attribute.Required;
-    Nota: Attribute.String;
-    Viaje_relacionado: Attribute.Relation<
-      'reservas.fecha-asignada',
+    Fecha: Schema.Attribute.Date & Schema.Attribute.Required;
+    Nota: Schema.Attribute.String;
+    Viaje_relacionado: Schema.Attribute.Relation<
       'oneToOne',
       'api::viaje.viaje'
     >;
   };
 }
 
-export interface ReservasIntegranteGrupo extends Schema.Component {
+export interface ReservasIntegranteGrupo extends Struct.ComponentSchema {
   collectionName: 'components_reservas_integrante_grupos';
   info: {
     displayName: 'Integrante_grupo';
     icon: 'user';
   };
   attributes: {
-    Documento_id: Attribute.String;
-    Email: Attribute.Email;
-    Nombre: Attribute.String & Attribute.Required;
-    Observaciones: Attribute.String;
-    Telefono: Attribute.String;
+    Documento_id: Schema.Attribute.String;
+    Email: Schema.Attribute.Email;
+    Nombre: Schema.Attribute.String & Schema.Attribute.Required;
+    Observaciones: Schema.Attribute.String;
+    Telefono: Schema.Attribute.String;
   };
 }
 
-export interface SharedMedia extends Schema.Component {
+export interface SharedMedia extends Struct.ComponentSchema {
   collectionName: 'components_shared_media';
   info: {
     displayName: 'Media';
     icon: 'file-video';
   };
   attributes: {
-    file: Attribute.Media<'images' | 'files' | 'videos'>;
+    file: Schema.Attribute.Media<'images' | 'files' | 'videos'>;
   };
 }
 
-export interface SharedQuote extends Schema.Component {
+export interface SharedQuote extends Struct.ComponentSchema {
   collectionName: 'components_shared_quotes';
   info: {
     displayName: 'Quote';
     icon: 'indent';
   };
   attributes: {
-    body: Attribute.Text;
-    title: Attribute.String;
+    body: Schema.Attribute.Text;
+    title: Schema.Attribute.String;
   };
 }
 
-export interface SharedRichText extends Schema.Component {
+export interface SharedRichText extends Struct.ComponentSchema {
   collectionName: 'components_shared_rich_texts';
   info: {
     description: '';
@@ -63,11 +62,11 @@ export interface SharedRichText extends Schema.Component {
     icon: 'align-justify';
   };
   attributes: {
-    body: Attribute.RichText;
+    body: Schema.Attribute.RichText;
   };
 }
 
-export interface SharedSeo extends Schema.Component {
+export interface SharedSeo extends Struct.ComponentSchema {
   collectionName: 'components_shared_seos';
   info: {
     description: '';
@@ -76,13 +75,13 @@ export interface SharedSeo extends Schema.Component {
     name: 'Seo';
   };
   attributes: {
-    metaDescription: Attribute.Text & Attribute.Required;
-    metaTitle: Attribute.String & Attribute.Required;
-    shareImage: Attribute.Media<'images'>;
+    metaDescription: Schema.Attribute.Text & Schema.Attribute.Required;
+    metaTitle: Schema.Attribute.String & Schema.Attribute.Required;
+    shareImage: Schema.Attribute.Media<'images'>;
   };
 }
 
-export interface SharedSlider extends Schema.Component {
+export interface SharedSlider extends Struct.ComponentSchema {
   collectionName: 'components_shared_sliders';
   info: {
     description: '';
@@ -90,11 +89,11 @@ export interface SharedSlider extends Schema.Component {
     icon: 'address-book';
   };
   attributes: {
-    files: Attribute.Media<'images', true>;
+    files: Schema.Attribute.Media<'images', true>;
   };
 }
 
-export interface ViajesSalida extends Schema.Component {
+export interface ViajesSalida extends Struct.ComponentSchema {
   collectionName: 'components_viajes_salidas';
   info: {
     description: '';
@@ -102,31 +101,30 @@ export interface ViajesSalida extends Schema.Component {
     icon: 'plane';
   };
   attributes: {
-    Cupo_disponible: Attribute.Integer;
-    Cupo_total: Attribute.Integer;
-    Estado: Attribute.Enumeration<
+    Cupo_disponible: Schema.Attribute.Integer;
+    Cupo_total: Schema.Attribute.Integer;
+    Estado: Schema.Attribute.Enumeration<
       [
         'Disponible',
         'Confirmado',
         '\u00DAltimas plazas',
         'Completo',
-        'Cancelado'
+        'Cancelado',
       ]
     >;
-    Fecha_fin: Attribute.Date;
-    Fecha_inicio: Attribute.Date;
-    Precio: Attribute.BigInteger;
-    Proveedores_asignados: Attribute.Relation<
-      'viajes.salida',
+    Fecha_fin: Schema.Attribute.Date;
+    Fecha_inicio: Schema.Attribute.Date;
+    Precio: Schema.Attribute.BigInteger;
+    Proveedores_asignados: Schema.Attribute.Relation<
       'oneToMany',
       'api::proveedor.proveedor'
     >;
   };
 }
 
-declare module '@strapi/types' {
-  export module Shared {
-    export interface Components {
+declare module '@strapi/strapi' {
+  export module Public {
+    export interface ComponentSchemas {
       'reservas.fecha-asignada': ReservasFechaAsignada;
       'reservas.integrante-grupo': ReservasIntegranteGrupo;
       'shared.media': SharedMedia;
