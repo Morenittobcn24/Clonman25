@@ -4,7 +4,7 @@ const config = {
   locales: ['es', 'en'],
   head: {
     favicon,
-    title: 'Panel Manaslu', // Cambia el título según tu preferencia
+    title: 'Panel Manaslu',
   },
   theme: {
     light: {
@@ -1403,11 +1403,12 @@ const config = {
   "components.Blocks.blocks.heading5": "Título 5",
   "components.Blocks.blocks.heading6": "Título 6",
   "components.Blocks.blocks.image": "Imagen"
-      },
+     },
+  },
 };
 
 const bootstrap = (app) => {
-  console.log(app);
+  console.log('Admin app initialized');
 };
 
 export default {
