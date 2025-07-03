@@ -3,7 +3,7 @@ import favicon from './extensions/favicon.jpg';
 const config = {
   locales: ['es', 'en'],
   head: {
-    favicon,
+    favicon: favicon,
     title: 'Manaslu Admin',
   },
   theme: {
