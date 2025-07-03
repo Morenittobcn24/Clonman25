@@ -1,29 +1,24 @@
+import favicon from './extensions/favicon.jpg';
+
 const config = {
-  locales: [
-     'es',
-    // 'fr',
-     'en',
-  ],
-};
-
-const bootstrap = (app) => {
-  console.log(app);
-};
-
-export default {
-  config: {
-    theme: {
-  light: {
-    colors: {
-      primary100: "#feecec",
-      primary200: "#f8c1c1",
-      primary500: "#e67373",
-      primary600: "#df1e18",
-      primary700: "#b31813",
-      danger700: "#8a130f",
+  locales: ['es', 'en'],
+  head: {
+    favicon,
+    title: 'Panel Manaslu', // Cambia el título según tu preferencia
+  },
+  theme: {
+    light: {
+      colors: {
+        primary100: '#feecec',
+        primary200: '#f8c1c1',
+        primary500: '#e67373',
+        primary600: '#df1e18',
+        primary700: '#b31813',
+        danger700: '#8a130f',
+      },
     },
   },
-},
+  
     translations: {
       es: {
          "Analytics": "Analytics",
@@ -1409,7 +1404,13 @@ export default {
   "components.Blocks.blocks.heading6": "Título 6",
   "components.Blocks.blocks.image": "Imagen"
       },
-    },
-  },
-  bootstrap() {},
+};
+
+const bootstrap = (app) => {
+  console.log(app);
+};
+
+export default {
+  config,
+  bootstrap,
 };
