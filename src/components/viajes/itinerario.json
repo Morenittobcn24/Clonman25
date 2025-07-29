@@ -1,0 +1,17 @@
+{
+  "collectionName": "components_viajes_itinerarios",
+  "info": {
+    "displayName": "Itinerario",
+    "icon": "bulletList"
+  },
+  "options": {},
+  "attributes": {
+    "Titulo_Dia": {
+      "type": "string"
+    },
+    "Descripcion_Dia": {
+      "type": "richtext"
+    }
+  },
+  "config": {}
+}

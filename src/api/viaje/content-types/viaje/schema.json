@@ -31,9 +31,6 @@
     "Descripcion_larga": {
       "type": "richtext"
     },
-    "Itinerario": {
-      "type": "richtext"
-    },
     "Foto_portada": {
       "type": "media",
       "multiple": false,
@@ -102,6 +99,9 @@
       "enum": [
         "Invierno",
         "Verano",
+        "Primavera",
+        "Otoño",
+        "Semana Santa",
         "Todo el año"
       ]
     },
@@ -114,7 +114,7 @@
         "Técnica"
       ]
     },
-    "Estilo": {
+    "Estilo_de_Viaje": {
       "type": "enumeration",
       "enum": [
         "Explorer",
@@ -131,7 +131,8 @@
         "Grupo Privado",
         "Familia",
         "Individual",
-        "A medida"
+        "A medida",
+        "En pareja"
       ]
     },
     "Continente": {
@@ -144,16 +145,6 @@
         "Oceanía",
         "Antártida"
       ]
-    },
-    "Pais": {
-      "type": "string",
-      "required": true
-    },
-    "Cordillera": {
-      "type": "string"
-    },
-    "Alojamiento": {
-      "type": "richtext"
     },
     "Servicios_incluidos": {
       "type": "richtext"
@@ -176,48 +167,91 @@
     "Precio_base": {
       "type": "biginteger"
     },
-    "Forma_pago": {
-      "type": "richtext"
-    },
-    "Financiacion": {
-      "type": "string"
-    },
-    "Descuento_reserva_anticipada": {
-      "type": "string"
-    },
-    "Descuento_por_personas": {
-      "type": "string"
-    },
-    "Seguro_cancelacion_asistencia": {
-      "type": "boolean",
-      "default": true
-    },
-    "Descripcion_seguro": {
-      "type": "string"
-    },
-    "Incluye_billetes_avion": {
-      "type": "boolean",
-      "default": true
-    },
-    "Descripcion_billetes": {
-      "type": "string"
-    },
-    "Actividad_extra": {
-      "type": "string"
-    },
-    "Extra_hab_individual": {
-      "type": "string"
-    },
-    "Extra_noche_hotel": {
-      "type": "string"
-    },
-    "Transfer_aeropuerto": {
-      "type": "string"
-    },
     "Salidas": {
       "type": "component",
       "component": "viajes.salida",
       "repeatable": true
+    },
+    "Itinerario": {
+      "type": "component",
+      "component": "viajes.itinerario",
+      "repeatable": true
+    },
+    "Etiqueta_Unica": {
+      "type": "string",
+      "required": true,
+      "unique": true
+    },
+    "Categoria_Unica": {
+      "type": "string",
+      "required": true,
+      "unique": true
+    },
+    "Cordillera": {
+      "type": "enumeration",
+      "enum": [
+        "África",
+        "Alpes",
+        "Ártico",
+        "Andes",
+        "Cáucaso",
+        "Dolomitas",
+        "Himalaya"
+      ]
+    },
+    "Pais": {
+      "type": "enumeration",
+      "enum": [
+        "España",
+        "Noruega",
+        "Albania",
+        "Holanda",
+        "Venezuela",
+        "Colombia",
+        "Portugal",
+        "Italia",
+        "México"
+      ]
+    },
+    "Icono_Destacado": {
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ]
+    },
+    "Alojamiento": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::alojamiento.alojamiento",
+      "mappedBy": "viajes"
+    },
+    "Actividades": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::actividad.actividad",
+      "mappedBy": "viajes"
+    },
+    "Seguros": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::seguro.seguro",
+      "mappedBy": "viajes"
+    },
+    "Transfer": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::transfer.transfer",
+      "mappedBy": "viajes"
+    },
+    "Descuento": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::descuento.descuento",
+      "mappedBy": "viajes"
     }
   }
 }

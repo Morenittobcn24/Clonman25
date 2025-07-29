@@ -1,0 +1,27 @@
+{
+  "kind": "collectionType",
+  "collectionName": "descuentos",
+  "info": {
+    "singularName": "descuento",
+    "pluralName": "descuentos",
+    "displayName": "Descuento"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "Descuento_reserva_anticipada": {
+      "type": "decimal"
+    },
+    "Descuento_por_personas": {
+      "type": "decimal"
+    },
+    "viajes": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::viaje.viaje",
+      "inversedBy": "Descuento"
+    }
+  }
+}

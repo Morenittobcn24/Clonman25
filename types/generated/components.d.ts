@@ -93,6 +93,18 @@ export interface SharedSlider extends Struct.ComponentSchema {
   };
 }
 
+export interface ViajesItinerario extends Struct.ComponentSchema {
+  collectionName: 'components_viajes_itinerarios';
+  info: {
+    displayName: 'Itinerario';
+    icon: 'bulletList';
+  };
+  attributes: {
+    Descripcion_Dia: Schema.Attribute.RichText;
+    Titulo_Dia: Schema.Attribute.String;
+  };
+}
+
 export interface ViajesSalida extends Struct.ComponentSchema {
   collectionName: 'components_viajes_salidas';
   info: {
@@ -132,6 +144,7 @@ declare module '@strapi/strapi' {
       'shared.rich-text': SharedRichText;
       'shared.seo': SharedSeo;
       'shared.slider': SharedSlider;
+      'viajes.itinerario': ViajesItinerario;
       'viajes.salida': ViajesSalida;
     }
   }

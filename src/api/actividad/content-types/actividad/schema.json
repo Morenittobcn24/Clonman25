@@ -1,0 +1,49 @@
+{
+  "kind": "collectionType",
+  "collectionName": "actividades",
+  "info": {
+    "singularName": "actividad",
+    "pluralName": "actividades",
+    "displayName": "Actividad"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "Nombre": {
+      "type": "string"
+    },
+    "Descripcion": {
+      "type": "richtext"
+    },
+    "Precio": {
+      "type": "decimal"
+    },
+    "Duracion": {
+      "type": "integer"
+    },
+    "Imagen": {
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ]
+    },
+    "viajes": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::viaje.viaje",
+      "inversedBy": "Actividades"
+    },
+    "reservas": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::reserva.reserva",
+      "inversedBy": "Actividades"
+    }
+  }
+}

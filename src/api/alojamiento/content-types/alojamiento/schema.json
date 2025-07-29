@@ -1,0 +1,52 @@
+{
+  "kind": "collectionType",
+  "collectionName": "alojamientos",
+  "info": {
+    "singularName": "alojamiento",
+    "pluralName": "alojamientos",
+    "displayName": "Alojamiento"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "Nombre": {
+      "type": "string"
+    },
+    "Descripcion": {
+      "type": "richtext"
+    },
+    "Precio": {
+      "type": "decimal"
+    },
+    "Imagen": {
+      "type": "media",
+      "multiple": true,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ]
+    },
+    "viajes": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::viaje.viaje",
+      "inversedBy": "Alojamiento"
+    },
+    "Extra_hab_individual": {
+      "type": "decimal"
+    },
+    "Extra_noche_hotel": {
+      "type": "decimal"
+    },
+    "reserva": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::reserva.reserva",
+      "inversedBy": "Alojamiento"
+    }
+  }
+}

@@ -1,0 +1,39 @@
+{
+  "kind": "collectionType",
+  "collectionName": "seguros",
+  "info": {
+    "singularName": "seguro",
+    "pluralName": "seguros",
+    "displayName": "Seguro"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "Nombre": {
+      "type": "string"
+    },
+    "Descripcion": {
+      "type": "richtext"
+    },
+    "Precio": {
+      "type": "decimal"
+    },
+    "Cobertura": {
+      "type": "richtext"
+    },
+    "viajes": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::viaje.viaje",
+      "inversedBy": "Seguros"
+    },
+    "reservas": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::reserva.reserva",
+      "mappedBy": "Seguro"
+    }
+  }
+}

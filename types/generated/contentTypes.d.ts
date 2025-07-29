@@ -373,6 +373,78 @@ export interface AdminUser extends Struct.CollectionTypeSchema {
   };
 }
 
+export interface ApiActividadActividad extends Struct.CollectionTypeSchema {
+  collectionName: 'actividades';
+  info: {
+    displayName: 'Actividad';
+    pluralName: 'actividades';
+    singularName: 'actividad';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    Descripcion: Schema.Attribute.RichText;
+    Duracion: Schema.Attribute.Integer;
+    Imagen: Schema.Attribute.Media<'images' | 'files' | 'videos' | 'audios'>;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::actividad.actividad'
+    > &
+      Schema.Attribute.Private;
+    Nombre: Schema.Attribute.String;
+    Precio: Schema.Attribute.Decimal;
+    publishedAt: Schema.Attribute.DateTime;
+    reservas: Schema.Attribute.Relation<'manyToMany', 'api::reserva.reserva'>;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    viajes: Schema.Attribute.Relation<'manyToMany', 'api::viaje.viaje'>;
+  };
+}
+
+export interface ApiAlojamientoAlojamiento extends Struct.CollectionTypeSchema {
+  collectionName: 'alojamientos';
+  info: {
+    displayName: 'Alojamiento';
+    pluralName: 'alojamientos';
+    singularName: 'alojamiento';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    Descripcion: Schema.Attribute.RichText;
+    Extra_hab_individual: Schema.Attribute.Decimal;
+    Extra_noche_hotel: Schema.Attribute.Decimal;
+    Imagen: Schema.Attribute.Media<
+      'images' | 'files' | 'videos' | 'audios',
+      true
+    >;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::alojamiento.alojamiento'
+    > &
+      Schema.Attribute.Private;
+    Nombre: Schema.Attribute.String;
+    Precio: Schema.Attribute.Decimal;
+    publishedAt: Schema.Attribute.DateTime;
+    reserva: Schema.Attribute.Relation<'oneToOne', 'api::reserva.reserva'>;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    viajes: Schema.Attribute.Relation<'manyToMany', 'api::viaje.viaje'>;
+  };
+}
+
 export interface ApiClienteCliente extends Struct.CollectionTypeSchema {
   collectionName: 'clientes';
   info: {
@@ -407,6 +479,36 @@ export interface ApiClienteCliente extends Struct.CollectionTypeSchema {
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
+  };
+}
+
+export interface ApiDescuentoDescuento extends Struct.CollectionTypeSchema {
+  collectionName: 'descuentos';
+  info: {
+    displayName: 'Descuento';
+    pluralName: 'descuentos';
+    singularName: 'descuento';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    Descuento_por_personas: Schema.Attribute.Decimal;
+    Descuento_reserva_anticipada: Schema.Attribute.Decimal;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::descuento.descuento'
+    > &
+      Schema.Attribute.Private;
+    publishedAt: Schema.Attribute.DateTime;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    viajes: Schema.Attribute.Relation<'manyToMany', 'api::viaje.viaje'>;
   };
 }
 
@@ -491,6 +593,14 @@ export interface ApiReservaReserva extends Struct.CollectionTypeSchema {
     draftAndPublish: true;
   };
   attributes: {
+    Actividades: Schema.Attribute.Relation<
+      'manyToMany',
+      'api::actividad.actividad'
+    >;
+    Alojamiento: Schema.Attribute.Relation<
+      'oneToOne',
+      'api::alojamiento.alojamiento'
+    >;
     Canal: Schema.Attribute.Enumeration<
       ['Web', 'Interno', 'Agencia', 'Whatsapp']
     >;
@@ -520,10 +630,77 @@ export interface ApiReservaReserva extends Struct.CollectionTypeSchema {
     Reserva_pagada: Schema.Attribute.Boolean &
       Schema.Attribute.DefaultTo<false>;
     Salida: Schema.Attribute.Component<'viajes.salida', false>;
+    Seguro: Schema.Attribute.Relation<'manyToMany', 'api::seguro.seguro'>;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
     Viaje: Schema.Attribute.Relation<'oneToOne', 'api::viaje.viaje'>;
+  };
+}
+
+export interface ApiSeguroSeguro extends Struct.CollectionTypeSchema {
+  collectionName: 'seguros';
+  info: {
+    displayName: 'Seguro';
+    pluralName: 'seguros';
+    singularName: 'seguro';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    Cobertura: Schema.Attribute.RichText;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    Descripcion: Schema.Attribute.RichText;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::seguro.seguro'
+    > &
+      Schema.Attribute.Private;
+    Nombre: Schema.Attribute.String;
+    Precio: Schema.Attribute.Decimal;
+    publishedAt: Schema.Attribute.DateTime;
+    reservas: Schema.Attribute.Relation<'manyToMany', 'api::reserva.reserva'>;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    viajes: Schema.Attribute.Relation<'manyToMany', 'api::viaje.viaje'>;
+  };
+}
+
+export interface ApiTransferTransfer extends Struct.CollectionTypeSchema {
+  collectionName: 'transfers';
+  info: {
+    displayName: 'Transfer';
+    pluralName: 'transfers';
+    singularName: 'transfer';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    Descripcion: Schema.Attribute.RichText;
+    Imagen: Schema.Attribute.Media<'images' | 'files' | 'videos' | 'audios'>;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::transfer.transfer'
+    > &
+      Schema.Attribute.Private;
+    Nombre: Schema.Attribute.String;
+    Precio: Schema.Attribute.Decimal;
+    publishedAt: Schema.Attribute.DateTime;
+    Tipo: Schema.Attribute.String;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    viajes: Schema.Attribute.Relation<'manyToMany', 'api::viaje.viaje'>;
   };
 }
 
@@ -539,11 +716,20 @@ export interface ApiViajeViaje extends Struct.CollectionTypeSchema {
     draftAndPublish: true;
   };
   attributes: {
-    Actividad_extra: Schema.Attribute.String;
-    Alojamiento: Schema.Attribute.RichText;
+    Actividades: Schema.Attribute.Relation<
+      'manyToMany',
+      'api::actividad.actividad'
+    >;
+    Alojamiento: Schema.Attribute.Relation<
+      'manyToMany',
+      'api::alojamiento.alojamiento'
+    >;
     Archivo_PDF: Schema.Attribute.Media<
       'images' | 'files' | 'videos' | 'audios'
     >;
+    Categoria_Unica: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.Unique;
     Continente: Schema.Attribute.Enumeration<
       [
         '\u00C1frica',
@@ -554,27 +740,43 @@ export interface ApiViajeViaje extends Struct.CollectionTypeSchema {
         'Ant\u00E1rtida',
       ]
     >;
-    Cordillera: Schema.Attribute.String;
+    Cordillera: Schema.Attribute.Enumeration<
+      [
+        '\u00C1frica',
+        'Alpes',
+        '\u00C1rtico',
+        'Andes',
+        'C\u00E1ucaso',
+        'Dolomitas',
+        'Himalaya',
+      ]
+    >;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
     Descripcion: Schema.Attribute.RichText;
-    Descripcion_billetes: Schema.Attribute.String;
     Descripcion_corta: Schema.Attribute.String;
     Descripcion_larga: Schema.Attribute.RichText;
-    Descripcion_seguro: Schema.Attribute.String;
-    Descuento_por_personas: Schema.Attribute.String;
-    Descuento_reserva_anticipada: Schema.Attribute.String;
+    Descuento: Schema.Attribute.Relation<
+      'manyToMany',
+      'api::descuento.descuento'
+    >;
     Duracion_total: Schema.Attribute.Integer;
-    Estilo: Schema.Attribute.Enumeration<
+    Estilo_de_Viaje: Schema.Attribute.Enumeration<
       ['Explorer', 'Confort', 'Luxury', 'Cl\u00E1sico', 'Minimal']
     >;
-    Extra_hab_individual: Schema.Attribute.String;
-    Extra_noche_hotel: Schema.Attribute.String;
-    Financiacion: Schema.Attribute.String;
-    Forma_pago: Schema.Attribute.RichText;
+    Etiqueta_Unica: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.Unique;
     Forma_viajar: Schema.Attribute.Enumeration<
-      ['Grupo Abierto', 'Grupo Privado', 'Familia', 'Individual', 'A medida']
+      [
+        'Grupo Abierto',
+        'Grupo Privado',
+        'Familia',
+        'Individual',
+        'A medida',
+        'En pareja',
+      ]
     >;
     Foto_portada: Schema.Attribute.Media<
       'images' | 'files' | 'videos' | 'audios'
@@ -586,10 +788,11 @@ export interface ApiViajeViaje extends Struct.CollectionTypeSchema {
     Grupo_maximo: Schema.Attribute.Integer;
     Grupo_minimo: Schema.Attribute.Integer;
     Icono: Schema.Attribute.Media<'images' | 'files' | 'videos' | 'audios'>;
-    Incluye_billetes_avion: Schema.Attribute.Boolean &
-      Schema.Attribute.DefaultTo<true>;
+    Icono_Destacado: Schema.Attribute.Media<
+      'images' | 'files' | 'videos' | 'audios'
+    >;
     Info_adicional: Schema.Attribute.String;
-    Itinerario: Schema.Attribute.RichText;
+    Itinerario: Schema.Attribute.Component<'viajes.itinerario', true>;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<'oneToMany', 'api::viaje.viaje'> &
       Schema.Attribute.Private;
@@ -599,17 +802,35 @@ export interface ApiViajeViaje extends Struct.CollectionTypeSchema {
       ['F\u00E1cil', 'Media', 'Alta', 'T\u00E9cnica']
     >;
     Nombre: Schema.Attribute.String;
-    Pais: Schema.Attribute.String & Schema.Attribute.Required;
+    Pais: Schema.Attribute.Enumeration<
+      [
+        'Espa\u00F1a',
+        'Noruega',
+        'Albania',
+        'Holanda',
+        'Venezuela',
+        'Colombia',
+        'Portugal',
+        'Italia',
+        'M\u00E9xico',
+      ]
+    >;
     Precio_base: Schema.Attribute.BigInteger;
     publishedAt: Schema.Attribute.DateTime;
     Salidas: Schema.Attribute.Component<'viajes.salida', true>;
-    Seguro_cancelacion_asistencia: Schema.Attribute.Boolean &
-      Schema.Attribute.DefaultTo<true>;
+    Seguros: Schema.Attribute.Relation<'manyToMany', 'api::seguro.seguro'>;
     Servicios_incluidos: Schema.Attribute.RichText;
     Servicios_no_incluidos: Schema.Attribute.RichText;
     Slug: Schema.Attribute.UID<'Nombre'>;
     Temporada: Schema.Attribute.Enumeration<
-      ['Invierno', 'Verano', 'Todo el a\u00F1o']
+      [
+        'Invierno',
+        'Verano',
+        'Primavera',
+        'Oto\u00F1o',
+        'Semana Santa',
+        'Todo el a\u00F1o',
+      ]
     >;
     Tipo_de_viaje: Schema.Attribute.Enumeration<
       [
@@ -623,7 +844,7 @@ export interface ApiViajeViaje extends Struct.CollectionTypeSchema {
         'Mixto',
       ]
     >;
-    Transfer_aeropuerto: Schema.Attribute.String;
+    Transfer: Schema.Attribute.Relation<'manyToMany', 'api::transfer.transfer'>;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -1139,10 +1360,15 @@ declare module '@strapi/strapi' {
       'admin::transfer-token': AdminTransferToken;
       'admin::transfer-token-permission': AdminTransferTokenPermission;
       'admin::user': AdminUser;
+      'api::actividad.actividad': ApiActividadActividad;
+      'api::alojamiento.alojamiento': ApiAlojamientoAlojamiento;
       'api::cliente.cliente': ApiClienteCliente;
+      'api::descuento.descuento': ApiDescuentoDescuento;
       'api::global.global': ApiGlobalGlobal;
       'api::proveedor.proveedor': ApiProveedorProveedor;
       'api::reserva.reserva': ApiReservaReserva;
+      'api::seguro.seguro': ApiSeguroSeguro;
+      'api::transfer.transfer': ApiTransferTransfer;
       'api::viaje.viaje': ApiViajeViaje;
       'plugin::content-releases.release': PluginContentReleasesRelease;
       'plugin::content-releases.release-action': PluginContentReleasesReleaseAction;
