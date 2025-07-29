@@ -625,7 +625,7 @@ export interface ApiReservaReserva extends Struct.CollectionTypeSchema {
       Schema.Attribute.Private;
     Notas_internas: Schema.Attribute.String;
     Personas: Schema.Attribute.Integer;
-    Precio_total: Schema.Attribute.BigInteger;
+    Precio_total: Schema.Attribute.Decimal;
     publishedAt: Schema.Attribute.DateTime;
     Reserva_pagada: Schema.Attribute.Boolean &
       Schema.Attribute.DefaultTo<false>;

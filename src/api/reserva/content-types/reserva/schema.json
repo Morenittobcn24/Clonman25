@@ -36,7 +36,7 @@
       ]
     },
     "Precio_total": {
-      "type": "biginteger"
+      "type": "decimal"
     },
     "Forma_pago": {
       "type": "enumeration",

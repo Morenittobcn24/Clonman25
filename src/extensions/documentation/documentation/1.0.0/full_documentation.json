@@ -14,7 +14,7 @@
       "name": "Apache 2.0",
       "url": "https://www.apache.org/licenses/LICENSE-2.0.html"
     },
-    "x-generation-date": "2025-07-29T09:42:48.292Z"
+    "x-generation-date": "2025-07-29T13:00:21.541Z"
   },
   "x-strapi-config": {
     "plugins": [
@@ -8334,9 +8334,8 @@
                             ]
                           },
                           "Precio_total": {
-                            "type": "string",
-                            "pattern": "^\\d*$",
-                            "example": "123456789"
+                            "type": "number",
+                            "format": "float"
                           },
                           "Forma_pago": {
                             "type": "string",
@@ -10546,9 +10545,8 @@
                           ]
                         },
                         "Precio_total": {
-                          "type": "string",
-                          "pattern": "^\\d*$",
-                          "example": "123456789"
+                          "type": "number",
+                          "format": "float"
                         },
                         "Forma_pago": {
                           "type": "string",
@@ -11461,9 +11459,8 @@
             "format": "date"
           },
           "Precio": {
-            "type": "string",
-            "pattern": "^\\d*$",
-            "example": "123456789"
+            "type": "number",
+            "format": "float"
           },
           "Cupo_total": {
             "type": "integer"
@@ -13580,9 +13577,8 @@
                             ]
                           },
                           "Precio_total": {
-                            "type": "string",
-                            "pattern": "^\\d*$",
-                            "example": "123456789"
+                            "type": "number",
+                            "format": "float"
                           },
                           "Forma_pago": {
                             "type": "string",
@@ -16894,9 +16890,8 @@
                             ]
                           },
                           "Precio_total": {
-                            "type": "string",
-                            "pattern": "^\\d*$",
-                            "example": "123456789"
+                            "type": "number",
+                            "format": "float"
                           },
                           "Forma_pago": {
                             "type": "string",
@@ -19183,9 +19178,8 @@
                 ]
               },
               "Precio_total": {
-                "type": "string",
-                "pattern": "^\\d*$",
-                "example": "123456789"
+                "type": "number",
+                "format": "float"
               },
               "Forma_pago": {
                 "type": "string",
@@ -19697,9 +19691,8 @@
             ]
           },
           "Precio_total": {
-            "type": "string",
-            "pattern": "^\\d*$",
-            "example": "123456789"
+            "type": "number",
+            "format": "float"
           },
           "Forma_pago": {
             "type": "string",
@@ -21091,9 +21084,8 @@
                           ]
                         },
                         "Precio_total": {
-                          "type": "string",
-                          "pattern": "^\\d*$",
-                          "example": "123456789"
+                          "type": "number",
+                          "format": "float"
                         },
                         "Forma_pago": {
                           "type": "string",
@@ -23925,9 +23917,8 @@
                             ]
                           },
                           "Precio_total": {
-                            "type": "string",
-                            "pattern": "^\\d*$",
-                            "example": "123456789"
+                            "type": "number",
+                            "format": "float"
                           },
                           "Forma_pago": {
                             "type": "string",
@@ -26852,9 +26843,8 @@
                             ]
                           },
                           "Precio_total": {
-                            "type": "string",
-                            "pattern": "^\\d*$",
-                            "example": "123456789"
+                            "type": "number",
+                            "format": "float"
                           },
                           "Forma_pago": {
                             "type": "string",
