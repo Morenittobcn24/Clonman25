@@ -101,7 +101,22 @@ export interface ViajesItinerario extends Struct.ComponentSchema {
   };
   attributes: {
     Descripcion_Dia: Schema.Attribute.RichText;
+    Imagen_iti: Schema.Attribute.Media<
+      'images' | 'files' | 'videos' | 'audios'
+    >;
     Titulo_Dia: Schema.Attribute.String;
+  };
+}
+
+export interface ViajesPreguntas extends Struct.ComponentSchema {
+  collectionName: 'components_viajes_preguntas';
+  info: {
+    displayName: 'Preguntas';
+    icon: 'apps';
+  };
+  attributes: {
+    Pregunta: Schema.Attribute.String;
+    Respuesta: Schema.Attribute.RichText;
   };
 }
 
@@ -145,6 +160,7 @@ declare module '@strapi/strapi' {
       'shared.seo': SharedSeo;
       'shared.slider': SharedSlider;
       'viajes.itinerario': ViajesItinerario;
+      'viajes.preguntas': ViajesPreguntas;
       'viajes.salida': ViajesSalida;
     }
   }

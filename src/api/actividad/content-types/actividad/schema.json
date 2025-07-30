@@ -17,12 +17,6 @@
     "Descripcion": {
       "type": "richtext"
     },
-    "Precio": {
-      "type": "decimal"
-    },
-    "Duracion": {
-      "type": "integer"
-    },
     "Imagen": {
       "type": "media",
       "multiple": false,
@@ -32,6 +26,12 @@
         "videos",
         "audios"
       ]
+    },
+    "Precio": {
+      "type": "decimal"
+    },
+    "Duracion": {
+      "type": "integer"
     },
     "viajes": {
       "type": "relation",

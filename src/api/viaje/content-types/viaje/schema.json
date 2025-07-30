@@ -22,6 +22,9 @@
     "Descripcion": {
       "type": "richtext"
     },
+    "Precio_base": {
+      "type": "biginteger"
+    },
     "Info_adicional": {
       "type": "string"
     },
@@ -94,15 +97,40 @@
         "Mixto"
       ]
     },
-    "Temporada": {
+    "Estilo_de_Viaje": {
       "type": "enumeration",
       "enum": [
-        "Invierno",
-        "Verano",
-        "Primavera",
-        "Otoño",
-        "Semana Santa",
-        "Todo el año"
+        "Explorer",
+        "Confort",
+        "Luxury",
+        "Clásico",
+        "Minimal"
+      ]
+    },
+    "Pais": {
+      "type": "enumeration",
+      "enum": [
+        "España",
+        "Noruega",
+        "Albania",
+        "Holanda",
+        "Venezuela",
+        "Colombia",
+        "Portugal",
+        "Italia",
+        "México"
+      ]
+    },
+    "Cordillera": {
+      "type": "enumeration",
+      "enum": [
+        "África",
+        "Alpes",
+        "Ártico",
+        "Andes",
+        "Cáucaso",
+        "Dolomitas",
+        "Himalaya"
       ]
     },
     "Nivel_dificultad": {
@@ -114,15 +142,20 @@
         "Técnica"
       ]
     },
-    "Estilo_de_Viaje": {
-      "type": "enumeration",
-      "enum": [
-        "Explorer",
-        "Confort",
-        "Luxury",
-        "Clásico",
-        "Minimal"
-      ]
+    "Estilo_alojamiento": {
+      "type": "string"
+    },
+    "Regimen_alojamiento": {
+      "type": "string"
+    },
+    "Duracion_total": {
+      "type": "integer"
+    },
+    "Guia": {
+      "type": "string"
+    },
+    "Transporte": {
+      "type": "string"
     },
     "Forma_viajar": {
       "type": "enumeration",
@@ -133,6 +166,23 @@
         "Individual",
         "A medida",
         "En pareja"
+      ]
+    },
+    "Grupo_minimo": {
+      "type": "integer"
+    },
+    "Grupo_maximo": {
+      "type": "integer"
+    },
+    "Temporada": {
+      "type": "enumeration",
+      "enum": [
+        "Invierno",
+        "Verano",
+        "Primavera",
+        "Otoño",
+        "Semana Santa",
+        "Todo el año"
       ]
     },
     "Continente": {
@@ -155,84 +205,18 @@
     "Material_recomendado": {
       "type": "richtext"
     },
-    "Grupo_minimo": {
-      "type": "integer"
-    },
-    "Grupo_maximo": {
-      "type": "integer"
-    },
-    "Duracion_total": {
-      "type": "integer"
-    },
-    "Precio_base": {
-      "type": "biginteger"
-    },
-    "Salidas": {
-      "type": "component",
-      "component": "viajes.salida",
-      "repeatable": true
+    "Staff": {
+      "type": "richtext"
     },
     "Itinerario": {
       "type": "component",
       "component": "viajes.itinerario",
       "repeatable": true
     },
-    "Etiqueta_Unica": {
-      "type": "string",
-      "required": true,
-      "unique": true
-    },
-    "Categoria_Unica": {
-      "type": "string",
-      "required": true,
-      "unique": true
-    },
-    "Cordillera": {
-      "type": "enumeration",
-      "enum": [
-        "África",
-        "Alpes",
-        "Ártico",
-        "Andes",
-        "Cáucaso",
-        "Dolomitas",
-        "Himalaya"
-      ]
-    },
-    "Pais": {
-      "type": "enumeration",
-      "enum": [
-        "España",
-        "Noruega",
-        "Albania",
-        "Holanda",
-        "Venezuela",
-        "Colombia",
-        "Portugal",
-        "Italia",
-        "México"
-      ]
-    },
-    "Icono_Destacado": {
-      "type": "media",
-      "multiple": false,
-      "allowedTypes": [
-        "images",
-        "files",
-        "videos",
-        "audios"
-      ]
-    },
     "Alojamiento": {
       "type": "relation",
       "relation": "manyToMany",
       "target": "api::alojamiento.alojamiento",
-      "mappedBy": "viajes"
-    },
-    "Actividades": {
-      "type": "relation",
-      "relation": "manyToMany",
-      "target": "api::actividad.actividad",
       "mappedBy": "viajes"
     },
     "Seguros": {
@@ -252,6 +236,42 @@
       "relation": "manyToMany",
       "target": "api::descuento.descuento",
       "mappedBy": "viajes"
+    },
+    "Salidas": {
+      "type": "component",
+      "component": "viajes.salida",
+      "repeatable": true
+    },
+    "Actividades": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::actividad.actividad",
+      "mappedBy": "viajes"
+    },
+    "Preguntas": {
+      "type": "component",
+      "component": "viajes.preguntas",
+      "repeatable": true
+    },
+    "Etiqueta_Unica": {
+      "type": "string",
+      "required": true,
+      "unique": true
+    },
+    "Categoria_Unica": {
+      "type": "string",
+      "required": true,
+      "unique": true
+    },
+    "Icono_Destacado": {
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ]
     }
   }
 }

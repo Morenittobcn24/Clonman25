@@ -762,6 +762,7 @@ export interface ApiViajeViaje extends Struct.CollectionTypeSchema {
       'api::descuento.descuento'
     >;
     Duracion_total: Schema.Attribute.Integer;
+    Estilo_alojamiento: Schema.Attribute.String;
     Estilo_de_Viaje: Schema.Attribute.Enumeration<
       ['Explorer', 'Confort', 'Luxury', 'Cl\u00E1sico', 'Minimal']
     >;
@@ -787,6 +788,7 @@ export interface ApiViajeViaje extends Struct.CollectionTypeSchema {
     >;
     Grupo_maximo: Schema.Attribute.Integer;
     Grupo_minimo: Schema.Attribute.Integer;
+    Guia: Schema.Attribute.String;
     Icono: Schema.Attribute.Media<'images' | 'files' | 'videos' | 'audios'>;
     Icono_Destacado: Schema.Attribute.Media<
       'images' | 'files' | 'videos' | 'audios'
@@ -816,12 +818,15 @@ export interface ApiViajeViaje extends Struct.CollectionTypeSchema {
       ]
     >;
     Precio_base: Schema.Attribute.BigInteger;
+    Preguntas: Schema.Attribute.Component<'viajes.preguntas', true>;
     publishedAt: Schema.Attribute.DateTime;
+    Regimen_alojamiento: Schema.Attribute.String;
     Salidas: Schema.Attribute.Component<'viajes.salida', true>;
     Seguros: Schema.Attribute.Relation<'manyToMany', 'api::seguro.seguro'>;
     Servicios_incluidos: Schema.Attribute.RichText;
     Servicios_no_incluidos: Schema.Attribute.RichText;
     Slug: Schema.Attribute.UID<'Nombre'>;
+    Staff: Schema.Attribute.RichText;
     Temporada: Schema.Attribute.Enumeration<
       [
         'Invierno',
@@ -845,6 +850,7 @@ export interface ApiViajeViaje extends Struct.CollectionTypeSchema {
       ]
     >;
     Transfer: Schema.Attribute.Relation<'manyToMany', 'api::transfer.transfer'>;
+    Transporte: Schema.Attribute.String;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;

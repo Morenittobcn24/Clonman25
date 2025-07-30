@@ -1,0 +1,17 @@
+{
+  "collectionName": "components_viajes_preguntas",
+  "info": {
+    "displayName": "Preguntas",
+    "icon": "apps"
+  },
+  "options": {},
+  "attributes": {
+    "Pregunta": {
+      "type": "string"
+    },
+    "Respuesta": {
+      "type": "richtext"
+    }
+  },
+  "config": {}
+}

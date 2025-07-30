@@ -9,6 +9,16 @@
     "Titulo_Dia": {
       "type": "string"
     },
+    "Imagen_iti": {
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ]
+    },
     "Descripcion_Dia": {
       "type": "richtext"
     }
