@@ -13,7 +13,7 @@
   "pluginOptions": {},
   "attributes": {
     "Localizador": {
-      "type": "uid"
+      "type": "string"
     },
     "Fecha_reserva": {
       "type": "date",

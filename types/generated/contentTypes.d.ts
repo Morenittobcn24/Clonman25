@@ -617,7 +617,7 @@ export interface ApiReservaReserva extends Struct.CollectionTypeSchema {
     >;
     Integrantes: Schema.Attribute.Component<'reservas.integrante-grupo', true>;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
-    Localizador: Schema.Attribute.UID;
+    Localizador: Schema.Attribute.String;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
       'api::reserva.reserva'
