@@ -14,7 +14,7 @@
       "name": "Apache 2.0",
       "url": "https://www.apache.org/licenses/LICENSE-2.0.html"
     },
-    "x-generation-date": "2025-07-30T12:00:43.457Z"
+    "x-generation-date": "2025-08-01T10:54:39.664Z"
   },
   "x-strapi-config": {
     "plugins": [
@@ -8087,7 +8087,7 @@
                         "type": "number",
                         "format": "float"
                       },
-                      "Extra_noche_hotel": {
+                      "Extra_noche": {
                         "type": "number",
                         "format": "float"
                       },
@@ -8605,6 +8605,9 @@
                                 }
                               }
                             }
+                          },
+                          "Billetes": {
+                            "type": "boolean"
                           },
                           "createdAt": {
                             "type": "string",
@@ -9196,6 +9199,14 @@
                     }
                   }
                 },
+                "Precio_adulto_extra": {
+                  "type": "number",
+                  "format": "float"
+                },
+                "Precio_nino_extra": {
+                  "type": "number",
+                  "format": "float"
+                },
                 "createdAt": {
                   "type": "string",
                   "format": "date-time"
@@ -9636,7 +9647,7 @@
                 "type": "number",
                 "format": "float"
               },
-              "Extra_noche_hotel": {
+              "Extra_noche": {
                 "type": "number",
                 "format": "float"
               },
@@ -11310,7 +11321,7 @@
                         "type": "number",
                         "format": "float"
                       },
-                      "Extra_noche_hotel": {
+                      "Extra_noche": {
                         "type": "number",
                         "format": "float"
                       },
@@ -11828,6 +11839,9 @@
                                 }
                               }
                             }
+                          },
+                          "Billetes": {
+                            "type": "boolean"
                           },
                           "createdAt": {
                             "type": "string",
@@ -12419,6 +12433,14 @@
                     }
                   }
                 },
+                "Precio_adulto_extra": {
+                  "type": "number",
+                  "format": "float"
+                },
+                "Precio_nino_extra": {
+                  "type": "number",
+                  "format": "float"
+                },
                 "createdAt": {
                   "type": "string",
                   "format": "date-time"
@@ -12477,7 +12499,7 @@
             "type": "number",
             "format": "float"
           },
-          "Extra_noche_hotel": {
+          "Extra_noche": {
             "type": "number",
             "format": "float"
           },
@@ -14644,7 +14666,7 @@
                         "type": "number",
                         "format": "float"
                       },
-                      "Extra_noche_hotel": {
+                      "Extra_noche": {
                         "type": "number",
                         "format": "float"
                       },
@@ -15162,6 +15184,9 @@
                                 }
                               }
                             }
+                          },
+                          "Billetes": {
+                            "type": "boolean"
                           },
                           "createdAt": {
                             "type": "string",
@@ -15752,6 +15777,14 @@
                       }
                     }
                   }
+                },
+                "Precio_adulto_extra": {
+                  "type": "number",
+                  "format": "float"
+                },
+                "Precio_nino_extra": {
+                  "type": "number",
+                  "format": "float"
                 },
                 "createdAt": {
                   "type": "string",
@@ -16995,11 +17028,20 @@
               "Telefono": {
                 "type": "string"
               },
+              "Web": {
+                "type": "string"
+              },
               "Pais": {
                 "type": "string"
               },
               "Rating_interno": {
                 "type": "integer"
+              },
+              "Condiciones": {
+                "type": "string"
+              },
+              "Bloqueos": {
+                "type": "boolean"
               },
               "Fechas_asignadas": {
                 "type": "array",
@@ -17082,11 +17124,20 @@
           "Telefono": {
             "type": "string"
           },
+          "Web": {
+            "type": "string"
+          },
           "Pais": {
             "type": "string"
           },
           "Rating_interno": {
             "type": "integer"
+          },
+          "Condiciones": {
+            "type": "string"
+          },
+          "Bloqueos": {
+            "type": "boolean"
           },
           "Fechas_asignadas": {
             "type": "array",
@@ -17284,6 +17335,9 @@
                   ],
                   "example": "string or id"
                 }
+              },
+              "Billetes": {
+                "type": "boolean"
               },
               "locale": {
                 "type": "string"
@@ -18937,7 +18991,7 @@
                       "type": "number",
                       "format": "float"
                     },
-                    "Extra_noche_hotel": {
+                    "Extra_noche": {
                       "type": "number",
                       "format": "float"
                     },
@@ -19377,6 +19431,9 @@
                               }
                             }
                           }
+                        },
+                        "Billetes": {
+                          "type": "boolean"
                         },
                         "createdAt": {
                           "type": "string",
@@ -19968,6 +20025,14 @@
                   }
                 }
               },
+              "Precio_adulto_extra": {
+                "type": "number",
+                "format": "float"
+              },
+              "Precio_nino_extra": {
+                "type": "number",
+                "format": "float"
+              },
               "createdAt": {
                 "type": "string",
                 "format": "date-time"
@@ -20068,6 +20133,9 @@
                 }
               }
             }
+          },
+          "Billetes": {
+            "type": "boolean"
           },
           "createdAt": {
             "type": "string",
@@ -21713,7 +21781,7 @@
                         "type": "number",
                         "format": "float"
                       },
-                      "Extra_noche_hotel": {
+                      "Extra_noche": {
                         "type": "number",
                         "format": "float"
                       },
@@ -22231,6 +22299,9 @@
                                 }
                               }
                             }
+                          },
+                          "Billetes": {
+                            "type": "boolean"
                           },
                           "createdAt": {
                             "type": "string",
@@ -22821,6 +22892,14 @@
                       }
                     }
                   }
+                },
+                "Precio_adulto_extra": {
+                  "type": "number",
+                  "format": "float"
+                },
+                "Precio_nino_extra": {
+                  "type": "number",
+                  "format": "float"
                 },
                 "createdAt": {
                   "type": "string",
@@ -24660,7 +24739,7 @@
                         "type": "number",
                         "format": "float"
                       },
-                      "Extra_noche_hotel": {
+                      "Extra_noche": {
                         "type": "number",
                         "format": "float"
                       },
@@ -25178,6 +25257,9 @@
                                 }
                               }
                             }
+                          },
+                          "Billetes": {
+                            "type": "boolean"
                           },
                           "createdAt": {
                             "type": "string",
@@ -25769,6 +25851,14 @@
                     }
                   }
                 },
+                "Precio_adulto_extra": {
+                  "type": "number",
+                  "format": "float"
+                },
+                "Precio_nino_extra": {
+                  "type": "number",
+                  "format": "float"
+                },
                 "createdAt": {
                   "type": "string",
                   "format": "date-time"
@@ -26209,6 +26299,14 @@
                   }
                 ],
                 "example": "string or id"
+              },
+              "Precio_adulto_extra": {
+                "type": "number",
+                "format": "float"
+              },
+              "Precio_nino_extra": {
+                "type": "number",
+                "format": "float"
               },
               "locale": {
                 "type": "string"
@@ -28991,6 +29089,9 @@
                                       }
                                     }
                                   },
+                                  "Billetes": {
+                                    "type": "boolean"
+                                  },
                                   "createdAt": {
                                     "type": "string",
                                     "format": "date-time"
@@ -29568,6 +29669,14 @@
                           }
                         }
                       },
+                      "Precio_adulto_extra": {
+                        "type": "number",
+                        "format": "float"
+                      },
+                      "Precio_nino_extra": {
+                        "type": "number",
+                        "format": "float"
+                      },
                       "createdAt": {
                         "type": "string",
                         "format": "date-time"
@@ -29626,7 +29735,7 @@
                   "type": "number",
                   "format": "float"
                 },
-                "Extra_noche_hotel": {
+                "Extra_noche": {
                   "type": "number",
                   "format": "float"
                 },
@@ -29897,6 +30006,14 @@
                 }
               }
             }
+          },
+          "Precio_adulto_extra": {
+            "type": "number",
+            "format": "float"
+          },
+          "Precio_nino_extra": {
+            "type": "number",
+            "format": "float"
           },
           "createdAt": {
             "type": "string",

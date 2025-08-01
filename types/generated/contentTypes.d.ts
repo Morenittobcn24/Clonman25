@@ -423,7 +423,7 @@ export interface ApiAlojamientoAlojamiento extends Struct.CollectionTypeSchema {
       Schema.Attribute.Private;
     Descripcion: Schema.Attribute.RichText;
     Extra_hab_individual: Schema.Attribute.Decimal;
-    Extra_noche_hotel: Schema.Attribute.Decimal;
+    Extra_noche: Schema.Attribute.Decimal;
     Imagen: Schema.Attribute.Media<
       'images' | 'files' | 'videos' | 'audios',
       true
@@ -556,6 +556,8 @@ export interface ApiProveedorProveedor extends Struct.CollectionTypeSchema {
     draftAndPublish: true;
   };
   attributes: {
+    Bloqueos: Schema.Attribute.Boolean;
+    Condiciones: Schema.Attribute.RichText;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -578,6 +580,7 @@ export interface ApiProveedorProveedor extends Struct.CollectionTypeSchema {
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
+    Web: Schema.Attribute.String;
   };
 }
 
@@ -601,6 +604,7 @@ export interface ApiReservaReserva extends Struct.CollectionTypeSchema {
       'oneToOne',
       'api::alojamiento.alojamiento'
     >;
+    Billetes: Schema.Attribute.Boolean;
     Canal: Schema.Attribute.Enumeration<
       ['Web', 'Interno', 'Agencia', 'Whatsapp']
     >;
@@ -817,7 +821,9 @@ export interface ApiViajeViaje extends Struct.CollectionTypeSchema {
         'M\u00E9xico',
       ]
     >;
+    Precio_adulto_extra: Schema.Attribute.Decimal;
     Precio_base: Schema.Attribute.BigInteger;
+    Precio_nino_extra: Schema.Attribute.Decimal;
     Preguntas: Schema.Attribute.Component<'viajes.preguntas', true>;
     publishedAt: Schema.Attribute.DateTime;
     Regimen_alojamiento: Schema.Attribute.String;

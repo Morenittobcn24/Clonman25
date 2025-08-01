@@ -39,7 +39,7 @@
     "Extra_hab_individual": {
       "type": "decimal"
     },
-    "Extra_noche_hotel": {
+    "Extra_noche": {
       "type": "decimal"
     },
     "reserva": {

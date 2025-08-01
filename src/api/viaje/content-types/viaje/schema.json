@@ -272,6 +272,12 @@
         "videos",
         "audios"
       ]
+    },
+    "Precio_adulto_extra": {
+      "type": "decimal"
+    },
+    "Precio_nino_extra": {
+      "type": "decimal"
     }
   }
 }

@@ -94,6 +94,9 @@
       "relation": "manyToMany",
       "target": "api::seguro.seguro",
       "inversedBy": "reservas"
+    },
+    "Billetes": {
+      "type": "boolean"
     }
   }
 }

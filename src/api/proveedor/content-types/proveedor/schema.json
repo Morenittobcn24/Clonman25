@@ -21,11 +21,20 @@
     "Telefono": {
       "type": "string"
     },
+    "Web": {
+      "type": "string"
+    },
     "Pais": {
       "type": "string"
     },
     "Rating_interno": {
       "type": "integer"
+    },
+    "Condiciones": {
+      "type": "richtext"
+    },
+    "Bloqueos": {
+      "type": "boolean"
     },
     "Fechas_asignadas": {
       "type": "component",
