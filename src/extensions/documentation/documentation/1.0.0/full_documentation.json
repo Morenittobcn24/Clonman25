@@ -14,7 +14,7 @@
       "name": "Apache 2.0",
       "url": "https://www.apache.org/licenses/LICENSE-2.0.html"
     },
-    "x-generation-date": "2025-08-07T09:13:20.355Z"
+    "x-generation-date": "2025-08-07T09:40:45.968Z"
   },
   "x-strapi-config": {
     "plugins": [
@@ -9223,6 +9223,9 @@
                     }
                   }
                 },
+                "Diferente": {
+                  "type": "string"
+                },
                 "Precio_adulto_extra": {
                   "type": "number",
                   "format": "float"
@@ -9230,9 +9233,6 @@
                 "Precio_nino_extra": {
                   "type": "number",
                   "format": "float"
-                },
-                "Diferente": {
-                  "type": "string"
                 },
                 "createdAt": {
                   "type": "string",
@@ -12484,6 +12484,9 @@
                     }
                   }
                 },
+                "Diferente": {
+                  "type": "string"
+                },
                 "Precio_adulto_extra": {
                   "type": "number",
                   "format": "float"
@@ -12491,9 +12494,6 @@
                 "Precio_nino_extra": {
                   "type": "number",
                   "format": "float"
-                },
-                "Diferente": {
-                  "type": "string"
                 },
                 "createdAt": {
                   "type": "string",
@@ -15856,6 +15856,9 @@
                     }
                   }
                 },
+                "Diferente": {
+                  "type": "string"
+                },
                 "Precio_adulto_extra": {
                   "type": "number",
                   "format": "float"
@@ -15863,9 +15866,6 @@
                 "Precio_nino_extra": {
                   "type": "number",
                   "format": "float"
-                },
-                "Diferente": {
-                  "type": "string"
                 },
                 "createdAt": {
                   "type": "string",
@@ -20160,6 +20160,9 @@
                   }
                 }
               },
+              "Diferente": {
+                "type": "string"
+              },
               "Precio_adulto_extra": {
                 "type": "number",
                 "format": "float"
@@ -20167,9 +20170,6 @@
               "Precio_nino_extra": {
                 "type": "number",
                 "format": "float"
-              },
-              "Diferente": {
-                "type": "string"
               },
               "createdAt": {
                 "type": "string",
@@ -23055,6 +23055,9 @@
                     }
                   }
                 },
+                "Diferente": {
+                  "type": "string"
+                },
                 "Precio_adulto_extra": {
                   "type": "number",
                   "format": "float"
@@ -23062,9 +23065,6 @@
                 "Precio_nino_extra": {
                   "type": "number",
                   "format": "float"
-                },
-                "Diferente": {
-                  "type": "string"
                 },
                 "createdAt": {
                   "type": "string",
@@ -26040,6 +26040,9 @@
                     }
                   }
                 },
+                "Diferente": {
+                  "type": "string"
+                },
                 "Precio_adulto_extra": {
                   "type": "number",
                   "format": "float"
@@ -26047,9 +26050,6 @@
                 "Precio_nino_extra": {
                   "type": "number",
                   "format": "float"
-                },
-                "Diferente": {
-                  "type": "string"
                 },
                 "createdAt": {
                   "type": "string",
@@ -26516,6 +26516,9 @@
                 ],
                 "example": "string or id"
               },
+              "Diferente": {
+                "type": "string"
+              },
               "Precio_adulto_extra": {
                 "type": "number",
                 "format": "float"
@@ -26523,9 +26526,6 @@
               "Precio_nino_extra": {
                 "type": "number",
                 "format": "float"
-              },
-              "Diferente": {
-                "type": "string"
               },
               "locale": {
                 "type": "string"
@@ -29936,6 +29936,9 @@
                           }
                         }
                       },
+                      "Diferente": {
+                        "type": "string"
+                      },
                       "Precio_adulto_extra": {
                         "type": "number",
                         "format": "float"
@@ -29943,9 +29946,6 @@
                       "Precio_nino_extra": {
                         "type": "number",
                         "format": "float"
-                      },
-                      "Diferente": {
-                        "type": "string"
                       },
                       "createdAt": {
                         "type": "string",
@@ -30277,6 +30277,9 @@
               }
             }
           },
+          "Diferente": {
+            "type": "string"
+          },
           "Precio_adulto_extra": {
             "type": "number",
             "format": "float"
@@ -30284,9 +30287,6 @@
           "Precio_nino_extra": {
             "type": "number",
             "format": "float"
-          },
-          "Diferente": {
-            "type": "string"
           },
           "createdAt": {
             "type": "string",

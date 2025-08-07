@@ -297,14 +297,14 @@
         "audios"
       ]
     },
+    "Diferente": {
+      "type": "richtext"
+    },
     "Precio_adulto_extra": {
       "type": "decimal"
     },
     "Precio_nino_extra": {
       "type": "decimal"
-    },
-    "Diferente": {
-      "type": "richtext"
     }
   }
 }
