@@ -88,29 +88,27 @@
       "type": "enumeration",
       "enum": [
         "Trekking",
-        "Alpinismo",
+        "Nature",
         "Esquí",
         "Bici",
-        "Yoga",
-        "Aventura",
-        "Montañismo",
-        "Mixto"
+        "Wellness",
+        "Aventura"
       ]
     },
     "Estilo_de_Viaje": {
       "type": "enumeration",
       "enum": [
-        "Explorer",
         "Confort",
         "Luxury",
-        "Clásico",
-        "Minimal"
+        "Mix"
       ]
     },
     "Pais": {
       "type": "enumeration",
       "enum": [
         "España",
+        "Francia-Suiza-Italia",
+        "Suiza-Italia",
         "Noruega",
         "Albania",
         "Holanda",
@@ -118,28 +116,51 @@
         "Colombia",
         "Portugal",
         "Italia",
-        "México"
+        "México",
+        "Kirguistán",
+        "Islandia",
+        "Marruecos",
+        "Cabo Verde",
+        "Mongolia",
+        "Nepal",
+        "Perú",
+        "Nueva Zelanda",
+        "Paquistán",
+        "Tanzania",
+        "Ecuador",
+        "Turquía",
+        "Costa Rica",
+        "Japón",
+        "Madagascar",
+        "Argentina",
+        "Francia-Reunión",
+        "Bolivia"
       ]
     },
     "Cordillera": {
       "type": "enumeration",
       "enum": [
-        "África",
         "Alpes",
-        "Ártico",
+        "Lofoten",
+        "Tian-Shan",
+        "Landmannalaugar",
+        "Atlas",
+        "Altai",
         "Andes",
-        "Cáucaso",
-        "Dolomitas",
-        "Himalaya"
+        "Himalaya",
+        "Montes Raukumura y Alpes del Sur",
+        "Karakorum",
+        "Balcanes",
+        "Macizo del Ararat",
+        "Cordillera Blanca"
       ]
     },
     "Nivel_dificultad": {
       "type": "enumeration",
       "enum": [
         "Fácil",
-        "Media",
-        "Alta",
-        "Técnica"
+        "Medio",
+        "Experto"
       ]
     },
     "Estilo_alojamiento": {
@@ -161,11 +182,10 @@
       "type": "enumeration",
       "enum": [
         "Grupo Abierto",
-        "Grupo Privado",
-        "Familia",
-        "Individual",
+        "Grupo Cerrado",
         "A medida",
-        "En pareja"
+        "Familia",
+        "Autoguiado"
       ]
     },
     "Grupo_minimo": {
@@ -182,7 +202,9 @@
         "Primavera",
         "Otoño",
         "Semana Santa",
-        "Todo el año"
+        "Navidad",
+        "Verano y Primavera",
+        "Invierno y Otoño"
       ]
     },
     "Continente": {
@@ -193,7 +215,9 @@
         "Asia",
         "Europa",
         "Oceanía",
-        "Antártida"
+        "Antártida",
+        "América del Sur",
+        "Centro América"
       ]
     },
     "Servicios_incluidos": {

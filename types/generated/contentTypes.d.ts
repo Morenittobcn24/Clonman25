@@ -747,17 +747,25 @@ export interface ApiViajeViaje extends Struct.CollectionTypeSchema {
         'Europa',
         'Ocean\u00EDa',
         'Ant\u00E1rtida',
+        'Am\u00E9rica del Sur',
+        'Centro Am\u00E9rica',
       ]
     >;
     Cordillera: Schema.Attribute.Enumeration<
       [
-        '\u00C1frica',
         'Alpes',
-        '\u00C1rtico',
+        'Lofoten',
+        'Tian-Shan',
+        'Landmannalaugar',
+        'Atlas',
+        'Altai',
         'Andes',
-        'C\u00E1ucaso',
-        'Dolomitas',
         'Himalaya',
+        'Montes Raukumura y Alpes del Sur',
+        'Karakorum',
+        'Balcanes',
+        'Macizo del Ararat',
+        'Cordillera Blanca',
       ]
     >;
     createdAt: Schema.Attribute.DateTime;
@@ -773,21 +781,12 @@ export interface ApiViajeViaje extends Struct.CollectionTypeSchema {
     Diferente: Schema.Attribute.RichText;
     Duracion_total: Schema.Attribute.Integer;
     Estilo_alojamiento: Schema.Attribute.String;
-    Estilo_de_Viaje: Schema.Attribute.Enumeration<
-      ['Explorer', 'Confort', 'Luxury', 'Cl\u00E1sico', 'Minimal']
-    >;
+    Estilo_de_Viaje: Schema.Attribute.Enumeration<['Confort', 'Luxury', 'Mix']>;
     Etiqueta_Unica: Schema.Attribute.String &
       Schema.Attribute.Required &
       Schema.Attribute.Unique;
     Forma_viajar: Schema.Attribute.Enumeration<
-      [
-        'Grupo Abierto',
-        'Grupo Privado',
-        'Familia',
-        'Individual',
-        'A medida',
-        'En pareja',
-      ]
+      ['Grupo Abierto', 'Grupo Cerrado', 'A medida', 'Familia', 'Autoguiado']
     >;
     Foto_portada: Schema.Attribute.Media<
       'images' | 'files' | 'videos' | 'audios'
@@ -811,12 +810,14 @@ export interface ApiViajeViaje extends Struct.CollectionTypeSchema {
     Mapa: Schema.Attribute.Media<'images' | 'files' | 'videos' | 'audios'>;
     Material_recomendado: Schema.Attribute.RichText;
     Nivel_dificultad: Schema.Attribute.Enumeration<
-      ['F\u00E1cil', 'Media', 'Alta', 'T\u00E9cnica']
+      ['F\u00E1cil', 'Medio', 'Experto']
     >;
     Nombre: Schema.Attribute.String;
     Pais: Schema.Attribute.Enumeration<
       [
         'Espa\u00F1a',
+        'Francia-Suiza-Italia',
+        'Suiza-Italia',
         'Noruega',
         'Albania',
         'Holanda',
@@ -825,6 +826,24 @@ export interface ApiViajeViaje extends Struct.CollectionTypeSchema {
         'Portugal',
         'Italia',
         'M\u00E9xico',
+        'Kirguist\u00E1n',
+        'Islandia',
+        'Marruecos',
+        'Cabo Verde',
+        'Mongolia',
+        'Nepal',
+        'Per\u00FA',
+        'Nueva Zelanda',
+        'Paquist\u00E1n',
+        'Tanzania',
+        'Ecuador',
+        'Turqu\u00EDa',
+        'Costa Rica',
+        'Jap\u00F3n',
+        'Madagascar',
+        'Argentina',
+        'Francia-Reuni\u00F3n',
+        'Bolivia',
       ]
     >;
     Precio_adulto_extra: Schema.Attribute.Decimal;
@@ -846,20 +865,13 @@ export interface ApiViajeViaje extends Struct.CollectionTypeSchema {
         'Primavera',
         'Oto\u00F1o',
         'Semana Santa',
-        'Todo el a\u00F1o',
+        'Navidad',
+        'Verano y Primavera',
+        'Invierno y Oto\u00F1o',
       ]
     >;
     Tipo_de_viaje: Schema.Attribute.Enumeration<
-      [
-        'Trekking',
-        'Alpinismo',
-        'Esqu\u00ED',
-        'Bici',
-        'Yoga',
-        'Aventura',
-        'Monta\u00F1ismo',
-        'Mixto',
-      ]
+      ['Trekking', 'Nature', 'Esqu\u00ED', 'Bici', 'Wellness', 'Aventura']
     >;
     Transfer: Schema.Attribute.Relation<'manyToMany', 'api::transfer.transfer'>;
     Transporte: Schema.Attribute.String;
