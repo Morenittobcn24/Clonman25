@@ -14,7 +14,7 @@
       "name": "Apache 2.0",
       "url": "https://www.apache.org/licenses/LICENSE-2.0.html"
     },
-    "x-generation-date": "2025-08-01T10:54:39.664Z"
+    "x-generation-date": "2025-08-07T08:13:03.058Z"
   },
   "x-strapi-config": {
     "plugins": [
@@ -9207,6 +9207,9 @@
                   "type": "number",
                   "format": "float"
                 },
+                "Diferente": {
+                  "type": "string"
+                },
                 "createdAt": {
                   "type": "string",
                   "format": "date-time"
@@ -12440,6 +12443,9 @@
                 "Precio_nino_extra": {
                   "type": "number",
                   "format": "float"
+                },
+                "Diferente": {
+                  "type": "string"
                 },
                 "createdAt": {
                   "type": "string",
@@ -15786,6 +15792,9 @@
                   "type": "number",
                   "format": "float"
                 },
+                "Diferente": {
+                  "type": "string"
+                },
                 "createdAt": {
                   "type": "string",
                   "format": "date-time"
@@ -17049,6 +17058,21 @@
                   "$ref": "#/components/schemas/ReservasFechaAsignadaComponent"
                 }
               },
+              "Forma_pago": {
+                "type": "string"
+              },
+              "Forma_conexion": {
+                "type": "string"
+              },
+              "Persona_contacto": {
+                "type": "string"
+              },
+              "Telefono_contacto": {
+                "type": "string"
+              },
+              "Correo_contacto": {
+                "type": "string"
+              },
               "locale": {
                 "type": "string"
               },
@@ -17144,6 +17168,21 @@
             "items": {
               "$ref": "#/components/schemas/ReservasFechaAsignadaComponent"
             }
+          },
+          "Forma_pago": {
+            "type": "string"
+          },
+          "Forma_conexion": {
+            "type": "string"
+          },
+          "Persona_contacto": {
+            "type": "string"
+          },
+          "Telefono_contacto": {
+            "type": "string"
+          },
+          "Correo_contacto": {
+            "type": "string"
           },
           "createdAt": {
             "type": "string",
@@ -20033,6 +20072,9 @@
                 "type": "number",
                 "format": "float"
               },
+              "Diferente": {
+                "type": "string"
+              },
               "createdAt": {
                 "type": "string",
                 "format": "date-time"
@@ -22900,6 +22942,9 @@
                 "Precio_nino_extra": {
                   "type": "number",
                   "format": "float"
+                },
+                "Diferente": {
+                  "type": "string"
                 },
                 "createdAt": {
                   "type": "string",
@@ -25859,6 +25904,9 @@
                   "type": "number",
                   "format": "float"
                 },
+                "Diferente": {
+                  "type": "string"
+                },
                 "createdAt": {
                   "type": "string",
                   "format": "date-time"
@@ -26307,6 +26355,9 @@
               "Precio_nino_extra": {
                 "type": "number",
                 "format": "float"
+              },
+              "Diferente": {
+                "type": "string"
               },
               "locale": {
                 "type": "string"
@@ -29677,6 +29728,9 @@
                         "type": "number",
                         "format": "float"
                       },
+                      "Diferente": {
+                        "type": "string"
+                      },
                       "createdAt": {
                         "type": "string",
                         "format": "date-time"
@@ -30014,6 +30068,9 @@
           "Precio_nino_extra": {
             "type": "number",
             "format": "float"
+          },
+          "Diferente": {
+            "type": "string"
           },
           "createdAt": {
             "type": "string",

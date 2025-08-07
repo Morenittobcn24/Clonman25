@@ -558,6 +558,7 @@ export interface ApiProveedorProveedor extends Struct.CollectionTypeSchema {
   attributes: {
     Bloqueos: Schema.Attribute.Boolean;
     Condiciones: Schema.Attribute.RichText;
+    Correo_contacto: Schema.Attribute.String;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -566,6 +567,8 @@ export interface ApiProveedorProveedor extends Struct.CollectionTypeSchema {
       'reservas.fecha-asignada',
       true
     >;
+    Forma_conexion: Schema.Attribute.String;
+    Forma_pago: Schema.Attribute.String;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
@@ -574,9 +577,11 @@ export interface ApiProveedorProveedor extends Struct.CollectionTypeSchema {
       Schema.Attribute.Private;
     Nombre: Schema.Attribute.String;
     Pais: Schema.Attribute.String;
+    Persona_contacto: Schema.Attribute.String;
     publishedAt: Schema.Attribute.DateTime;
     Rating_interno: Schema.Attribute.Integer;
     Telefono: Schema.Attribute.String;
+    Telefono_contacto: Schema.Attribute.String;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -765,6 +770,7 @@ export interface ApiViajeViaje extends Struct.CollectionTypeSchema {
       'manyToMany',
       'api::descuento.descuento'
     >;
+    Diferente: Schema.Attribute.RichText;
     Duracion_total: Schema.Attribute.Integer;
     Estilo_alojamiento: Schema.Attribute.String;
     Estilo_de_Viaje: Schema.Attribute.Enumeration<

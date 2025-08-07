@@ -40,6 +40,21 @@
       "type": "component",
       "component": "reservas.fecha-asignada",
       "repeatable": true
+    },
+    "Forma_pago": {
+      "type": "string"
+    },
+    "Forma_conexion": {
+      "type": "string"
+    },
+    "Persona_contacto": {
+      "type": "string"
+    },
+    "Telefono_contacto": {
+      "type": "string"
+    },
+    "Correo_contacto": {
+      "type": "string"
     }
   }
 }

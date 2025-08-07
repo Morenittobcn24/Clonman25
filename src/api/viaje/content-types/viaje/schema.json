@@ -278,6 +278,9 @@
     },
     "Precio_nino_extra": {
       "type": "decimal"
+    },
+    "Diferente": {
+      "type": "richtext"
     }
   }
 }
