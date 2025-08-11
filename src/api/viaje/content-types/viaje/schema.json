@@ -91,6 +91,7 @@
     "Estilo_de_Viaje": {
       "type": "enumeration",
       "enum": [
+        "Explorer",
         "Confort",
         "Luxury",
         "Mix"

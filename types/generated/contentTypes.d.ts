@@ -781,7 +781,9 @@ export interface ApiViajeViaje extends Struct.CollectionTypeSchema {
     Diferente: Schema.Attribute.RichText;
     Duracion_total: Schema.Attribute.Integer;
     Estilo_alojamiento: Schema.Attribute.String;
-    Estilo_de_Viaje: Schema.Attribute.Enumeration<['Confort', 'Luxury', 'Mix']>;
+    Estilo_de_Viaje: Schema.Attribute.Enumeration<
+      ['Explorer', 'Confort', 'Luxury', 'Mix']
+    >;
     Etiqueta_Unica: Schema.Attribute.String &
       Schema.Attribute.Required &
       Schema.Attribute.Unique;

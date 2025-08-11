@@ -14,7 +14,7 @@
       "name": "Apache 2.0",
       "url": "https://www.apache.org/licenses/LICENSE-2.0.html"
     },
-    "x-generation-date": "2025-08-11T06:55:42.399Z"
+    "x-generation-date": "2025-08-11T07:22:06.226Z"
   },
   "x-strapi-config": {
     "plugins": [
@@ -7674,6 +7674,7 @@
                 "Estilo_de_Viaje": {
                   "type": "string",
                   "enum": [
+                    "Explorer",
                     "Confort",
                     "Luxury",
                     "Mix"
@@ -10809,6 +10810,7 @@
                 "Estilo_de_Viaje": {
                   "type": "string",
                   "enum": [
+                    "Explorer",
                     "Confort",
                     "Luxury",
                     "Mix"
@@ -14055,6 +14057,7 @@
                 "Estilo_de_Viaje": {
                   "type": "string",
                   "enum": [
+                    "Explorer",
                     "Confort",
                     "Luxury",
                     "Mix"
@@ -18311,6 +18314,7 @@
               "Estilo_de_Viaje": {
                 "type": "string",
                 "enum": [
+                  "Explorer",
                   "Confort",
                   "Luxury",
                   "Mix"
@@ -21002,6 +21006,7 @@
                 "Estilo_de_Viaje": {
                   "type": "string",
                   "enum": [
+                    "Explorer",
                     "Confort",
                     "Luxury",
                     "Mix"
@@ -23861,6 +23866,7 @@
                 "Estilo_de_Viaje": {
                   "type": "string",
                   "enum": [
+                    "Explorer",
                     "Confort",
                     "Luxury",
                     "Mix"
@@ -25513,6 +25519,7 @@
               "Estilo_de_Viaje": {
                 "type": "string",
                 "enum": [
+                  "Explorer",
                   "Confort",
                   "Luxury",
                   "Mix"
@@ -26860,6 +26867,7 @@
           "Estilo_de_Viaje": {
             "type": "string",
             "enum": [
+              "Explorer",
               "Confort",
               "Luxury",
               "Mix"
@@ -27723,6 +27731,7 @@
                       "Estilo_de_Viaje": {
                         "type": "string",
                         "enum": [
+                          "Explorer",
                           "Confort",
                           "Luxury",
                           "Mix"
