@@ -64,16 +64,6 @@
         "audios"
       ]
     },
-    "Mapa": {
-      "type": "media",
-      "multiple": false,
-      "allowedTypes": [
-        "images",
-        "files",
-        "videos",
-        "audios"
-      ]
-    },
     "Archivo_PDF": {
       "type": "media",
       "multiple": false,
@@ -83,6 +73,9 @@
         "videos",
         "audios"
       ]
+    },
+    "Mapa": {
+      "type": "richtext"
     },
     "Tipo_de_viaje": {
       "type": "enumeration",

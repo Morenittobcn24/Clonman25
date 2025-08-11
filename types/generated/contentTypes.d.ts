@@ -807,7 +807,7 @@ export interface ApiViajeViaje extends Struct.CollectionTypeSchema {
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<'oneToMany', 'api::viaje.viaje'> &
       Schema.Attribute.Private;
-    Mapa: Schema.Attribute.Media<'images' | 'files' | 'videos' | 'audios'>;
+    Mapa: Schema.Attribute.RichText;
     Material_recomendado: Schema.Attribute.RichText;
     Nivel_dificultad: Schema.Attribute.Enumeration<
       ['F\u00E1cil', 'Medio', 'Experto']
