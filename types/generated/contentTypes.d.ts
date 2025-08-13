@@ -383,21 +383,50 @@ export interface ApiActividadActividad extends Struct.CollectionTypeSchema {
   options: {
     draftAndPublish: true;
   };
+  pluginOptions: {
+    i18n: {
+      localized: true;
+    };
+  };
   attributes: {
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
-    Descripcion: Schema.Attribute.RichText;
-    Duracion: Schema.Attribute.Integer;
-    Imagen: Schema.Attribute.Media<'images' | 'files' | 'videos' | 'audios'>;
-    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    Descripcion: Schema.Attribute.RichText &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
+    Duracion: Schema.Attribute.Integer &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
+    Imagen: Schema.Attribute.Media<'images' | 'files' | 'videos' | 'audios'> &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
+    locale: Schema.Attribute.String;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
       'api::actividad.actividad'
-    > &
-      Schema.Attribute.Private;
-    Nombre: Schema.Attribute.String;
-    Precio: Schema.Attribute.Decimal;
+    >;
+    Nombre: Schema.Attribute.String &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
+    Precio: Schema.Attribute.Decimal &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
     publishedAt: Schema.Attribute.DateTime;
     reservas: Schema.Attribute.Relation<'manyToMany', 'api::reserva.reserva'>;
     updatedAt: Schema.Attribute.DateTime;
@@ -417,25 +446,59 @@ export interface ApiAlojamientoAlojamiento extends Struct.CollectionTypeSchema {
   options: {
     draftAndPublish: true;
   };
+  pluginOptions: {
+    i18n: {
+      localized: true;
+    };
+  };
   attributes: {
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
-    Descripcion: Schema.Attribute.RichText;
-    Extra_hab_individual: Schema.Attribute.Decimal;
-    Extra_noche: Schema.Attribute.Decimal;
+    Descripcion: Schema.Attribute.RichText &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
+    Extra_hab_individual: Schema.Attribute.Decimal &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
+    Extra_noche: Schema.Attribute.Decimal &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
     Imagen: Schema.Attribute.Media<
       'images' | 'files' | 'videos' | 'audios',
       true
-    >;
-    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    > &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
+    locale: Schema.Attribute.String;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
       'api::alojamiento.alojamiento'
-    > &
-      Schema.Attribute.Private;
-    Nombre: Schema.Attribute.String;
-    Precio: Schema.Attribute.Decimal;
+    >;
+    Nombre: Schema.Attribute.String &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
+    Precio: Schema.Attribute.Decimal &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
     publishedAt: Schema.Attribute.DateTime;
     reserva: Schema.Attribute.Relation<'oneToOne', 'api::reserva.reserva'>;
     updatedAt: Schema.Attribute.DateTime;
@@ -492,18 +555,32 @@ export interface ApiDescuentoDescuento extends Struct.CollectionTypeSchema {
   options: {
     draftAndPublish: true;
   };
+  pluginOptions: {
+    i18n: {
+      localized: true;
+    };
+  };
   attributes: {
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
-    Descuento_por_personas: Schema.Attribute.Decimal;
-    Descuento_reserva_anticipada: Schema.Attribute.Decimal;
-    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    Descuento_por_personas: Schema.Attribute.Decimal &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
+    Descuento_reserva_anticipada: Schema.Attribute.Decimal &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
+    locale: Schema.Attribute.String;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
       'api::descuento.descuento'
-    > &
-      Schema.Attribute.Private;
+    >;
     publishedAt: Schema.Attribute.DateTime;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
@@ -555,37 +632,111 @@ export interface ApiProveedorProveedor extends Struct.CollectionTypeSchema {
   options: {
     draftAndPublish: true;
   };
+  pluginOptions: {
+    i18n: {
+      localized: true;
+    };
+  };
   attributes: {
-    Bloqueos: Schema.Attribute.Boolean;
-    Condiciones: Schema.Attribute.RichText;
-    Correo_contacto: Schema.Attribute.String;
+    Bloqueos: Schema.Attribute.Boolean &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
+    Condiciones: Schema.Attribute.RichText &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
+    Correo_contacto: Schema.Attribute.String &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
-    Email: Schema.Attribute.Email;
+    Email: Schema.Attribute.Email &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
     Fechas_asignadas: Schema.Attribute.Component<
       'reservas.fecha-asignada',
       true
-    >;
-    Forma_conexion: Schema.Attribute.String;
-    Forma_pago: Schema.Attribute.String;
-    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    > &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
+    Forma_conexion: Schema.Attribute.String &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
+    Forma_pago: Schema.Attribute.String &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
+    locale: Schema.Attribute.String;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
       'api::proveedor.proveedor'
-    > &
-      Schema.Attribute.Private;
-    Nombre: Schema.Attribute.String;
-    Pais: Schema.Attribute.String;
-    Persona_contacto: Schema.Attribute.String;
+    >;
+    Nombre: Schema.Attribute.String &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
+    Pais: Schema.Attribute.String &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
+    Persona_contacto: Schema.Attribute.String &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
     publishedAt: Schema.Attribute.DateTime;
-    Rating_interno: Schema.Attribute.Integer;
-    Telefono: Schema.Attribute.String;
-    Telefono_contacto: Schema.Attribute.String;
+    Rating_interno: Schema.Attribute.Integer &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
+    Telefono: Schema.Attribute.String &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
+    Telefono_contacto: Schema.Attribute.String &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
-    Web: Schema.Attribute.String;
+    Web: Schema.Attribute.String &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
   };
 }
 
@@ -657,20 +808,41 @@ export interface ApiSeguroSeguro extends Struct.CollectionTypeSchema {
   options: {
     draftAndPublish: true;
   };
+  pluginOptions: {
+    i18n: {
+      localized: true;
+    };
+  };
   attributes: {
-    Cobertura: Schema.Attribute.RichText;
+    Cobertura: Schema.Attribute.RichText &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
-    Descripcion: Schema.Attribute.RichText;
-    locale: Schema.Attribute.String & Schema.Attribute.Private;
-    localizations: Schema.Attribute.Relation<
-      'oneToMany',
-      'api::seguro.seguro'
-    > &
-      Schema.Attribute.Private;
-    Nombre: Schema.Attribute.String;
-    Precio: Schema.Attribute.Decimal;
+    Descripcion: Schema.Attribute.RichText &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
+    locale: Schema.Attribute.String;
+    localizations: Schema.Attribute.Relation<'oneToMany', 'api::seguro.seguro'>;
+    Nombre: Schema.Attribute.String &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
+    Precio: Schema.Attribute.Decimal &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
     publishedAt: Schema.Attribute.DateTime;
     reservas: Schema.Attribute.Relation<'manyToMany', 'api::reserva.reserva'>;
     updatedAt: Schema.Attribute.DateTime;
@@ -690,22 +862,51 @@ export interface ApiTransferTransfer extends Struct.CollectionTypeSchema {
   options: {
     draftAndPublish: true;
   };
+  pluginOptions: {
+    i18n: {
+      localized: true;
+    };
+  };
   attributes: {
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
-    Descripcion: Schema.Attribute.RichText;
-    Imagen: Schema.Attribute.Media<'images' | 'files' | 'videos' | 'audios'>;
-    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    Descripcion: Schema.Attribute.RichText &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
+    Imagen: Schema.Attribute.Media<'images' | 'files' | 'videos' | 'audios'> &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
+    locale: Schema.Attribute.String;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
       'api::transfer.transfer'
-    > &
-      Schema.Attribute.Private;
-    Nombre: Schema.Attribute.String;
-    Precio: Schema.Attribute.Decimal;
+    >;
+    Nombre: Schema.Attribute.String &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
+    Precio: Schema.Attribute.Decimal &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
     publishedAt: Schema.Attribute.DateTime;
-    Tipo: Schema.Attribute.String;
+    Tipo: Schema.Attribute.String &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -724,6 +925,11 @@ export interface ApiViajeViaje extends Struct.CollectionTypeSchema {
   options: {
     draftAndPublish: true;
   };
+  pluginOptions: {
+    i18n: {
+      localized: true;
+    };
+  };
   attributes: {
     Actividades: Schema.Attribute.Relation<
       'manyToMany',
@@ -735,10 +941,20 @@ export interface ApiViajeViaje extends Struct.CollectionTypeSchema {
     >;
     Archivo_PDF: Schema.Attribute.Media<
       'images' | 'files' | 'videos' | 'audios'
-    >;
+    > &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
     Categoria_Unica: Schema.Attribute.String &
       Schema.Attribute.Required &
-      Schema.Attribute.Unique;
+      Schema.Attribute.Unique &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
     Continente: Schema.Attribute.Enumeration<
       [
         '\u00C1frica',
@@ -750,7 +966,12 @@ export interface ApiViajeViaje extends Struct.CollectionTypeSchema {
         'Am\u00E9rica del Sur',
         'Centro Am\u00E9rica',
       ]
-    >;
+    > &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
     Cordillera: Schema.Attribute.Enumeration<
       [
         'Alpes',
@@ -767,99 +988,438 @@ export interface ApiViajeViaje extends Struct.CollectionTypeSchema {
         'Macizo del Ararat',
         'Cordillera Blanca',
       ]
-    >;
+    > &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
-    Descripcion: Schema.Attribute.RichText;
-    Descripcion_corta: Schema.Attribute.String;
-    Descripcion_larga: Schema.Attribute.RichText;
+    Descripcion: Schema.Attribute.RichText &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
+    Descripcion_corta: Schema.Attribute.String &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
+    Descripcion_larga: Schema.Attribute.RichText &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
     Descuento: Schema.Attribute.Relation<
       'manyToMany',
       'api::descuento.descuento'
     >;
-    Diferente: Schema.Attribute.RichText;
-    Duracion_total: Schema.Attribute.Integer;
-    Estilo_alojamiento: Schema.Attribute.String;
+    Diferente: Schema.Attribute.RichText &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
+    Duracion_total: Schema.Attribute.Integer &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
+    Estilo_alojamiento: Schema.Attribute.String &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
     Estilo_de_Viaje: Schema.Attribute.Enumeration<
       ['Explorer', 'Confort', 'Luxury', 'Mix']
-    >;
+    > &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
     Etiqueta_Unica: Schema.Attribute.String &
       Schema.Attribute.Required &
-      Schema.Attribute.Unique;
+      Schema.Attribute.Unique &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
     Forma_viajar: Schema.Attribute.Enumeration<
       ['Grupo Abierto', 'Grupo Cerrado', 'A medida', 'Familia', 'Autoguiado']
-    >;
+    > &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
     Foto_portada: Schema.Attribute.Media<
       'images' | 'files' | 'videos' | 'audios'
-    >;
+    > &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
     Galeria: Schema.Attribute.Media<
       'images' | 'files' | 'videos' | 'audios',
       true
-    >;
-    Grupo_maximo: Schema.Attribute.Integer;
-    Grupo_minimo: Schema.Attribute.Integer;
-    Guia: Schema.Attribute.String;
-    Icono: Schema.Attribute.Media<'images' | 'files' | 'videos' | 'audios'>;
+    > &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
+    Grupo_maximo: Schema.Attribute.Integer &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
+    Grupo_minimo: Schema.Attribute.Integer &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
+    Guia: Schema.Attribute.String &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
+    Icono: Schema.Attribute.Media<'images' | 'files' | 'videos' | 'audios'> &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
     Icono_Destacado: Schema.Attribute.Media<
       'images' | 'files' | 'videos' | 'audios'
-    >;
-    Info_adicional: Schema.Attribute.String;
-    Itinerario: Schema.Attribute.Component<'viajes.itinerario', true>;
-    locale: Schema.Attribute.String & Schema.Attribute.Private;
-    localizations: Schema.Attribute.Relation<'oneToMany', 'api::viaje.viaje'> &
-      Schema.Attribute.Private;
-    Mapa: Schema.Attribute.RichText;
-    Material_recomendado: Schema.Attribute.RichText;
+    > &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
+    Info_adicional: Schema.Attribute.RichText &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
+    Itinerario: Schema.Attribute.Component<'viajes.itinerario', true> &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
+    locale: Schema.Attribute.String;
+    localizations: Schema.Attribute.Relation<'oneToMany', 'api::viaje.viaje'>;
+    Mapa: Schema.Attribute.RichText &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
+    Material_recomendado: Schema.Attribute.RichText &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
     Nivel_dificultad: Schema.Attribute.Enumeration<
       ['F\u00E1cil', 'Medio', 'Experto']
-    >;
-    Nombre: Schema.Attribute.String;
+    > &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
+    Nombre: Schema.Attribute.String &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
     Pais: Schema.Attribute.Enumeration<
       [
-        'Espa\u00F1a',
         'Francia-Suiza-Italia',
         'Suiza-Italia',
-        'Noruega',
-        'Albania',
-        'Holanda',
-        'Venezuela',
-        'Colombia',
-        'Portugal',
-        'Italia',
-        'M\u00E9xico',
-        'Kirguist\u00E1n',
-        'Islandia',
-        'Marruecos',
-        'Cabo Verde',
-        'Mongolia',
-        'Nepal',
-        'Per\u00FA',
-        'Nueva Zelanda',
-        'Paquist\u00E1n',
-        'Tanzania',
-        'Ecuador',
-        'Turqu\u00EDa',
-        'Costa Rica',
-        'Jap\u00F3n',
-        'Madagascar',
-        'Argentina',
         'Francia-Reuni\u00F3n',
+        'Francia-Suiza',
+        'Afganist\u00E1n',
+        'Albania',
+        'Alemania',
+        'Andorra',
+        'Angola',
+        'Antigua y Barbuda',
+        'Arabia Saudita',
+        'Argelia',
+        'Argentina',
+        'Armenia',
+        'Australia',
+        'Austria',
+        'Azerbaiy\u00E1n',
+        'Bahamas',
+        'Banglad\u00E9s',
+        'Barbados',
+        'Bar\u00E9in',
+        'B\u00E9lgica',
+        'Belice',
+        'Ben\u00EDn',
+        'Bielorrusia',
+        'Birmania (Myanmar)',
         'Bolivia',
+        'Bosnia y Herzegovina',
+        'Botsuana',
+        'Brasil',
+        'Brun\u00E9i',
+        'Bulgaria',
+        'Burkina Faso',
+        'Burundi',
+        'But\u00E1n',
+        'Cabo Verde',
+        'Camboya',
+        'Camer\u00FAn',
+        'Canad\u00E1',
+        'Catar',
+        'Chad',
+        'Chile',
+        'China',
+        'Chipre',
+        'Colombia',
+        'Comoras',
+        'Corea del Norte',
+        'Corea del Sur',
+        'Costa de Marfil',
+        'Costa Rica',
+        'Croacia',
+        'Cuba',
+        'Dinamarca',
+        'Dominica',
+        'Ecuador',
+        'Egipto',
+        'El Salvador',
+        'Emiratos \u00C1rabes Unidos',
+        'Eritrea',
+        'Eslovaquia',
+        'Eslovenia',
+        'Espa\u00F1a',
+        'Estados Unidos',
+        'Estonia',
+        'Etiop\u00EDa',
+        'Fiyi',
+        'Filipinas',
+        'Finlandia',
+        'Francia',
+        'Gab\u00F3n',
+        'Gambia',
+        'Georgia',
+        'Ghana',
+        'Granada',
+        'Grecia',
+        'Guatemala',
+        'Guinea',
+        'Guinea-Bis\u00E1u',
+        'Guinea Ecuatorial',
+        'Guyana',
+        'Hait\u00ED',
+        'Honduras',
+        'Hungr\u00EDa',
+        'India',
+        'Indonesia',
+        'Irak',
+        'Ir\u00E1n',
+        'Irlanda',
+        'Islandia',
+        'Islas Marshall',
+        'Islas Salom\u00F3n',
+        'Israel',
+        'Italia',
+        'Jamaica',
+        'Jap\u00F3n',
+        'Jordania',
+        'Kazajist\u00E1n',
+        'Kenia',
+        'Kirguist\u00E1n',
+        'Kiribati',
+        'Kuwait',
+        'Laos',
+        'Lesoto',
+        'Letonia',
+        'L\u00EDbano',
+        'Liberia',
+        'Libia',
+        'Liechtenstein',
+        'Lituania',
+        'Luxemburgo',
+        'Macedonia del Norte',
+        'Madagascar',
+        'Malasia',
+        'Malaui',
+        'Maldivas',
+        'Mal\u00ED',
+        'Malta',
+        'Marruecos',
+        'Mauricio',
+        'Mauritania',
+        'M\u00E9xico',
+        'Micronesia',
+        'Moldavia',
+        'M\u00F3naco',
+        'Mongolia',
+        'Montenegro',
+        'Mozambique',
+        'Namibia',
+        'Nauru',
+        'Nepal',
+        'Nicaragua',
+        'N\u00EDger',
+        'Nigeria',
+        'Noruega',
+        'Nueva Zelanda',
+        'Om\u00E1n',
+        'Pa\u00EDses Bajos',
+        'Pakist\u00E1n',
+        'Palaos',
+        'Panam\u00E1',
+        'Pap\u00FAa Nueva Guinea',
+        'Paraguay',
+        'Per\u00FA',
+        'Polonia',
+        'Portugal',
+        'Reino Unido',
+        'Rep\u00FAblica Centroafricana',
+        'Rep\u00FAblica Checa',
+        'Rep\u00FAblica del Congo',
+        'Rep\u00FAblica Democr\u00E1tica del Congo',
+        'Rep\u00FAblica Dominicana',
+        'Ruanda',
+        'Ruman\u00EDa',
+        'Rusia',
+        'Samoa',
+        'San Crist\u00F3bal y Nieves',
+        'San Marino',
+        'San Vicente y las Granadinas',
+        'Santa Luc\u00EDa',
+        'Santo Tom\u00E9 y Pr\u00EDncipe',
+        'Senegal',
+        'Serbia',
+        'Seychelles',
+        'Sierra Leona',
+        'Singapur',
+        'Siria',
+        'Somalia',
+        'Sri Lanka',
+        'Suazilandia (Eswatini)',
+        'Sud\u00E1frica',
+        'Sud\u00E1n',
+        'Sud\u00E1n del Sur',
+        'Suecia',
+        'Suiza',
+        'Surinam',
+        'Tailandia',
+        'Tanzania',
+        'Tayikist\u00E1n',
+        'Timor Oriental',
+        'Togo',
+        'Tonga',
+        'Trinidad y Tobago',
+        'T\u00FAnez',
+        'Turkmenist\u00E1n',
+        'Turqu\u00EDa',
+        'Tuvalu',
+        'Ucrania',
+        'Uganda',
+        'Uruguay',
+        'Uzbekist\u00E1n',
+        'Vanuatu',
+        'Vaticano',
+        'Venezuela',
+        'Vietnam',
+        'Yemen',
+        'Yibuti',
+        'Zambia',
+        'Zimbabue',
       ]
-    >;
-    Precio_adulto_extra: Schema.Attribute.Decimal;
-    Precio_base: Schema.Attribute.BigInteger;
-    Precio_nino_extra: Schema.Attribute.Decimal;
-    Preguntas: Schema.Attribute.Component<'viajes.preguntas', true>;
+    > &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
+    Precio_adulto_extra: Schema.Attribute.Decimal &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
+    Precio_base: Schema.Attribute.BigInteger &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
+    Precio_nino_extra: Schema.Attribute.Decimal &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
+    Preguntas: Schema.Attribute.Component<'viajes.preguntas', true> &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
     publishedAt: Schema.Attribute.DateTime;
-    Regimen_alojamiento: Schema.Attribute.String;
-    Salidas: Schema.Attribute.Component<'viajes.salida', true>;
+    Regimen_alojamiento: Schema.Attribute.String &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
+    Salidas: Schema.Attribute.Component<'viajes.salida', true> &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
     Seguros: Schema.Attribute.Relation<'manyToMany', 'api::seguro.seguro'>;
-    Servicios_incluidos: Schema.Attribute.RichText;
-    Servicios_no_incluidos: Schema.Attribute.RichText;
+    Servicios_incluidos: Schema.Attribute.RichText &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
+    Servicios_no_incluidos: Schema.Attribute.RichText &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
+    Slogan: Schema.Attribute.String &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
     Slug: Schema.Attribute.UID<'Nombre'>;
-    Staff: Schema.Attribute.RichText;
+    Staff: Schema.Attribute.RichText &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
     Temporada: Schema.Attribute.Enumeration<
       [
         'Invierno',
@@ -871,12 +1431,35 @@ export interface ApiViajeViaje extends Struct.CollectionTypeSchema {
         'Verano y Primavera',
         'Invierno y Oto\u00F1o',
       ]
-    >;
+    > &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
     Tipo_de_viaje: Schema.Attribute.Enumeration<
-      ['Trekking', 'Nature', 'Esqu\u00ED', 'Bici', 'Wellness', 'Aventura']
-    >;
+      [
+        'Trekking',
+        'Nature',
+        'Esqu\u00ED',
+        'Bici',
+        'Wellness',
+        'Aventura',
+        'Alpinismo',
+      ]
+    > &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
     Transfer: Schema.Attribute.Relation<'manyToMany', 'api::transfer.transfer'>;
-    Transporte: Schema.Attribute.String;
+    Transporte: Schema.Attribute.String &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
