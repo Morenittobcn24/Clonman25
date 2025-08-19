@@ -28,38 +28,6 @@
       "type": "uid",
       "targetField": "Nombre"
     },
-    "Descripcion": {
-      "type": "richtext",
-      "pluginOptions": {
-        "i18n": {
-          "localized": true
-        }
-      }
-    },
-    "Precio_base": {
-      "type": "biginteger",
-      "pluginOptions": {
-        "i18n": {
-          "localized": true
-        }
-      }
-    },
-    "Descripcion_corta": {
-      "type": "string",
-      "pluginOptions": {
-        "i18n": {
-          "localized": true
-        }
-      }
-    },
-    "Descripcion_larga": {
-      "type": "richtext",
-      "pluginOptions": {
-        "i18n": {
-          "localized": true
-        }
-      }
-    },
     "Foto_portada": {
       "type": "media",
       "pluginOptions": {
@@ -75,52 +43,57 @@
         "audios"
       ]
     },
-    "Icono": {
-      "type": "media",
+    "Slogan": {
+      "type": "string",
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      }
+    },
+    "Icono_viaje": {
+      "type": "enumeration",
       "pluginOptions": {
         "i18n": {
           "localized": true
         }
       },
-      "multiple": false,
-      "allowedTypes": [
-        "images",
-        "files",
-        "videos",
-        "audios"
+      "enum": [
+        "Top Ventas",
+        "Viaje del Mes",
+        "Destino Nuevo",
+        "Oferta Flash",
+        "Promo dto.",
+        "Nada"
       ]
     },
-    "Galeria": {
-      "type": "media",
+    "Descripcion_corta": {
+      "type": "richtext",
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      }
+    },
+    "Descripcion_larga": {
+      "type": "richtext",
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      }
+    },
+    "Salidas": {
+      "type": "component",
       "pluginOptions": {
         "i18n": {
           "localized": true
         }
       },
-      "multiple": true,
-      "allowedTypes": [
-        "images",
-        "files",
-        "videos",
-        "audios"
-      ]
+      "component": "viajes.salida",
+      "repeatable": true
     },
-    "Archivo_PDF": {
-      "type": "media",
-      "pluginOptions": {
-        "i18n": {
-          "localized": true
-        }
-      },
-      "multiple": false,
-      "allowedTypes": [
-        "images",
-        "files",
-        "videos",
-        "audios"
-      ]
-    },
-    "Mapa": {
+    "Fechas_explicacion": {
       "type": "richtext",
       "pluginOptions": {
         "i18n": {
@@ -143,20 +116,6 @@
         "Wellness",
         "Aventura",
         "Alpinismo"
-      ]
-    },
-    "Estilo_de_Viaje": {
-      "type": "enumeration",
-      "pluginOptions": {
-        "i18n": {
-          "localized": true
-        }
-      },
-      "enum": [
-        "Explorer",
-        "Confort",
-        "Luxury",
-        "Mix"
       ]
     },
     "Pais": {
@@ -403,6 +362,14 @@
         "Experto"
       ]
     },
+    "Nivel_explicacion": {
+      "type": "string",
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      }
+    },
     "Estilo_alojamiento": {
       "type": "string",
       "pluginOptions": {
@@ -412,6 +379,14 @@
       }
     },
     "Regimen_alojamiento": {
+      "type": "string",
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      }
+    },
+    "Regimen_explicacion": {
       "type": "string",
       "pluginOptions": {
         "i18n": {
@@ -443,6 +418,14 @@
         }
       }
     },
+    "Transporte_explicacion": {
+      "type": "string",
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      }
+    },
     "Forma_viajar": {
       "type": "enumeration",
       "pluginOptions": {
@@ -451,10 +434,8 @@
         }
       },
       "enum": [
-        "Grupo Abierto",
-        "Grupo Cerrado",
+        "En Grupo",
         "A medida",
-        "Familia",
         "Autoguiado"
       ]
     },
@@ -474,7 +455,57 @@
         }
       }
     },
-    "Temporada": {
+    "Mapa": {
+      "type": "richtext",
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      }
+    },
+    "Itinerario": {
+      "type": "component",
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      },
+      "component": "viajes.itinerario",
+      "repeatable": true
+    },
+    "Precio_base": {
+      "type": "biginteger",
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      }
+    },
+    "Servicios_incluidos": {
+      "type": "richtext",
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      }
+    },
+    "Servicios_no_incluidos": {
+      "type": "richtext",
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      }
+    },
+    "Actividades_opcionales": {
+      "type": "richtext",
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      }
+    },
+    "Transfer_seleccionable": {
       "type": "enumeration",
       "pluginOptions": {
         "i18n": {
@@ -482,15 +513,112 @@
         }
       },
       "enum": [
-        "Invierno",
-        "Verano",
-        "Primavera",
-        "Otoño",
-        "Semana Santa",
-        "Navidad",
-        "Verano y Primavera",
-        "Invierno y Otoño"
+        "Bus",
+        "Tren",
+        "Furgoneta o Taxi Privado"
       ]
+    },
+    "Alojamiento_comidas": {
+      "type": "richtext",
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      }
+    },
+    "Staff": {
+      "type": "richtext",
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      }
+    },
+    "Material_recomendado": {
+      "type": "richtext",
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      }
+    },
+    "Info_adicional": {
+      "type": "richtext",
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      }
+    },
+    "Diferente": {
+      "type": "richtext",
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      }
+    },
+    "Galeria": {
+      "type": "media",
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      },
+      "multiple": true,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ]
+    },
+    "Imagen_google": {
+      "type": "media",
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      },
+      "multiple": false,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ]
+    },
+    "Preguntas": {
+      "type": "component",
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      },
+      "component": "viajes.preguntas",
+      "repeatable": true
+    },
+    "Estilo_viaje": {
+      "type": "enumeration",
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      },
+      "enum": [
+        "Explorer",
+        "Confort",
+        "Luxury",
+        "Mix"
+      ]
+    },
+    "Estilo_viaje_explicacion": {
+      "type": "string",
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      }
     },
     "Continente": {
       "type": "enumeration",
@@ -510,47 +638,23 @@
         "Centro América"
       ]
     },
-    "Servicios_incluidos": {
-      "type": "richtext",
-      "pluginOptions": {
-        "i18n": {
-          "localized": true
-        }
-      }
-    },
-    "Servicios_no_incluidos": {
-      "type": "richtext",
-      "pluginOptions": {
-        "i18n": {
-          "localized": true
-        }
-      }
-    },
-    "Material_recomendado": {
-      "type": "richtext",
-      "pluginOptions": {
-        "i18n": {
-          "localized": true
-        }
-      }
-    },
-    "Staff": {
-      "type": "richtext",
-      "pluginOptions": {
-        "i18n": {
-          "localized": true
-        }
-      }
-    },
-    "Itinerario": {
-      "type": "component",
+    "Temporada": {
+      "type": "enumeration",
       "pluginOptions": {
         "i18n": {
           "localized": true
         }
       },
-      "component": "viajes.itinerario",
-      "repeatable": true
+      "enum": [
+        "Invierno",
+        "Verano",
+        "Primavera",
+        "Otoño",
+        "Semana Santa",
+        "Navidad",
+        "Verano y Primavera",
+        "Invierno y Otoño"
+      ]
     },
     "Alojamiento": {
       "type": "relation",
@@ -576,31 +680,42 @@
       "target": "api::descuento.descuento",
       "mappedBy": "viajes"
     },
-    "Salidas": {
-      "type": "component",
-      "pluginOptions": {
-        "i18n": {
-          "localized": true
-        }
-      },
-      "component": "viajes.salida",
-      "repeatable": true
-    },
     "Actividades": {
       "type": "relation",
       "relation": "manyToMany",
       "target": "api::actividad.actividad",
       "mappedBy": "viajes"
     },
-    "Preguntas": {
-      "type": "component",
+    "Precio_adulto_extra": {
+      "type": "decimal",
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      }
+    },
+    "Precio_nino_extra": {
+      "type": "decimal",
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      }
+    },
+    "PDF": {
+      "type": "media",
       "pluginOptions": {
         "i18n": {
           "localized": true
         }
       },
-      "component": "viajes.preguntas",
-      "repeatable": true
+      "multiple": false,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ]
     },
     "Etiqueta_Unica": {
       "type": "string",
@@ -621,61 +736,6 @@
       },
       "required": true,
       "unique": true
-    },
-    "Icono_Destacado": {
-      "type": "media",
-      "pluginOptions": {
-        "i18n": {
-          "localized": true
-        }
-      },
-      "multiple": false,
-      "allowedTypes": [
-        "images",
-        "files",
-        "videos",
-        "audios"
-      ]
-    },
-    "Diferente": {
-      "type": "richtext",
-      "pluginOptions": {
-        "i18n": {
-          "localized": true
-        }
-      }
-    },
-    "Precio_adulto_extra": {
-      "type": "decimal",
-      "pluginOptions": {
-        "i18n": {
-          "localized": true
-        }
-      }
-    },
-    "Precio_nino_extra": {
-      "type": "decimal",
-      "pluginOptions": {
-        "i18n": {
-          "localized": true
-        }
-      }
-    },
-    "Info_adicional": {
-      "type": "richtext",
-      "pluginOptions": {
-        "i18n": {
-          "localized": true
-        }
-      }
-    },
-    "Slogan": {
-      "type": "string",
-      "pluginOptions": {
-        "i18n": {
-          "localized": true
-        }
-      }
     }
   }
 }

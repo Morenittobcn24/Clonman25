@@ -935,13 +935,17 @@ export interface ApiViajeViaje extends Struct.CollectionTypeSchema {
       'manyToMany',
       'api::actividad.actividad'
     >;
+    Actividades_opcionales: Schema.Attribute.RichText &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
     Alojamiento: Schema.Attribute.Relation<
       'manyToMany',
       'api::alojamiento.alojamiento'
     >;
-    Archivo_PDF: Schema.Attribute.Media<
-      'images' | 'files' | 'videos' | 'audios'
-    > &
+    Alojamiento_comidas: Schema.Attribute.RichText &
       Schema.Attribute.SetPluginOptions<{
         i18n: {
           localized: true;
@@ -997,13 +1001,7 @@ export interface ApiViajeViaje extends Struct.CollectionTypeSchema {
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
-    Descripcion: Schema.Attribute.RichText &
-      Schema.Attribute.SetPluginOptions<{
-        i18n: {
-          localized: true;
-        };
-      }>;
-    Descripcion_corta: Schema.Attribute.String &
+    Descripcion_corta: Schema.Attribute.RichText &
       Schema.Attribute.SetPluginOptions<{
         i18n: {
           localized: true;
@@ -1037,9 +1035,15 @@ export interface ApiViajeViaje extends Struct.CollectionTypeSchema {
           localized: true;
         };
       }>;
-    Estilo_de_Viaje: Schema.Attribute.Enumeration<
+    Estilo_viaje: Schema.Attribute.Enumeration<
       ['Explorer', 'Confort', 'Luxury', 'Mix']
     > &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
+    Estilo_viaje_explicacion: Schema.Attribute.String &
       Schema.Attribute.SetPluginOptions<{
         i18n: {
           localized: true;
@@ -1053,8 +1057,14 @@ export interface ApiViajeViaje extends Struct.CollectionTypeSchema {
           localized: true;
         };
       }>;
+    Fechas_explicacion: Schema.Attribute.RichText &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
     Forma_viajar: Schema.Attribute.Enumeration<
-      ['Grupo Abierto', 'Grupo Cerrado', 'A medida', 'Familia', 'Autoguiado']
+      ['En Grupo', 'A medida', 'Autoguiado']
     > &
       Schema.Attribute.SetPluginOptions<{
         i18n: {
@@ -1096,13 +1106,22 @@ export interface ApiViajeViaje extends Struct.CollectionTypeSchema {
           localized: true;
         };
       }>;
-    Icono: Schema.Attribute.Media<'images' | 'files' | 'videos' | 'audios'> &
+    Icono_viaje: Schema.Attribute.Enumeration<
+      [
+        'Top Ventas',
+        'Viaje del Mes',
+        'Destino Nuevo',
+        'Oferta Flash',
+        'Promo dto.',
+        'Nada',
+      ]
+    > &
       Schema.Attribute.SetPluginOptions<{
         i18n: {
           localized: true;
         };
       }>;
-    Icono_Destacado: Schema.Attribute.Media<
+    Imagen_google: Schema.Attribute.Media<
       'images' | 'files' | 'videos' | 'audios'
     > &
       Schema.Attribute.SetPluginOptions<{
@@ -1139,6 +1158,12 @@ export interface ApiViajeViaje extends Struct.CollectionTypeSchema {
     Nivel_dificultad: Schema.Attribute.Enumeration<
       ['F\u00E1cil', 'Medio', 'Experto']
     > &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
+    Nivel_explicacion: Schema.Attribute.String &
       Schema.Attribute.SetPluginOptions<{
         i18n: {
           localized: true;
@@ -1357,6 +1382,12 @@ export interface ApiViajeViaje extends Struct.CollectionTypeSchema {
           localized: true;
         };
       }>;
+    PDF: Schema.Attribute.Media<'images' | 'files' | 'videos' | 'audios'> &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
     Precio_adulto_extra: Schema.Attribute.Decimal &
       Schema.Attribute.SetPluginOptions<{
         i18n: {
@@ -1383,6 +1414,12 @@ export interface ApiViajeViaje extends Struct.CollectionTypeSchema {
       }>;
     publishedAt: Schema.Attribute.DateTime;
     Regimen_alojamiento: Schema.Attribute.String &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
+    Regimen_explicacion: Schema.Attribute.String &
       Schema.Attribute.SetPluginOptions<{
         i18n: {
           localized: true;
@@ -1454,7 +1491,21 @@ export interface ApiViajeViaje extends Struct.CollectionTypeSchema {
         };
       }>;
     Transfer: Schema.Attribute.Relation<'manyToMany', 'api::transfer.transfer'>;
+    Transfer_seleccionable: Schema.Attribute.Enumeration<
+      ['Bus', 'Tren', 'Furgoneta o Taxi Privado']
+    > &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
     Transporte: Schema.Attribute.String &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
+    Transporte_explicacion: Schema.Attribute.String &
       Schema.Attribute.SetPluginOptions<{
         i18n: {
           localized: true;
