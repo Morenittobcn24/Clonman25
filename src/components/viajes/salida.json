@@ -29,7 +29,10 @@
         "Confirmado",
         "Últimas plazas",
         "Completo",
-        "Cancelado"
+        "Cancelado",
+        "¡Corre pocas plazas disponibles!",
+        "Cerrado",
+        "Privado"
       ]
     },
     "Proveedores_asignados": {
