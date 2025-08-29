@@ -644,7 +644,19 @@ export interface ApiProveedorProveedor extends Struct.CollectionTypeSchema {
           localized: true;
         };
       }>;
+    Categoria: Schema.Attribute.String &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
     Condiciones: Schema.Attribute.RichText &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
+    Continente: Schema.Attribute.String &
       Schema.Attribute.SetPluginOptions<{
         i18n: {
           localized: true;
@@ -659,6 +671,12 @@ export interface ApiProveedorProveedor extends Struct.CollectionTypeSchema {
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
+    Descripcion: Schema.Attribute.RichText &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
     Email: Schema.Attribute.Email &
       Schema.Attribute.SetPluginOptions<{
         i18n: {
@@ -723,6 +741,22 @@ export interface ApiProveedorProveedor extends Struct.CollectionTypeSchema {
         };
       }>;
     Telefono_contacto: Schema.Attribute.String &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
+    Tipo_proveedor: Schema.Attribute.Enumeration<
+      [
+        'Alojamiento',
+        'Transporte',
+        'Gu\u00EDa',
+        'Restaurante',
+        'Bici',
+        'Material',
+        'Receptivo',
+      ]
+    > &
       Schema.Attribute.SetPluginOptions<{
         i18n: {
           localized: true;

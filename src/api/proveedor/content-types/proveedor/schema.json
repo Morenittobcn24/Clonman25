@@ -129,6 +129,47 @@
           "localized": true
         }
       }
+    },
+    "Tipo_proveedor": {
+      "type": "enumeration",
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      },
+      "enum": [
+        "Alojamiento",
+        "Transporte",
+        "Guía",
+        "Restaurante",
+        "Bici",
+        "Material",
+        "Receptivo"
+      ]
+    },
+    "Continente": {
+      "type": "string",
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      }
+    },
+    "Categoria": {
+      "type": "string",
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      }
+    },
+    "Descripcion": {
+      "type": "richtext",
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      }
     }
   }
 }
