@@ -14,7 +14,7 @@
       "name": "Apache 2.0",
       "url": "https://www.apache.org/licenses/LICENSE-2.0.html"
     },
-    "x-generation-date": "2025-08-26T10:05:39.614Z"
+    "x-generation-date": "2025-08-29T07:34:37.738Z"
   },
   "x-strapi-config": {
     "plugins": [
@@ -9178,6 +9178,45 @@
                 "Categoria_Unica": {
                   "type": "string"
                 },
+                "Estado_viaje": {
+                  "type": "string",
+                  "enum": [
+                    "Disponible",
+                    "Agotado",
+                    "Cancelado",
+                    "Mixto",
+                    "Sin salidas"
+                  ]
+                },
+                "Resumen_salidas": {
+                  "type": "string"
+                },
+                "Proxima_salida": {
+                  "type": "string",
+                  "format": "date"
+                },
+                "Precio_minimo": {
+                  "type": "number",
+                  "format": "float"
+                },
+                "Viaje_nombre_index": {
+                  "type": "string"
+                },
+                "Fechas_salida_index": {},
+                "Fechas_salida_index_text": {
+                  "type": "string"
+                },
+                "Primer_salida": {
+                  "type": "string",
+                  "format": "date"
+                },
+                "Meses_salida_index": {
+                  "type": "string"
+                },
+                "Ultima_salida": {
+                  "type": "string",
+                  "format": "date"
+                },
                 "createdAt": {
                   "type": "string",
                   "format": "date-time"
@@ -11391,6 +11430,45 @@
               },
               "Categoria_Unica": {
                 "type": "string"
+              },
+              "Estado_viaje": {
+                "type": "string",
+                "enum": [
+                  "Disponible",
+                  "Agotado",
+                  "Cancelado",
+                  "Mixto",
+                  "Sin salidas"
+                ]
+              },
+              "Resumen_salidas": {
+                "type": "string"
+              },
+              "Proxima_salida": {
+                "type": "string",
+                "format": "date"
+              },
+              "Precio_minimo": {
+                "type": "number",
+                "format": "float"
+              },
+              "Viaje_nombre_index": {
+                "type": "string"
+              },
+              "Fechas_salida_index": {},
+              "Fechas_salida_index_text": {
+                "type": "string"
+              },
+              "Primer_salida": {
+                "type": "string",
+                "format": "date"
+              },
+              "Meses_salida_index": {
+                "type": "string"
+              },
+              "Ultima_salida": {
+                "type": "string",
+                "format": "date"
               },
               "createdAt": {
                 "type": "string",
@@ -14596,6 +14674,45 @@
                 },
                 "Categoria_Unica": {
                   "type": "string"
+                },
+                "Estado_viaje": {
+                  "type": "string",
+                  "enum": [
+                    "Disponible",
+                    "Agotado",
+                    "Cancelado",
+                    "Mixto",
+                    "Sin salidas"
+                  ]
+                },
+                "Resumen_salidas": {
+                  "type": "string"
+                },
+                "Proxima_salida": {
+                  "type": "string",
+                  "format": "date"
+                },
+                "Precio_minimo": {
+                  "type": "number",
+                  "format": "float"
+                },
+                "Viaje_nombre_index": {
+                  "type": "string"
+                },
+                "Fechas_salida_index": {},
+                "Fechas_salida_index_text": {
+                  "type": "string"
+                },
+                "Primer_salida": {
+                  "type": "string",
+                  "format": "date"
+                },
+                "Meses_salida_index": {
+                  "type": "string"
+                },
+                "Ultima_salida": {
+                  "type": "string",
+                  "format": "date"
                 },
                 "createdAt": {
                   "type": "string",
@@ -17912,6 +18029,45 @@
                 },
                 "Categoria_Unica": {
                   "type": "string"
+                },
+                "Estado_viaje": {
+                  "type": "string",
+                  "enum": [
+                    "Disponible",
+                    "Agotado",
+                    "Cancelado",
+                    "Mixto",
+                    "Sin salidas"
+                  ]
+                },
+                "Resumen_salidas": {
+                  "type": "string"
+                },
+                "Proxima_salida": {
+                  "type": "string",
+                  "format": "date"
+                },
+                "Precio_minimo": {
+                  "type": "number",
+                  "format": "float"
+                },
+                "Viaje_nombre_index": {
+                  "type": "string"
+                },
+                "Fechas_salida_index": {},
+                "Fechas_salida_index_text": {
+                  "type": "string"
+                },
+                "Primer_salida": {
+                  "type": "string",
+                  "format": "date"
+                },
+                "Meses_salida_index": {
+                  "type": "string"
+                },
+                "Ultima_salida": {
+                  "type": "string",
+                  "format": "date"
                 },
                 "createdAt": {
                   "type": "string",
@@ -22161,6 +22317,45 @@
               "Categoria_Unica": {
                 "type": "string"
               },
+              "Estado_viaje": {
+                "type": "string",
+                "enum": [
+                  "Disponible",
+                  "Agotado",
+                  "Cancelado",
+                  "Mixto",
+                  "Sin salidas"
+                ]
+              },
+              "Resumen_salidas": {
+                "type": "string"
+              },
+              "Proxima_salida": {
+                "type": "string",
+                "format": "date"
+              },
+              "Precio_minimo": {
+                "type": "number",
+                "format": "float"
+              },
+              "Viaje_nombre_index": {
+                "type": "string"
+              },
+              "Fechas_salida_index": {},
+              "Fechas_salida_index_text": {
+                "type": "string"
+              },
+              "Primer_salida": {
+                "type": "string",
+                "format": "date"
+              },
+              "Meses_salida_index": {
+                "type": "string"
+              },
+              "Ultima_salida": {
+                "type": "string",
+                "format": "date"
+              },
               "createdAt": {
                 "type": "string",
                 "format": "date-time"
@@ -24999,6 +25194,45 @@
                 },
                 "Categoria_Unica": {
                   "type": "string"
+                },
+                "Estado_viaje": {
+                  "type": "string",
+                  "enum": [
+                    "Disponible",
+                    "Agotado",
+                    "Cancelado",
+                    "Mixto",
+                    "Sin salidas"
+                  ]
+                },
+                "Resumen_salidas": {
+                  "type": "string"
+                },
+                "Proxima_salida": {
+                  "type": "string",
+                  "format": "date"
+                },
+                "Precio_minimo": {
+                  "type": "number",
+                  "format": "float"
+                },
+                "Viaje_nombre_index": {
+                  "type": "string"
+                },
+                "Fechas_salida_index": {},
+                "Fechas_salida_index_text": {
+                  "type": "string"
+                },
+                "Primer_salida": {
+                  "type": "string",
+                  "format": "date"
+                },
+                "Meses_salida_index": {
+                  "type": "string"
+                },
+                "Ultima_salida": {
+                  "type": "string",
+                  "format": "date"
                 },
                 "createdAt": {
                   "type": "string",
@@ -27929,6 +28163,45 @@
                 "Categoria_Unica": {
                   "type": "string"
                 },
+                "Estado_viaje": {
+                  "type": "string",
+                  "enum": [
+                    "Disponible",
+                    "Agotado",
+                    "Cancelado",
+                    "Mixto",
+                    "Sin salidas"
+                  ]
+                },
+                "Resumen_salidas": {
+                  "type": "string"
+                },
+                "Proxima_salida": {
+                  "type": "string",
+                  "format": "date"
+                },
+                "Precio_minimo": {
+                  "type": "number",
+                  "format": "float"
+                },
+                "Viaje_nombre_index": {
+                  "type": "string"
+                },
+                "Fechas_salida_index": {},
+                "Fechas_salida_index_text": {
+                  "type": "string"
+                },
+                "Primer_salida": {
+                  "type": "string",
+                  "format": "date"
+                },
+                "Meses_salida_index": {
+                  "type": "string"
+                },
+                "Ultima_salida": {
+                  "type": "string",
+                  "format": "date"
+                },
                 "createdAt": {
                   "type": "string",
                   "format": "date-time"
@@ -28584,6 +28857,45 @@
               },
               "Categoria_Unica": {
                 "type": "string"
+              },
+              "Estado_viaje": {
+                "type": "string",
+                "enum": [
+                  "Disponible",
+                  "Agotado",
+                  "Cancelado",
+                  "Mixto",
+                  "Sin salidas"
+                ]
+              },
+              "Resumen_salidas": {
+                "type": "string"
+              },
+              "Proxima_salida": {
+                "type": "string",
+                "format": "date"
+              },
+              "Precio_minimo": {
+                "type": "number",
+                "format": "float"
+              },
+              "Viaje_nombre_index": {
+                "type": "string"
+              },
+              "Fechas_salida_index": {},
+              "Fechas_salida_index_text": {
+                "type": "string"
+              },
+              "Primer_salida": {
+                "type": "string",
+                "format": "date"
+              },
+              "Meses_salida_index": {
+                "type": "string"
+              },
+              "Ultima_salida": {
+                "type": "string",
+                "format": "date"
               },
               "locale": {
                 "type": "string"
@@ -30119,6 +30431,45 @@
           },
           "Categoria_Unica": {
             "type": "string"
+          },
+          "Estado_viaje": {
+            "type": "string",
+            "enum": [
+              "Disponible",
+              "Agotado",
+              "Cancelado",
+              "Mixto",
+              "Sin salidas"
+            ]
+          },
+          "Resumen_salidas": {
+            "type": "string"
+          },
+          "Proxima_salida": {
+            "type": "string",
+            "format": "date"
+          },
+          "Precio_minimo": {
+            "type": "number",
+            "format": "float"
+          },
+          "Viaje_nombre_index": {
+            "type": "string"
+          },
+          "Fechas_salida_index": {},
+          "Fechas_salida_index_text": {
+            "type": "string"
+          },
+          "Primer_salida": {
+            "type": "string",
+            "format": "date"
+          },
+          "Meses_salida_index": {
+            "type": "string"
+          },
+          "Ultima_salida": {
+            "type": "string",
+            "format": "date"
           },
           "createdAt": {
             "type": "string",

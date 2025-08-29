@@ -1013,6 +1013,14 @@ export interface ApiViajeViaje extends Struct.CollectionTypeSchema {
           localized: true;
         };
       }>;
+    Estado_viaje: Schema.Attribute.Enumeration<
+      ['Disponible', 'Agotado', 'Cancelado', 'Mixto', 'Sin salidas']
+    > &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
     Estilo_alojamiento: Schema.Attribute.String &
       Schema.Attribute.SetPluginOptions<{
         i18n: {
@@ -1042,6 +1050,18 @@ export interface ApiViajeViaje extends Struct.CollectionTypeSchema {
         };
       }>;
     Fechas_explicacion: Schema.Attribute.RichText &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
+    Fechas_salida_index: Schema.Attribute.JSON &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
+    Fechas_salida_index_text: Schema.Attribute.String &
       Schema.Attribute.SetPluginOptions<{
         i18n: {
           localized: true;
@@ -1134,6 +1154,12 @@ export interface ApiViajeViaje extends Struct.CollectionTypeSchema {
         };
       }>;
     Material_recomendado: Schema.Attribute.RichText &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
+    Meses_salida_index: Schema.Attribute.String &
       Schema.Attribute.SetPluginOptions<{
         i18n: {
           localized: true;
@@ -1384,6 +1410,12 @@ export interface ApiViajeViaje extends Struct.CollectionTypeSchema {
           localized: true;
         };
       }>;
+    Precio_minimo: Schema.Attribute.Decimal &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
     Precio_nino_extra: Schema.Attribute.Decimal &
       Schema.Attribute.SetPluginOptions<{
         i18n: {
@@ -1391,6 +1423,18 @@ export interface ApiViajeViaje extends Struct.CollectionTypeSchema {
         };
       }>;
     Preguntas: Schema.Attribute.Component<'viajes.preguntas', true> &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
+    Primer_salida: Schema.Attribute.Date &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
+    Proxima_salida: Schema.Attribute.Date &
       Schema.Attribute.SetPluginOptions<{
         i18n: {
           localized: true;
@@ -1404,6 +1448,12 @@ export interface ApiViajeViaje extends Struct.CollectionTypeSchema {
         };
       }>;
     Regimen_explicacion: Schema.Attribute.String &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
+    Resumen_salidas: Schema.Attribute.Text &
       Schema.Attribute.SetPluginOptions<{
         i18n: {
           localized: true;
@@ -1501,9 +1551,21 @@ export interface ApiViajeViaje extends Struct.CollectionTypeSchema {
           localized: true;
         };
       }>;
+    Ultima_salida: Schema.Attribute.Date &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
+    Viaje_nombre_index: Schema.Attribute.String &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
   };
 }
 

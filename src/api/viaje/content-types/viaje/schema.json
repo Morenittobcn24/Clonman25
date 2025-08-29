@@ -731,6 +731,93 @@
       },
       "required": true,
       "unique": true
+    },
+    "Estado_viaje": {
+      "type": "enumeration",
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      },
+      "enum": [
+        "Disponible",
+        "Agotado",
+        "Cancelado",
+        "Mixto",
+        "Sin salidas"
+      ]
+    },
+    "Resumen_salidas": {
+      "type": "text",
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      }
+    },
+    "Proxima_salida": {
+      "type": "date",
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      }
+    },
+    "Precio_minimo": {
+      "type": "decimal",
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      }
+    },
+    "Viaje_nombre_index": {
+      "type": "string",
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      }
+    },
+    "Fechas_salida_index": {
+      "type": "json",
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      }
+    },
+    "Fechas_salida_index_text": {
+      "type": "string",
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      }
+    },
+    "Primer_salida": {
+      "type": "date",
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      }
+    },
+    "Meses_salida_index": {
+      "type": "string",
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      }
+    },
+    "Ultima_salida": {
+      "type": "date",
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      }
     }
   }
 }
