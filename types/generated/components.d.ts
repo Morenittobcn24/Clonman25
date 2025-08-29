@@ -145,10 +145,13 @@ export interface ViajesSalida extends Struct.ComponentSchema {
     Fecha_fin: Schema.Attribute.Date;
     Fecha_inicio: Schema.Attribute.Date;
     Precio: Schema.Attribute.Decimal;
+    Precio_coste: Schema.Attribute.Decimal;
+    Precio_rebajado: Schema.Attribute.Decimal;
     Proveedores_asignados: Schema.Attribute.Relation<
       'oneToMany',
       'api::proveedor.proveedor'
     >;
+    Texto_promo: Schema.Attribute.String;
   };
 }
 

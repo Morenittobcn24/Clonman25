@@ -39,6 +39,15 @@
       "type": "relation",
       "relation": "oneToMany",
       "target": "api::proveedor.proveedor"
+    },
+    "Precio_rebajado": {
+      "type": "decimal"
+    },
+    "Precio_coste": {
+      "type": "decimal"
+    },
+    "Texto_promo": {
+      "type": "string"
     }
   }
 }
