@@ -1438,7 +1438,7 @@ export interface ApiViajeViaje extends Struct.CollectionTypeSchema {
           localized: true;
         };
       }>;
-    Precio_base: Schema.Attribute.BigInteger &
+    Precio_gancho: Schema.Attribute.Decimal &
       Schema.Attribute.SetPluginOptions<{
         i18n: {
           localized: true;
@@ -1560,7 +1560,7 @@ export interface ApiViajeViaje extends Struct.CollectionTypeSchema {
       }>;
     Transfer: Schema.Attribute.Relation<'manyToMany', 'api::transfer.transfer'>;
     Transfer_seleccionable: Schema.Attribute.Enumeration<
-      ['Bus', 'Tren', 'Furgoneta o Taxi Privado']
+      ['Bus', 'Tren', 'Furgoneta o Taxi Privado', 'No Necesita']
     > &
       Schema.Attribute.SetPluginOptions<{
         i18n: {

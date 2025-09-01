@@ -460,8 +460,8 @@
       "component": "viajes.itinerario",
       "repeatable": true
     },
-    "Precio_base": {
-      "type": "biginteger",
+    "Precio_gancho": {
+      "type": "decimal",
       "pluginOptions": {
         "i18n": {
           "localized": true
@@ -510,7 +510,8 @@
       "enum": [
         "Bus",
         "Tren",
-        "Furgoneta o Taxi Privado"
+        "Furgoneta o Taxi Privado",
+        "No Necesita"
       ]
     },
     "Alojamiento_comidas": {

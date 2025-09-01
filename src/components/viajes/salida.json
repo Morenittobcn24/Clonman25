@@ -13,7 +13,7 @@
     "Fecha_fin": {
       "type": "date"
     },
-    "Precio": {
+    "Precio_pax": {
       "type": "decimal"
     },
     "Cupo_total": {

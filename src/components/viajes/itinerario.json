@@ -21,6 +21,11 @@
     },
     "Descripcion_Dia": {
       "type": "richtext"
+    },
+    "Proveedores": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::proveedor.proveedor"
     }
   },
   "config": {}

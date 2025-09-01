@@ -14,7 +14,7 @@
       "name": "Apache 2.0",
       "url": "https://www.apache.org/licenses/LICENSE-2.0.html"
     },
-    "x-generation-date": "2025-08-29T11:21:15.074Z"
+    "x-generation-date": "2025-09-01T14:41:51.122Z"
   },
   "x-strapi-config": {
     "plugins": [
@@ -7554,10 +7554,9 @@
                     "$ref": "#/components/schemas/ViajesItinerarioComponent"
                   }
                 },
-                "Precio_base": {
-                  "type": "string",
-                  "pattern": "^\\d*$",
-                  "example": "123456789"
+                "Precio_gancho": {
+                  "type": "number",
+                  "format": "float"
                 },
                 "Servicios_incluidos": {
                   "type": "string"
@@ -7576,7 +7575,8 @@
                   "enum": [
                     "Bus",
                     "Tren",
-                    "Furgoneta o Taxi Privado"
+                    "Furgoneta o Taxi Privado",
+                    "No Necesita"
                   ]
                 },
                 "Alojamiento_comidas": {
@@ -9807,10 +9807,9 @@
                   "$ref": "#/components/schemas/ViajesItinerarioComponent"
                 }
               },
-              "Precio_base": {
-                "type": "string",
-                "pattern": "^\\d*$",
-                "example": "123456789"
+              "Precio_gancho": {
+                "type": "number",
+                "format": "float"
               },
               "Servicios_incluidos": {
                 "type": "string"
@@ -9829,7 +9828,8 @@
                 "enum": [
                   "Bus",
                   "Tren",
-                  "Furgoneta o Taxi Privado"
+                  "Furgoneta o Taxi Privado",
+                  "No Necesita"
                 ]
               },
               "Alojamiento_comidas": {
@@ -11542,7 +11542,7 @@
             "type": "string",
             "format": "date"
           },
-          "Precio": {
+          "Precio_pax": {
             "type": "number",
             "format": "float"
           },
@@ -11850,6 +11850,20 @@
           },
           "Descripcion_Dia": {
             "type": "string"
+          },
+          "Proveedores": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "number"
+                },
+                "documentId": {
+                  "type": "string"
+                }
+              }
+            }
           }
         }
       },
@@ -13083,10 +13097,9 @@
                     "$ref": "#/components/schemas/ViajesItinerarioComponent"
                   }
                 },
-                "Precio_base": {
-                  "type": "string",
-                  "pattern": "^\\d*$",
-                  "example": "123456789"
+                "Precio_gancho": {
+                  "type": "number",
+                  "format": "float"
                 },
                 "Servicios_incluidos": {
                   "type": "string"
@@ -13105,7 +13118,8 @@
                   "enum": [
                     "Bus",
                     "Tren",
-                    "Furgoneta o Taxi Privado"
+                    "Furgoneta o Taxi Privado",
+                    "No Necesita"
                   ]
                 },
                 "Alojamiento_comidas": {
@@ -16438,10 +16452,9 @@
                     "$ref": "#/components/schemas/ViajesItinerarioComponent"
                   }
                 },
-                "Precio_base": {
-                  "type": "string",
-                  "pattern": "^\\d*$",
-                  "example": "123456789"
+                "Precio_gancho": {
+                  "type": "number",
+                  "format": "float"
                 },
                 "Servicios_incluidos": {
                   "type": "string"
@@ -16460,7 +16473,8 @@
                   "enum": [
                     "Bus",
                     "Tren",
-                    "Furgoneta o Taxi Privado"
+                    "Furgoneta o Taxi Privado",
+                    "No Necesita"
                   ]
                 },
                 "Alojamiento_comidas": {
@@ -20845,10 +20859,9 @@
                   "$ref": "#/components/schemas/ViajesItinerarioComponent"
                 }
               },
-              "Precio_base": {
-                "type": "string",
-                "pattern": "^\\d*$",
-                "example": "123456789"
+              "Precio_gancho": {
+                "type": "number",
+                "format": "float"
               },
               "Servicios_incluidos": {
                 "type": "string"
@@ -20867,7 +20880,8 @@
                 "enum": [
                   "Bus",
                   "Tren",
-                  "Furgoneta o Taxi Privado"
+                  "Furgoneta o Taxi Privado",
+                  "No Necesita"
                 ]
               },
               "Alojamiento_comidas": {
@@ -23645,10 +23659,9 @@
                     "$ref": "#/components/schemas/ViajesItinerarioComponent"
                   }
                 },
-                "Precio_base": {
-                  "type": "string",
-                  "pattern": "^\\d*$",
-                  "example": "123456789"
+                "Precio_gancho": {
+                  "type": "number",
+                  "format": "float"
                 },
                 "Servicios_incluidos": {
                   "type": "string"
@@ -23667,7 +23680,8 @@
                   "enum": [
                     "Bus",
                     "Tren",
-                    "Furgoneta o Taxi Privado"
+                    "Furgoneta o Taxi Privado",
+                    "No Necesita"
                   ]
                 },
                 "Alojamiento_comidas": {
@@ -26613,10 +26627,9 @@
                     "$ref": "#/components/schemas/ViajesItinerarioComponent"
                   }
                 },
-                "Precio_base": {
-                  "type": "string",
-                  "pattern": "^\\d*$",
-                  "example": "123456789"
+                "Precio_gancho": {
+                  "type": "number",
+                  "format": "float"
                 },
                 "Servicios_incluidos": {
                   "type": "string"
@@ -26635,7 +26648,8 @@
                   "enum": [
                     "Bus",
                     "Tren",
-                    "Furgoneta o Taxi Privado"
+                    "Furgoneta o Taxi Privado",
+                    "No Necesita"
                   ]
                 },
                 "Alojamiento_comidas": {
@@ -28728,10 +28742,9 @@
                   "$ref": "#/components/schemas/ViajesItinerarioComponent"
                 }
               },
-              "Precio_base": {
-                "type": "string",
-                "pattern": "^\\d*$",
-                "example": "123456789"
+              "Precio_gancho": {
+                "type": "number",
+                "format": "float"
               },
               "Servicios_incluidos": {
                 "type": "string"
@@ -28750,7 +28763,8 @@
                 "enum": [
                   "Bus",
                   "Tren",
-                  "Furgoneta o Taxi Privado"
+                  "Furgoneta o Taxi Privado",
+                  "No Necesita"
                 ]
               },
               "Alojamiento_comidas": {
@@ -29948,10 +29962,9 @@
               "$ref": "#/components/schemas/ViajesItinerarioComponent"
             }
           },
-          "Precio_base": {
-            "type": "string",
-            "pattern": "^\\d*$",
-            "example": "123456789"
+          "Precio_gancho": {
+            "type": "number",
+            "format": "float"
           },
           "Servicios_incluidos": {
             "type": "string"
@@ -29970,7 +29983,8 @@
             "enum": [
               "Bus",
               "Tren",
-              "Furgoneta o Taxi Privado"
+              "Furgoneta o Taxi Privado",
+              "No Necesita"
             ]
           },
           "Alojamiento_comidas": {

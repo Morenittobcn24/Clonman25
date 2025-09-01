@@ -104,6 +104,10 @@ export interface ViajesItinerario extends Struct.ComponentSchema {
     Imagen_iti: Schema.Attribute.Media<
       'images' | 'files' | 'videos' | 'audios'
     >;
+    Proveedores: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::proveedor.proveedor'
+    >;
     Titulo_Dia: Schema.Attribute.String;
   };
 }
@@ -144,8 +148,8 @@ export interface ViajesSalida extends Struct.ComponentSchema {
     >;
     Fecha_fin: Schema.Attribute.Date;
     Fecha_inicio: Schema.Attribute.Date;
-    Precio: Schema.Attribute.Decimal;
     Precio_coste: Schema.Attribute.Decimal;
+    Precio_pax: Schema.Attribute.Decimal;
     Precio_rebajado: Schema.Attribute.Decimal;
     Proveedores_asignados: Schema.Attribute.Relation<
       'oneToMany',
