@@ -26,6 +26,11 @@
       "type": "relation",
       "relation": "oneToMany",
       "target": "api::proveedor.proveedor"
+    },
+    "Alojamientos": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::alojamiento.alojamiento"
     }
   },
   "config": {}

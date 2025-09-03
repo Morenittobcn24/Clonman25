@@ -75,12 +75,6 @@
           "localized": true
         }
       }
-    },
-    "reserva": {
-      "type": "relation",
-      "relation": "oneToOne",
-      "target": "api::reserva.reserva",
-      "inversedBy": "Alojamiento"
     }
   }
 }

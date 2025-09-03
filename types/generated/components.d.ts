@@ -100,6 +100,10 @@ export interface ViajesItinerario extends Struct.ComponentSchema {
     icon: 'bulletList';
   };
   attributes: {
+    Alojamientos: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::alojamiento.alojamiento'
+    >;
     Descripcion_Dia: Schema.Attribute.RichText;
     Imagen_iti: Schema.Attribute.Media<
       'images' | 'files' | 'videos' | 'audios'

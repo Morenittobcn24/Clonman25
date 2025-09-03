@@ -77,12 +77,6 @@
       "component": "viajes.salida",
       "repeatable": false
     },
-    "Alojamiento": {
-      "type": "relation",
-      "relation": "oneToOne",
-      "target": "api::alojamiento.alojamiento",
-      "mappedBy": "reserva"
-    },
     "Actividades": {
       "type": "relation",
       "relation": "manyToMany",

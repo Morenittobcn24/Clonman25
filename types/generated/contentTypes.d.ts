@@ -500,7 +500,6 @@ export interface ApiAlojamientoAlojamiento extends Struct.CollectionTypeSchema {
         };
       }>;
     publishedAt: Schema.Attribute.DateTime;
-    reserva: Schema.Attribute.Relation<'oneToOne', 'api::reserva.reserva'>;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -789,10 +788,6 @@ export interface ApiReservaReserva extends Struct.CollectionTypeSchema {
     Actividades: Schema.Attribute.Relation<
       'manyToMany',
       'api::actividad.actividad'
-    >;
-    Alojamiento: Schema.Attribute.Relation<
-      'oneToOne',
-      'api::alojamiento.alojamiento'
     >;
     Billetes: Schema.Attribute.Boolean;
     Canal: Schema.Attribute.Enumeration<
