@@ -35,11 +35,6 @@
         "Privado"
       ]
     },
-    "Proveedores_asignados": {
-      "type": "relation",
-      "relation": "oneToMany",
-      "target": "api::proveedor.proveedor"
-    },
     "Precio_rebajado": {
       "type": "decimal"
     },
@@ -48,6 +43,11 @@
     },
     "Texto_promo": {
       "type": "string"
+    },
+    "proveedors": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::proveedor.proveedor"
     }
   }
 }

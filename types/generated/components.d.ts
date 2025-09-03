@@ -155,7 +155,7 @@ export interface ViajesSalida extends Struct.ComponentSchema {
     Precio_coste: Schema.Attribute.Decimal;
     Precio_pax: Schema.Attribute.Decimal;
     Precio_rebajado: Schema.Attribute.Decimal;
-    Proveedores_asignados: Schema.Attribute.Relation<
+    proveedors: Schema.Attribute.Relation<
       'oneToMany',
       'api::proveedor.proveedor'
     >;
