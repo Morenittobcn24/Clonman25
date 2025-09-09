@@ -23,11 +23,11 @@ const J = (v, max = 400) => {
   return s.length > max ? s.slice(0, max) + '…' : s;
 };
 
-// ——— lectura completa desde BD
+// ——— lectura completa desde BD (ahora pidiendo Precio_pax)
 async function getPersistedForCalc(id, locale) {
   if (!id) return { nombre: null, salidas: [] };
   const full = await strapi.entityService.findOne('api::viaje.viaje', id, {
-    populate: { Salidas: { fields: ['Fecha_inicio', 'Cupo_disponible', 'Estado', 'Precio'] } },
+    populate: { Salidas: { fields: ['Fecha_inicio', 'Cupo_disponible', 'Estado', 'Precio_pax'] } },
     fields: ['Nombre'],
     locale: locale || undefined,
   });
@@ -36,11 +36,11 @@ async function getPersistedForCalc(id, locale) {
 }
 
 // ——— mapeo robusto de una salida (acepta variantes del admin)
+// BACKCOMPAT: intenta Precio_pax y, si no existe, cae a Precio
 function mapSalida(raw, idx) {
   const s = raw && typeof raw === 'object' ? raw : {};
   const a = s.attributes || s.value || s; // soporta {attributes:{...}} o {value:{...}} o plano
 
-  // recoger posibles claves con distintas casings
   const get = (k) =>
     a?.[k] ??
     a?.[k?.toLowerCase?.()] ??
@@ -50,13 +50,16 @@ function mapSalida(raw, idx) {
   const Fecha_inicio = get('Fecha_inicio');
   const Cupo_disponible = get('Cupo_disponible');
   const Estado = get('Estado');
-  const Precio = get('Precio');
+
+  // lee Precio_pax; si no, Precio (para entradas antiguas)
+  const Precio_raw = get('Precio_pax') ?? get('Precio');
 
   const mapped = {
     Fecha_inicio: Fecha_inicio || null,
     Cupo_disponible: Cupo_disponible != null ? Number(Cupo_disponible) : null,
     Estado: Estado || null,
-    Precio: Precio != null ? Number(Precio) : null,
+    // internamente seguimos usando la clave Precio para todos los cálculos
+    Precio: Precio_raw != null ? Number(Precio_raw) : null,
   };
 
   strapi.log.info(`[viaje:mapSalida] #${idx} in=${J(s)} -> ${J(mapped)}`);
@@ -86,7 +89,6 @@ function calcularIndices(nombre, salidasRaw) {
 
   const Cupo_disponible_total = salidas.reduce((acc, s) => acc + (Number(s.Cupo_disponible) || 0), 0);
 
-  // --- Normalización de fechas a ISO corto (YYYY-MM-DD) y orden
   const fechasISO = salidas
     .map((s) => (s.Fecha_inicio ? String(s.Fecha_inicio).slice(0, 10) : null))
     .filter((d) => d && /^\d{4}-\d{2}-\d{2}$/.test(d));
@@ -99,10 +101,9 @@ function calcularIndices(nombre, salidasRaw) {
   const Primer_salida = fechasOrdenadas[0] ?? null;
   const Ultima_salida = fechasOrdenadas.length ? fechasOrdenadas[fechasOrdenadas.length - 1] : null;
 
-  // índice de meses (YYYY-MM)
   const mesesOrdenados = [...new Set(fechasOrdenadas.map((d) => d.slice(0, 7)))].sort();
 
-  // precios
+  // precios: ahora ya vienen de mapped.Precio (que proviene de Precio_pax o Precio)
   const precios = salidas.map((s) => s.Precio).filter((v) => Number.isFinite(v) && v >= 0);
   const Precio_minimo = precios.length ? Math.min(...precios) : null;
 
@@ -119,10 +120,9 @@ function calcularIndices(nombre, salidasRaw) {
         .join('\n')
     : `Viaje: ${nombreViaje} | Estado: ${Estado_viaje} | Sin salidas`;
 
-  // —— campos índice NUEVOS para filtrar en el panel
-  const Fechas_salida_index = fechasOrdenadas;             // JSON array
-  const Fechas_salida_index_text = fechasOrdenadas.join('|'); // texto para "contiene"
-  const Meses_salida_index = mesesOrdenados.join('|');        // texto para "contiene"
+  const Fechas_salida_index = fechasOrdenadas;
+  const Fechas_salida_index_text = fechasOrdenadas.join('|');
+  const Meses_salida_index = mesesOrdenados.join('|');
 
   const idx = {
     Estado_viaje,
@@ -132,7 +132,6 @@ function calcularIndices(nombre, salidasRaw) {
     Resumen_salidas,
     Viaje_nombre_index: nombreViaje,
 
-    // nuevos índices
     Primer_salida,
     Ultima_salida,
     Fechas_salida_index,
@@ -141,7 +140,7 @@ function calcularIndices(nombre, salidasRaw) {
   };
 
   strapi.log.info(`[viaje:calc] RESULT ${J(idx, 800)}`);
-  return { idx, salidasMapeadas: salidas };
+  return { idx, salidas: salidas }; // devolvemos ya mapeadas
 }
 
 function todasVacias(salidasMap) {
@@ -162,9 +161,9 @@ module.exports = {
       const salidasRaw = Array.isArray(data.Salidas) ? data.Salidas : [];
 
       strapi.log.info(`[viaje:beforeCreate] payload Salidas.len=${salidasRaw.length} nombre="${nombre}"`);
-      const { idx, salidasMapeadas } = calcularIndices(nombre, salidasRaw);
+      const { idx, salidas } = calcularIndices(nombre, salidasRaw);
 
-      if (todasVacias(salidasMapeadas)) {
+      if (todasVacias(salidas)) {
         strapi.log.info(`[viaje:beforeCreate] Todas las salidas del payload vienen vacías -> mantengo idx pero revisa el formulario/admin.`);
       }
 
@@ -192,8 +191,8 @@ module.exports = {
       // 1) Intentamos con lo que viene en payload
       let prelim = calcularIndices(nombre, salidasParaCalc);
 
-      // 2) Si TODAS las salidas del payload están vacías, releemos desde BD
-      if (todasVacias(prelim.salidasMapeadas)) {
+      // 2) Si TODAS las salidas del payload están vacías, releemos desde BD (ya pidiendo Precio_pax)
+      if (todasVacias(prelim.salidas)) {
         strapi.log.info(`[viaje:beforeUpdate] Payload trae salidas vacías -> releyendo desde BD para completar…`);
         const current = await getPersistedForCalc(id, locale);
         nombre = nombre || current.nombre;
