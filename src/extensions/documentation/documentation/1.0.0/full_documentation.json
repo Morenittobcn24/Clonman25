@@ -14,7 +14,7 @@
       "name": "Apache 2.0",
       "url": "https://www.apache.org/licenses/LICENSE-2.0.html"
     },
-    "x-generation-date": "2025-09-09T09:29:30.744Z"
+    "x-generation-date": "2025-09-10T08:33:06.449Z"
   },
   "x-strapi-config": {
     "plugins": [
@@ -11391,7 +11391,7 @@
               }
             }
           },
-          "Alojamientos": {
+          "alojamiento_opcion_1": {
             "type": "array",
             "items": {
               "type": "object",
@@ -11404,6 +11404,43 @@
                 }
               }
             }
+          },
+          "alojamiento_opcion_2": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "number"
+                },
+                "documentId": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "alojamiento_opcion_3": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "number"
+                },
+                "documentId": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "Regimen_O1": {
+            "type": "string"
+          },
+          "Regimen_O2": {
+            "type": "string"
+          },
+          "Regimen_O3": {
+            "type": "string"
           }
         }
       },

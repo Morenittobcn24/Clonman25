@@ -27,10 +27,29 @@
       "relation": "oneToMany",
       "target": "api::proveedor.proveedor"
     },
-    "Alojamientos": {
+    "alojamiento_opcion_1": {
       "type": "relation",
       "relation": "oneToMany",
       "target": "api::alojamiento.alojamiento"
+    },
+    "alojamiento_opcion_2": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::alojamiento.alojamiento"
+    },
+    "alojamiento_opcion_3": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::alojamiento.alojamiento"
+    },
+    "Regimen_O1": {
+      "type": "string"
+    },
+    "Regimen_O2": {
+      "type": "string"
+    },
+    "Regimen_O3": {
+      "type": "string"
     }
   },
   "config": {}

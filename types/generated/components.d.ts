@@ -100,7 +100,15 @@ export interface ViajesItinerario extends Struct.ComponentSchema {
     icon: 'bulletList';
   };
   attributes: {
-    Alojamientos: Schema.Attribute.Relation<
+    alojamiento_opcion_1: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::alojamiento.alojamiento'
+    >;
+    alojamiento_opcion_2: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::alojamiento.alojamiento'
+    >;
+    alojamiento_opcion_3: Schema.Attribute.Relation<
       'oneToMany',
       'api::alojamiento.alojamiento'
     >;
@@ -112,6 +120,9 @@ export interface ViajesItinerario extends Struct.ComponentSchema {
       'oneToMany',
       'api::proveedor.proveedor'
     >;
+    Regimen_O1: Schema.Attribute.String;
+    Regimen_O2: Schema.Attribute.String;
+    Regimen_O3: Schema.Attribute.String;
     Titulo_Dia: Schema.Attribute.String;
   };
 }
