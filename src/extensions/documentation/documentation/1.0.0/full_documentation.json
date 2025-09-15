@@ -14,7 +14,7 @@
       "name": "Apache 2.0",
       "url": "https://www.apache.org/licenses/LICENSE-2.0.html"
     },
-    "x-generation-date": "2025-09-10T08:33:06.449Z"
+    "x-generation-date": "2025-09-15T12:52:52.391Z"
   },
   "x-strapi-config": {
     "plugins": [
@@ -11088,7 +11088,8 @@
               "Cancelado",
               "¡Corre pocas plazas disponibles!",
               "Cerrado",
-              "Privado"
+              "Privado",
+              "B2B"
             ]
           },
           "Precio_rebajado": {

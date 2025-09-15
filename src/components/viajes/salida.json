@@ -32,7 +32,8 @@
         "Cancelado",
         "¡Corre pocas plazas disponibles!",
         "Cerrado",
-        "Privado"
+        "Privado",
+        "B2B"
       ]
     },
     "Precio_rebajado": {

@@ -159,6 +159,7 @@ export interface ViajesSalida extends Struct.ComponentSchema {
         '\u00A1Corre pocas plazas disponibles!',
         'Cerrado',
         'Privado',
+        'B2B',
       ]
     >;
     Fecha_fin: Schema.Attribute.Date;
