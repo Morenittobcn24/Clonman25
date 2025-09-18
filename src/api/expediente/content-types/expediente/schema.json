@@ -1,0 +1,34 @@
+{
+  "collectionName": "expedientes",
+  "info": {
+    "singularName": "expediente",
+    "pluralName": "expedientes",
+    "displayName": "Gestor de Expedientes"
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "attributes": {
+    "viaje": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::viaje.viaje"
+    },
+    "fecha_salida": {
+      "type": "string"
+    },
+    "reservas": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::reserva.reserva"
+    },
+    "proveedores": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::proveedor.proveedor"
+    },
+    "precio_venta": { "type": "decimal" },
+    "precio_coste": { "type": "decimal" },
+    "ganancia": { "type": "decimal" }
+  }
+}
