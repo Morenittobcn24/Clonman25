@@ -34,28 +34,28 @@ const config = {
 
 const bootstrap = (app) => {
   app.addMenuLink({
-    to: '/import-viajes',
+    to: '/plugins/import-viajes',
     icon: 'upload',
     intlLabel: {
       id: 'import.button.label',
-      defaultMessage: 'Import CSV',
+      defaultMessage: 'Importar CSV',
     },
     Component: ImportViajesButton,
     permissions: [],
   });
 
   app.addMenuLink({
-    to: '/export-viajes',
+    to: '/plugins/export-viajes', 
     icon: 'download',
     intlLabel: {
       id: 'export.button.label',
-      defaultMessage: 'Export CSV',
+      defaultMessage: 'Exportar CSV',
     },
     Component: ExportViajesButton,
     permissions: [],
   });
 
-  console.log('Admin extensions initialized');
+  console.log('Menu links added successfully');
 };
 
 export default {
