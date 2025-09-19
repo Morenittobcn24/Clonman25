@@ -1,4 +1,6 @@
-import favicon from './extensions/favicon.jpg'; // Ruta correcta, archivo existe
+import favicon from './extensions/favicon.jpg';
+import ImportViajesButton from './extensions/ImportViajesButton.jsx';
+import ExportViajesButton from './extensions/ExportViajesButton.jsx';
 
 const config = {
   locales: ['es', 'en'],
@@ -1405,6 +1407,34 @@ const config = {
   "components.Blocks.blocks.image": "Imagen"
      },
   },
+};
+
+const bootstrap = (app) => {
+  app.addMenuLink({
+    to: '/import-viajes',
+    icon: 'upload',
+    intlLabel: {
+      id: 'Importar Viajes CSV',
+      defaultMessage: 'Importar Viajes CSV',
+    },
+    Component: ImportViajesButton,
+    permissions: [],
+  });
+  app.addMenuLink({
+    to: '/export-viajes',
+    icon: 'download',
+    intlLabel: {
+      id: 'Exportar Viajes CSV',
+      defaultMessage: 'Exportar Viajes CSV',
+    },
+    Component: ExportViajesButton,
+    permissions: [],
+  });
+};
+
+export default {
+  config,
+  bootstrap,
 };
 
 
