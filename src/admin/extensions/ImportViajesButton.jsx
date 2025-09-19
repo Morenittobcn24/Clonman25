@@ -1,53 +1,47 @@
-import React, { useState } from 'react';
+import React from 'react';
 
 const ImportViajesButton = () => {
-  const [showModal, setShowModal] = useState(false);
-  const [file, setFile] = useState(null);
-  const [loading, setLoading] = useState(false);
-  const [message, setMessage] = useState('');
-
-  const handleFileChange = (e) => {
-    setFile(e.target.files[0]);
-  };
-
-  const handleImport = async () => {
-    if (!file) return;
-    setLoading(true);
-    setMessage('');
-    try {
+  const handleClick = () => {
+    const input = document.createElement('input');
+    input.type = 'file';
+    input.accept = '.csv';
+    input.onchange = async (e) => {
+      const file = e.target.files[0];
+      if (!file) return;
+      
       const formData = new FormData();
       formData.append('csv', file);
-      const res = await fetch('/api/import-viajes', {
-        method: 'POST',
-        body: formData,
-      });
-      const result = await res.json();
-      setMessage(result.message || 'Importación completada');
-    } catch (err) {
-      setMessage('Error al importar: ' + err.message);
-    }
-    setLoading(false);
+      
+      try {
+        const res = await fetch('/api/import-viajes', {
+          method: 'POST',
+          body: formData,
+        });
+        const data = await res.json();
+        alert(data.message || 'Importación completada');
+      } catch (err) {
+        alert('Error al importar: ' + err.message);
+      }
+    };
+    input.click();
   };
 
   return (
-    <>
-      <button onClick={() => setShowModal(true)} style={{padding: '8px 16px', background: '#eee', border: '1px solid #ccc', borderRadius: '4px', cursor: 'pointer'}}>
-        Importar Viajes CSV
+    <div style={{padding: '20px'}}>
+      <h1>Importar Viajes</h1>
+      <p>Selecciona un archivo CSV para importar viajes al sistema.</p>
+      <button onClick={handleClick} style={{
+        padding: '10px 20px',
+        fontSize: '16px',
+        cursor: 'pointer',
+        backgroundColor: '#4945ff',
+        color: 'white',
+        border: 'none',
+        borderRadius: '4px'
+      }}>
+        Importar CSV
       </button>
-      {showModal && (
-        <div style={{position: 'fixed', top: 0, left: 0, width: '100vw', height: '100vh', background: 'rgba(0,0,0,0.3)', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 9999}}>
-          <div style={{background: '#fff', padding: 24, borderRadius: 8, minWidth: 300}}>
-            <h2>Importar CSV de Viajes</h2>
-            <input type="file" accept=".csv" onChange={handleFileChange} />
-            <button onClick={handleImport} disabled={loading} style={{marginTop: 12, padding: '8px 16px', background: '#eee', border: '1px solid #ccc', borderRadius: '4px', cursor: 'pointer'}}>
-              {loading ? 'Importando...' : 'Importar'}
-            </button>
-            {message && <p>{message}</p>}
-            <button onClick={() => setShowModal(false)} style={{marginTop: 12, padding: '4px 12px', background: '#f5f5f5', border: '1px solid #ccc', borderRadius: '4px', cursor: 'pointer'}}>Cerrar</button>
-          </div>
-        </div>
-      )}
-    </>
+    </div>
   );
 };
 
