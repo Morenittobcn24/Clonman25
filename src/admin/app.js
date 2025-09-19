@@ -1,4 +1,4 @@
-import favicon from './extensions/favicon.jpg';
+import favicon from './extensions/favicon.jpg'; // Ruta correcta, archivo existe
 
 const config = {
   locales: ['es', 'en'],
@@ -1407,7 +1407,32 @@ const config = {
   },
 };
 
+
+// Registrar los botones como extensiones visibles en el menú lateral
+import ImportViajesButton from './extensions/ImportViajesButton.jsx';
+import ExportViajesButton from './extensions/ExportViajesButton.jsx';
+
 const bootstrap = (app) => {
+  app.addMenuLink({
+    to: '/import-viajes',
+    icon: 'upload',
+    intlLabel: {
+      id: 'Importar Viajes CSV',
+      defaultMessage: 'Importar Viajes CSV',
+    },
+    Component: ImportViajesButton,
+    permissions: [],
+  });
+  app.addMenuLink({
+    to: '/export-viajes',
+    icon: 'download',
+    intlLabel: {
+      id: 'Exportar Viajes CSV',
+      defaultMessage: 'Exportar Viajes CSV',
+    },
+    Component: ExportViajesButton,
+    permissions: [],
+  });
   console.log('Admin app initialized');
 };
 
