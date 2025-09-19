@@ -1,6 +1,4 @@
 import favicon from './extensions/favicon.jpg';
-import ImportViajesButton from './extensions/ImportViajesButton.jsx';
-import ExportViajesButton from './extensions/ExportViajesButton.jsx';
 
 const config = {
   locales: ['es', 'en'],
@@ -20,39 +18,31 @@ const config = {
       },
     },
   },
-  translations: {
-    en: {
-      "import.button.label": "Import CSV",
-      "export.button.label": "Export CSV"
-    },
-    es: {
-      "import.button.label": "Importar CSV",
-      "export.button.label": "Exportar CSV"
-    }
+  menu: {
+    logo: favicon
   }
 };
 
 const bootstrap = (app) => {
+  console.log('Admin panel bootstrap started');
+  
+  // Agregar enlaces directamente al menú principal
   app.addMenuLink({
-    to: '/plugins/import-viajes',
-    icon: 'upload',
+    to: '/content-manager/collectionType/api::viaje.viaje',
+    icon: 'Upload',
     intlLabel: {
-      id: 'import.button.label',
+      id: 'csv-import',
       defaultMessage: 'Importar CSV',
     },
-    Component: ImportViajesButton,
-    permissions: [],
   });
 
   app.addMenuLink({
-    to: '/plugins/export-viajes', 
-    icon: 'download',
+    to: '/content-manager/collectionType/api::viaje.viaje',
+    icon: 'Download', 
     intlLabel: {
-      id: 'export.button.label',
+      id: 'csv-export',
       defaultMessage: 'Exportar CSV',
     },
-    Component: ExportViajesButton,
-    permissions: [],
   });
 
   console.log('Menu links added successfully');
