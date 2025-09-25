@@ -1,0 +1,97 @@
+{
+  "kind": "collectionType",
+  "collectionName": "beneficios",
+  "info": {
+    "singularName": "beneficio",
+    "pluralName": "beneficios",
+    "displayName": "Beneficio",
+    "description": "Sistema de beneficios y descuentos para clientes"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "Nombre": {
+      "type": "string",
+      "required": true,
+      "maxLength": 255
+    },
+    "Descripcion": {
+      "type": "text",
+      "required": false
+    },
+    "Tipo": {
+      "type": "enumeration",
+      "enum": [
+        "Descuento",
+        "Puntos",
+        "Regalo",
+        "Experiencia",
+        "Upgrade",
+        "Otro"
+      ],
+      "default": "Descuento",
+      "required": true
+    },
+    "Valor": {
+      "type": "decimal",
+      "required": false
+    },
+    "Porcentaje": {
+      "type": "integer",
+      "min": 0,
+      "max": 100,
+      "required": false
+    },
+    "Fecha_inicio": {
+      "type": "date",
+      "required": false
+    },
+    "Fecha_fin": {
+      "type": "date",
+      "required": false
+    },
+    "Activo": {
+      "type": "boolean",
+      "default": true,
+      "required": true
+    },
+    "Codigo": {
+      "type": "string",
+      "unique": true,
+      "maxLength": 50
+    },
+    "Condiciones": {
+      "type": "text",
+      "required": false
+    },
+    "Limite_uso": {
+      "type": "integer",
+      "min": 0,
+      "required": false
+    },
+    "Usado_veces": {
+      "type": "integer",
+      "default": 0,
+      "min": 0
+    },
+    "Clientes_elegibles": {
+      "type": "enumeration",
+      "enum": [
+        "Todos",
+        "Nuevos",
+        "Recurrentes",
+        "VIP",
+        "Especifico"
+      ],
+      "default": "Todos"
+    },
+    "Imagen": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
+      "allowedTypes": ["images"]
+    }
+  }
+}

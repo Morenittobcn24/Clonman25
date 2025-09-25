@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSV Simple</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; }
+        button { background: #4945ff; color: white; border: none; padding: 10px 20px; margin: 10px; border-radius: 4px; cursor: pointer; }
+        .result { margin: 10px 0; padding: 10px; border-radius: 4px; }
+        .success { background: #d4edda; color: #155724; }
+        .error { background: #f8d7da; color: #721c24; }
+    </style>
+</head>
+<body>
+    <h1>📊 Exportar/Importar CSV</h1>
+    
+    <h2>Exportar Viajes</h2>
+    <button onclick="exportarViajes()">📥 Exportar Viajes CSV</button>
+    <div id="exportResult"></div>
+    
+    <h2>Importar Viajes</h2>
+    <input type="file" id="csvFile" accept=".csv">
+    <button onclick="importarViajes()">📤 Importar CSV</button>
+    <div id="importResult"></div>
+
+    <script>
+        async function exportarViajes() {
+            const resultDiv = document.getElementById('exportResult');
+            try {
+                resultDiv.innerHTML = 'Exportando...';
+                
+                const response = await fetch('/api/viajes?populate=*');
+                const data = await response.json();
+                
+                if (!data.data || data.data.length === 0) {
+                    resultDiv.innerHTML = '<div class="error">No hay viajes para exportar</div>';
+                    return;
+                }
+                
+                // Convertir a CSV simple
+                let csv = 'ID,Nombre,Descripcion,Precio\\n';
+                data.data.forEach(viaje => {
+                    const attrs = viaje.attributes;
+                    csv += `${viaje.id},"${attrs.Nombre || ''}","${attrs.Descripcion || ''}","${attrs.Precio || ''}"\\n`;
+                });
+                
+                // Descargar
+                const blob = new Blob([csv], { type: 'text/csv' });
+                const url = window.URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = 'viajes.csv';
+                a.click();
+                
+                resultDiv.innerHTML = `<div class="success">✅ ${data.data.length} viajes exportados</div>`;
+                
+            } catch (error) {
+                resultDiv.innerHTML = `<div class="error">❌ Error: ${error.message}</div>`;
+            }
+        }
+        
+        async function importarViajes() {
+            const fileInput = document.getElementById('csvFile');
+            const resultDiv = document.getElementById('importResult');
+            
+            if (!fileInput.files[0]) {
+                resultDiv.innerHTML = '<div class="error">Selecciona un archivo CSV</div>';
+                return;
+            }
+            
+            try {
+                resultDiv.innerHTML = 'Importando...';
+                const file = fileInput.files[0];
+                const text = await file.text();
+                const lines = text.split('\\n').filter(l => l.trim());
+                
+                let created = 0;
+                for (let i = 1; i < lines.length; i++) {
+                    const [id, nombre, descripcion, precio] = lines[i].split(',').map(s => s.replace(/"/g, ''));
+                    
+                    try {
+                        await fetch('/api/viajes', {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({
+                                data: {
+                                    Nombre: nombre,
+                                    Descripcion: descripcion,
+                                    Precio: parseFloat(precio) || 0
+                                }
+                            })
+                        });
+                        created++;
+                    } catch (e) {
+                        console.error('Error creando viaje:', e);
+                    }
+                }
+                
+                resultDiv.innerHTML = `<div class="success">✅ ${created} viajes creados</div>`;
+                fileInput.value = '';
+                
+            } catch (error) {
+                resultDiv.innerHTML = `<div class="error">❌ Error: ${error.message}</div>`;
+            }
+        }
+    </script>
+</body>
+</html>

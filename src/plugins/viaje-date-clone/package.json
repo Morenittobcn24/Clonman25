@@ -1,0 +1,12 @@
+{
+  "name": "viaje-date-clone",
+  "version": "1.0.0",
+  "description": "Plugin para clonar fechas de viajes desde el admin",
+  "strapi": {
+    "name": "viaje-date-clone",
+    "displayName": "Clonar Fechas Viaje",
+    "description": "Duplicar fechas de salida desde el panel de administración",
+    "kind": "plugin"
+  },
+  "dependencies": {}
+}

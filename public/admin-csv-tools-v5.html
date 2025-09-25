@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin CSV y Herramientas - Strapi V5</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            margin-bottom: 20px;
+        }
+        h1 {
+            color: #2c3e50;
+            border-bottom: 3px solid #3498db;
+            padding-bottom: 15px;
+            margin-bottom: 30px;
+            font-size: 2rem;
+        }
+        h2 {
+            color: #34495e;
+            border-left: 4px solid #e74c3c;
+            padding-left: 15px;
+            margin-top: 40px;
+            margin-bottom: 20px;
+        }
+        .tool-section {
+            background: #f8f9fa;
+            padding: 25px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            border-left: 5px solid #3498db;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #34495e;
+        }
+        input, select {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+        input:focus, select:focus {
+            border-color: #3498db;
+            outline: none;
+        }
+        button {
+            background: linear-gradient(135deg, #27ae60, #2ecc71);
+            color: white;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 600;
+            margin-right: 10px;
+            margin-bottom: 10px;
+            transition: all 0.3s;
+        }
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+        .export-button {
+            background: linear-gradient(135deg, #e74c3c, #c0392b);
+        }
+        .import-button {
+            background: linear-gradient(135deg, #f39c12, #e67e22);
+        }
+        .clone-button {
+            background: linear-gradient(135deg, #9b59b6, #8e44ad);
+        }
+        .info-button {
+            background: linear-gradient(135deg, #3498db, #2980b9);
+        }
+        .result {
+            margin-top: 20px;
+            padding: 20px;
+            border-radius: 8px;
+            display: none;
+            font-family: monospace;
+        }
+        .success {
+            background-color: #d4edda;
+            color: #155724;
+            border: 2px solid #c3e6cb;
+        }
+        .error {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 2px solid #f5c6cb;
+        }
+        .info {
+            background-color: #d1ecf1;
+            color: #0c5460;
+            border: 2px solid #bee5eb;
+        }
+        pre {
+            background-color: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+            overflow-x: auto;
+            white-space: pre-wrap;
+            max-height: 300px;
+        }
+        .field-info {
+            font-size: 14px;
+            color: #666;
+            margin-top: 5px;
+            font-style: italic;
+        }
+        .grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+        }
+        @media (max-width: 768px) {
+            .grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        .status-indicator {
+            display: inline-block;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            margin-right: 8px;
+        }
+        .status-ok { background-color: #27ae60; }
+        .status-error { background-color: #e74c3c; }
+        .status-warning { background-color: #f39c12; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🛠️ Admin CSV y Herramientas - Strapi V5</h1>
+        <p><strong>Strapi Version:</strong> V5.15.1 | <strong>Funcionalidades:</strong> Import/Export CSV + Clonado de Salidas</p>
+        <div id="connection-info" style="background: #e3f2fd; padding: 10px; border-radius: 5px; margin-bottom: 20px; font-size: 14px;">
+            <strong>🔗 Información de Conexión:</strong><br>
+            <span id="current-url"></span><br>
+            <span id="api-base"></span>
+        </div>
+        
+        <div class="grid">
+            <!-- Sección CSV -->
+            <div class="tool-section">
+                <h2>📊 Herramientas CSV</h2>
+                
+                <div class="form-group">
+                    <label for="modelName">Modelo a exportar/importar:</label>
+                    <select id="modelName">
+                        <option value="viaje">Viajes</option>
+                        <option value="reserva">Reservas</option>
+                        <option value="actividad">Actividades</option>
+                        <option value="alojamiento">Alojamientos</option>
+                        <option value="proveedor">Proveedores</option>
+                    </select>
+                    <div class="field-info">Selecciona el tipo de contenido para exportar o importar</div>
+                </div>
+
+                <button onclick="exportarCSV()" class="export-button">📤 Exportar CSV</button>
+                
+                <div class="form-group" style="margin-top: 20px;">
+                    <label for="csvFile">Archivo CSV para importar:</label>
+                    <input type="file" id="csvFile" accept=".csv" />
+                    <div class="field-info">Selecciona un archivo CSV para importar datos</div>
+                </div>
+
+                <button onclick="importarCSV()" class="import-button">📥 Importar CSV</button>
+            </div>
+
+            <!-- Sección Clonado de Salidas -->
+            <div class="tool-section">
+                <h2>🚀 Clonado de Salidas</h2>
+                
+                <div class="form-group">
+                    <label for="viajeId">ID del Viaje:</label>
+                    <input type="text" id="viajeId" value="4" placeholder="ID o documentId del viaje">
+                    <div class="field-info">ID numérico o documentId alfanumérico del viaje</div>
+                </div>
+
+                <div class="form-group">
+                    <label for="fechaInicio">Nueva Fecha de Inicio:</label>
+                    <input type="date" id="fechaInicio" value="2025-12-25">
+                </div>
+
+                <div class="form-group">
+                    <label for="fechaFin">Nueva Fecha de Fin (opcional):</label>
+                    <input type="date" id="fechaFin" value="2025-12-30">
+                </div>
+
+                <button onclick="clonarSalida()" class="clone-button">🧬 Clonar Última Salida</button>
+                <button onclick="verificarViaje()" class="info-button">🔍 Ver Viaje</button>
+            </div>
+        </div>
+
+        <!-- Sección de Utilidades -->
+        <div class="tool-section">
+            <h2>🔧 Utilidades</h2>
+            <button onclick="listarViajes()" class="info-button">📋 Listar Todos los Viajes</button>
+            <button onclick="verificarEstado()" class="info-button">⚡ Estado del Sistema</button>
+            <button onclick="abrirAdmin()" class="info-button">🎛️ Panel Admin</button>
+        </div>
+
+        <div id="result" class="result"></div>
+    </div>
+
+    <script>
+        function showResult(message, type = 'info') {
+            const resultDiv = document.getElementById('result');
+            resultDiv.innerHTML = message;
+            resultDiv.className = `result ${type}`;
+            resultDiv.style.display = 'block';
+            resultDiv.scrollIntoView({ behavior: 'smooth' });
+        }
+
+        async function exportarCSV() {
+            const modelName = document.getElementById('modelName').value;
+            showResult('🔄 Exportando CSV...', 'info');
+
+            try {
+                const baseURL = window.location.origin;
+                const response = await fetch(`${baseURL}/api/csvs/export/${modelName}`);
+                
+                if (response.ok) {
+                    const blob = await response.blob();
+                    const url = window.URL.createObjectURL(blob);
+                    const a = document.createElement('a');
+                    a.style.display = 'none';
+                    a.href = url;
+                    a.download = `${modelName}_export_${new Date().toISOString().split('T')[0]}.csv`;
+                    document.body.appendChild(a);
+                    a.click();
+                    window.URL.revokeObjectURL(url);
+                    
+                    showResult(`✅ CSV de ${modelName} exportado exitosamente y descargado`, 'success');
+                } else {
+                    const error = await response.text();
+                    showResult(`❌ Error exportando: ${error}`, 'error');
+                }
+            } catch (error) {
+                showResult(`❌ Error de conexión: ${error.message}`, 'error');
+            }
+        }
+
+        async function importarCSV() {
+            const modelName = document.getElementById('modelName').value;
+            const fileInput = document.getElementById('csvFile');
+            const file = fileInput.files[0];
+
+            if (!file) {
+                showResult('❌ Por favor selecciona un archivo CSV', 'error');
+                return;
+            }
+
+            showResult('🔄 Importando CSV...', 'info');
+
+            try {
+                const formData = new FormData();
+                formData.append('file', file);
+
+                const baseURL = window.location.origin;
+                const response = await fetch(`${baseURL}/api/csvs/import/${modelName}`, {
+                    method: 'POST',
+                    body: formData
+                });
+
+                const result = await response.json();
+
+                if (response.ok) {
+                    showResult(`
+                        <h3>✅ Importación exitosa</h3>
+                        <p><strong>Registros procesados:</strong> ${result.processed || 'N/A'}</p>
+                        <p><strong>Registros creados:</strong> ${result.created || 'N/A'}</p>
+                        <p><strong>Tiempo:</strong> ${result.time || 'N/A'}</p>
+                        <pre>${JSON.stringify(result, null, 2)}</pre>
+                    `, 'success');
+                } else {
+                    showResult(`
+                        <h3>❌ Error en importación</h3>
+                        <p>${result.error || result.message || 'Error desconocido'}</p>
+                        <pre>${JSON.stringify(result, null, 2)}</pre>
+                    `, 'error');
+                }
+            } catch (error) {
+                showResult(`❌ Error de conexión: ${error.message}`, 'error');
+            }
+        }
+
+        async function clonarSalida() {
+            const viajeId = document.getElementById('viajeId').value.trim();
+            const fechaInicio = document.getElementById('fechaInicio').value;
+            const fechaFin = document.getElementById('fechaFin').value;
+
+            if (!viajeId || !fechaInicio) {
+                showResult('❌ ID del viaje y fecha de inicio son requeridos', 'error');
+                return;
+            }
+
+            showResult('🔄 Clonando última salida...', 'info');
+
+            try {
+                // Detectar si estamos en Codespace y usar la URL correcta
+                const baseURL = window.location.origin;
+                const apiURL = `${baseURL}/api/viajes/${viajeId}/salidas/0/clone`;
+                
+                console.log('🔗 Usando URL:', apiURL);
+                
+                const response = await fetch(apiURL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        fechaInicio: fechaInicio,
+                        ...(fechaFin && { fechaFin: fechaFin })
+                    })
+                });
+
+                const data = await response.json();
+
+                if (response.ok && data.success) {
+                    showResult(`
+                        <h3>✅ ¡Salida clonada exitosamente!</h3>
+                        <p><strong>Viaje:</strong> ${data.viaje.nombre} (ID: ${data.viaje.id})</p>
+                        <p><strong>Total salidas:</strong> ${data.viaje.totalSalidas}</p>
+                        
+                        <h4>📋 Salida Original (clonada):</h4>
+                        <pre>${JSON.stringify(data.salidaOriginal, null, 2)}</pre>
+                        
+                        <h4>🆕 Nueva Salida Creada:</h4>
+                        <pre>${JSON.stringify(data.nuevaSalida, null, 2)}</pre>
+                        
+                        <h4>ℹ️ Detalles:</h4>
+                        <p>• Método búsqueda: ${data.detalles.metodoBusqueda}</p>
+                        <p>• Campos copiados completos: ${data.detalles.camposCopiadosCompletos ? '✅' : '❌'}</p>
+                        <p>• Índice salida original: ${data.detalles.ultimaSalidaIndice}</p>
+                    `, 'success');
+                } else {
+                    showResult(`
+                        <h3>❌ Error clonando salida</h3>
+                        <p>${data.error?.message || data.message || 'Error desconocido'}</p>
+                        <pre>${JSON.stringify(data, null, 2)}</pre>
+                    `, 'error');
+                }
+            } catch (error) {
+                showResult(`❌ Error de conexión: ${error.message}`, 'error');
+            }
+        }
+
+        async function verificarViaje() {
+            const viajeId = document.getElementById('viajeId').value.trim();
+            if (!viajeId) {
+                showResult('❌ Por favor ingresa el ID del viaje', 'error');
+                return;
+            }
+
+            showResult('🔍 Verificando viaje...', 'info');
+
+            try {
+                const baseURL = window.location.origin;
+                const response = await fetch(`${baseURL}/api/debug/viajes/${viajeId}`);
+                const data = await response.json();
+
+                if (data.success && data.viaje) {
+                    const v = data.viaje;
+                    showResult(`
+                        <h3>📋 Información del Viaje</h3>
+                        <p><strong>ID:</strong> ${v.id} | <strong>Document ID:</strong> ${v.documentId}</p>
+                        <p><strong>Nombre:</strong> ${v.nombre}</p>
+                        <p><strong>Total salidas:</strong> ${v.totalSalidas}</p>
+                        
+                        <h4>🎯 Salidas (${v.salidas.length}):</h4>
+                        ${v.salidas.map((s, i) => `
+                            <div style="border: 1px solid #ddd; padding: 10px; margin: 5px 0; border-radius: 5px; ${i === v.salidas.length - 1 ? 'border-color: #e74c3c; background: #fdf2f2;' : ''}">
+                                <strong>${i === v.salidas.length - 1 ? '🎯 ÚLTIMA (será clonada)' : `Salida ${i + 1}`}:</strong>
+                                ${s.Fecha_inicio} → ${s.Fecha_fin} | €${s.Precio_pax} | ${s.Estado || 'Sin estado'}
+                                <br><small>Cupos: ${s.Cupo_total || 'N/A'} total, ${s.Cupo_disponible || 'N/A'} disponibles</small>
+                            </div>
+                        `).join('')}
+                        
+                        <h4>🔧 Datos completos:</h4>
+                        <pre>${JSON.stringify(v, null, 2)}</pre>
+                    `, 'info');
+                } else {
+                    showResult(`
+                        <h3>❌ Viaje no encontrado</h3>
+                        <p>${data.message || 'Error desconocido'}</p>
+                    `, 'error');
+                }
+            } catch (error) {
+                showResult(`❌ Error de conexión: ${error.message}`, 'error');
+            }
+        }
+
+        async function listarViajes() {
+            showResult('📝 Listando viajes...', 'info');
+
+            try {
+                const baseURL = window.location.origin;
+                const response = await fetch(`${baseURL}/api/debug/viajes`);
+                const data = await response.json();
+
+                if (data.success) {
+                    let html = `<h3>📝 Viajes Disponibles (${data.total})</h3>`;
+                    
+                    data.viajes.forEach((v, i) => {
+                        html += `
+                            <div style="border: 1px solid #ddd; padding: 15px; margin: 10px 0; border-radius: 8px; background: #f9f9f9;">
+                                <h4>${v.nombre || 'Sin nombre'}</h4>
+                                <p><strong>ID:</strong> ${v.id} | <strong>Document ID:</strong> ${v.documentId}</p>
+                                <p><strong>Salidas:</strong> ${v.salidas} ${v.salidas > 0 ? '✅' : '❌'}</p>
+                                ${v.salidas > 0 ? `
+                                    <button onclick="document.getElementById('viajeId').value='${v.id}'; verificarViaje();" 
+                                            style="background: #3498db; color: white; border: none; padding: 8px 16px; border-radius: 5px; cursor: pointer; margin-right: 10px;">
+                                        🔍 Ver Detalles
+                                    </button>
+                                    <button onclick="document.getElementById('viajeId').value='${v.id}';" 
+                                            style="background: #27ae60; color: white; border: none; padding: 8px 16px; border-radius: 5px; cursor: pointer;">
+                                        ✅ Usar para Clonar
+                                    </button>
+                                ` : '<span style="color: #e74c3c;">⚠️ Sin salidas para clonar</span>'}
+                            </div>
+                        `;
+                    });
+
+                    showResult(html, 'info');
+                } else {
+                    showResult(`❌ Error listando viajes: ${data.error}`, 'error');
+                }
+            } catch (error) {
+                showResult(`❌ Error de conexión: ${error.message}`, 'error');
+            }
+        }
+
+        async function verificarEstado() {
+            showResult('⚡ Verificando estado del sistema...', 'info');
+
+            const baseURL = window.location.origin;
+            const checks = [
+                { name: 'Servidor Strapi', url: `${baseURL}/admin`, type: 'admin' },
+                { name: 'API Viajes', url: `${baseURL}/api/debug/viajes`, type: 'api' },
+                { name: 'Export CSV', url: `${baseURL}/api/csvs/export/viaje`, type: 'csv' }
+            ];
+
+            let html = '<h3>⚡ Estado del Sistema</h3>';
+
+            for (const check of checks) {
+                try {
+                    const response = await fetch(check.url);
+                    const status = response.status;
+                    const statusClass = status < 400 ? 'status-ok' : 'status-error';
+                    const statusText = status < 400 ? 'OK' : 'ERROR';
+                    
+                    html += `
+                        <p><span class="status-indicator ${statusClass}"></span>
+                        <strong>${check.name}:</strong> ${statusText} (${status})</p>
+                    `;
+                } catch (error) {
+                    html += `
+                        <p><span class="status-indicator status-error"></span>
+                        <strong>${check.name}:</strong> ERROR (${error.message})</p>
+                    `;
+                }
+            }
+
+            showResult(html, 'info');
+        }
+
+        function abrirAdmin() {
+            const baseURL = window.location.origin;
+            window.open(`${baseURL}/admin`, '_blank');
+        }
+
+        // Cargar lista inicial
+        window.onload = function() {
+            // Mostrar información de conexión
+            document.getElementById('current-url').innerHTML = `URL Actual: <code>${window.location.href}</code>`;
+            document.getElementById('api-base').innerHTML = `Base API: <code>${window.location.origin}/api/</code>`;
+            
+            listarViajes();
+        };
+    </script>
+</body>
+</html>

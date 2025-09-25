@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>URLs Codespace - Strapi V5</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+        h1 {
+            color: #2c3e50;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .url-card {
+            background: #f8f9fa;
+            border: 2px solid #e9ecef;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 15px 0;
+            transition: all 0.3s;
+        }
+        .url-card:hover {
+            border-color: #3498db;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        .url-title {
+            font-weight: bold;
+            color: #2c3e50;
+            margin-bottom: 10px;
+            font-size: 18px;
+        }
+        .url-link {
+            font-family: monospace;
+            background: #e9ecef;
+            padding: 10px;
+            border-radius: 5px;
+            word-break: break-all;
+            margin: 10px 0;
+        }
+        .url-link a {
+            color: #3498db;
+            text-decoration: none;
+        }
+        .url-link a:hover {
+            text-decoration: underline;
+        }
+        .description {
+            color: #6c757d;
+            font-size: 14px;
+            margin-top: 10px;
+        }
+        .status {
+            display: inline-block;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+        .status.online {
+            background: #d4edda;
+            color: #155724;
+        }
+        .status.checking {
+            background: #fff3cd;
+            color: #856404;
+        }
+        .copy-btn {
+            background: #3498db;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-left: 10px;
+            font-size: 12px;
+        }
+        .copy-btn:hover {
+            background: #2980b9;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🚀 URLs del Codespace - Strapi V5</h1>
+        
+        <div class="url-card">
+            <div class="url-title">🎛️ Panel de Administración</div>
+            <div class="url-link">
+                <a href="" id="admin-url" target="_blank"></a>
+                <button class="copy-btn" onclick="copyUrl('admin-url')">📋 Copiar</button>
+            </div>
+            <div class="description">Panel administrativo completo de Strapi para gestionar contenido</div>
+            <div class="status checking" id="admin-status">Verificando...</div>
+        </div>
+
+        <div class="url-card">
+            <div class="url-title">🛠️ Herramientas CSV y Clonado</div>
+            <div class="url-link">
+                <a href="" id="tools-url" target="_blank"></a>
+                <button class="copy-btn" onclick="copyUrl('tools-url')">📋 Copiar</button>
+            </div>
+            <div class="description">Interfaz para export/import CSV y clonado de salidas</div>
+            <div class="status checking" id="tools-status">Verificando...</div>
+        </div>
+
+        <div class="url-card">
+            <div class="url-title">🧪 Test Clonado de Salidas</div>
+            <div class="url-link">
+                <a href="" id="test-url" target="_blank"></a>
+                <button class="copy-btn" onclick="copyUrl('test-url')">📋 Copiar</button>
+            </div>
+            <div class="description">Interfaz específica para probar el clonado de salidas</div>
+            <div class="status checking" id="test-status">Verificando...</div>
+        </div>
+
+        <div class="url-card">
+            <div class="url-title">🔗 API Base</div>
+            <div class="url-link">
+                <span id="api-base"></span>
+                <button class="copy-btn" onclick="copyUrl('api-base')">📋 Copiar</button>
+            </div>
+            <div class="description">URL base para todas las llamadas a la API</div>
+        </div>
+
+        <div class="url-card">
+            <div class="url-title">🚀 Endpoint Clonado</div>
+            <div class="url-link">
+                <span id="clone-endpoint"></span>
+                <button class="copy-btn" onclick="copyUrl('clone-endpoint')">📋 Copiar</button>
+            </div>
+            <div class="description">Endpoint específico para clonar salidas (POST)</div>
+        </div>
+    </div>
+
+    <script>
+        // Detectar si estamos en Codespace
+        const currentHost = window.location.host;
+        const isCodespace = currentHost.includes('app.github.dev');
+        const baseUrl = window.location.origin;
+
+        // Configurar URLs
+        const urls = {
+            admin: `${baseUrl}/admin`,
+            tools: `${baseUrl}/admin-csv-tools-v5.html`,
+            test: `${baseUrl}/test-clonar-salidas.html`,
+            apiBase: `${baseUrl}/api/`,
+            cloneEndpoint: `${baseUrl}/api/viajes/{id}/salidas/0/clone`
+        };
+
+        // Actualizar elementos
+        document.getElementById('admin-url').href = urls.admin;
+        document.getElementById('admin-url').textContent = urls.admin;
+
+        document.getElementById('tools-url').href = urls.tools;
+        document.getElementById('tools-url').textContent = urls.tools;
+
+        document.getElementById('test-url').href = urls.test;
+        document.getElementById('test-url').textContent = urls.test;
+
+        document.getElementById('api-base').textContent = urls.apiBase;
+        document.getElementById('clone-endpoint').textContent = urls.cloneEndpoint;
+
+        // Función para copiar URL
+        function copyUrl(elementId) {
+            const element = document.getElementById(elementId);
+            const text = element.href || element.textContent;
+            navigator.clipboard.writeText(text).then(() => {
+                alert('URL copiada al portapapeles');
+            });
+        }
+
+        // Verificar estado de los endpoints
+        async function checkStatus(url, statusElementId) {
+            try {
+                const response = await fetch(url, { method: 'HEAD' });
+                const statusElement = document.getElementById(statusElementId);
+                if (response.ok) {
+                    statusElement.textContent = '✅ Online';
+                    statusElement.className = 'status online';
+                } else {
+                    statusElement.textContent = `❌ Error ${response.status}`;
+                    statusElement.className = 'status offline';
+                }
+            } catch (error) {
+                const statusElement = document.getElementById(statusElementId);
+                statusElement.textContent = '❌ No disponible';
+                statusElement.className = 'status offline';
+            }
+        }
+
+        // Verificar estados al cargar
+        setTimeout(() => {
+            checkStatus(urls.admin, 'admin-status');
+            checkStatus(urls.tools, 'tools-status');
+            checkStatus(urls.test, 'test-status');
+        }, 1000);
+
+        // Información adicional
+        if (isCodespace) {
+            document.title += ' (GitHub Codespace)';
+        }
+    </script>
+</body>
+</html>

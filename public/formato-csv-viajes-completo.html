@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formato CSV para Importación de Viajes - Sistema Completo</title>
+    <style>
+        body { font-family: Arial, sans-serif; max-width: 1200px; margin: 0 auto; padding: 20px; }
+        .warning { background: #fff3cd; border: 1px solid #ffeaa7; padding: 15px; border-radius: 5px; margin: 20px 0; }
+        .success { background: #d4edda; border: 1px solid #c3e6cb; padding: 15px; border-radius: 5px; margin: 20px 0; }
+        .error { background: #f8d7da; border: 1px solid #f5c6cb; padding: 15px; border-radius: 5px; margin: 20px 0; }
+        table { border-collapse: collapse; width: 100%; margin: 20px 0; }
+        th, td { border: 1px solid #dee2e6; padding: 8px 12px; text-align: left; vertical-align: top; }
+        th { background-color: #e9ecef; font-weight: bold; }
+        code { background: #f8f9fa; padding: 2px 4px; border-radius: 3px; font-family: monospace; }
+        .example { background: #f8f9fa; padding: 15px; border-radius: 5px; margin: 20px 0; overflow-x: auto; }
+    </style>
+</head>
+<body>
+    <h1>🚀 Sistema CSV Completo para Viajes</h1>
+    
+    <div class="success">
+        <h3>✅ NUEVO SISTEMA MEJORADO</h3>
+        <p><strong>Ahora puedes importar TODOS los campos del modelo viaje:</strong></p>
+        <ul>
+            <li>🎯 <strong>Todos los campos disponibles</strong>: básicos, numéricos, booleanos, fechas, componentes y relaciones</li>
+            <li>🔍 <strong>Validación inteligente</strong>: solo se importan registros con campos obligatorios completos</li>
+            <li>🧹 <strong>Limpieza automática</strong>: campos vacíos se convierten automáticamente en null</li>
+            <li>📊 <strong>Reporte detallado</strong>: importados, omitidos y errores con razones específicas</li>
+            <li>🔄 <strong>Procesamiento JSON</strong>: componentes complejos se parsean automáticamente</li>
+        </ul>
+    </div>
+
+    <h2>📋 Campos Disponibles para Importar</h2>
+    
+    <h3>📝 Campos Básicos (Texto)</h3>
+    <table>
+        <tr><th>Campo</th><th>Descripción</th><th>Obligatorio</th><th>Ejemplo</th></tr>
+        <tr><td><code>Nombre</code></td><td>Nombre del viaje</td><td>🔴 <strong>SÍ</strong></td><td>"Viaje a París"</td></tr>
+        <tr><td><code>Slogan</code></td><td>Eslogan o frase publicitaria</td><td>🟡 No</td><td>"Descubre la ciudad del amor"</td></tr>
+        <tr><td><code>Descripcion_corta</code></td><td>Descripción breve del viaje</td><td>🟡 No</td><td>"Un viaje increíble por París con todos los servicios"</td></tr>
+        <tr><td><code>Descripcion_larga</code></td><td>Descripción completa y detallada</td><td>🟡 No</td><td>"París es una ciudad que enamora desde el primer momento..."</td></tr>
+        <tr><td><code>Icono_viaje</code></td><td>Icono o imagen representativa</td><td>🟡 No</td><td>"paris-icon" o "torre-eiffel.jpg"</td></tr>
+    </table>
+
+    <h3>🔢 Campos Numéricos</h3>
+    <table>
+        <tr><th>Campo</th><th>Descripción</th><th>Tipo</th><th>Ejemplo</th><th>Notas</th></tr>
+        <tr><td><code>Precio_desde</code></td><td>Precio base del viaje</td><td>Decimal</td><td>1200.50</td><td>Se convierte automáticamente a número</td></tr>
+        <tr><td><code>Duracion_dias</code></td><td>Duración en días</td><td>Entero</td><td>7</td><td>Valores inválidos se convierten en null</td></tr>
+        <tr><td><code>Maximo_personas</code></td><td>Capacidad máxima</td><td>Entero</td><td>20</td><td>Debe ser mayor que Minimo_personas</td></tr>
+        <tr><td><code>Minimo_personas</code></td><td>Mínimo de personas requeridas</td><td>Entero</td><td>2</td><td>Generalmente 1 o 2</td></tr>
+    </table>
+
+    <h3>✅ Campos Booleanos (Verdadero/Falso)</h3>
+    <table>
+        <tr><th>Campo</th><th>Descripción</th><th>Valores Aceptados</th><th>Ejemplo</th></tr>
+        <tr><td><code>Destacado</code></td><td>Si el viaje aparece como destacado</td><td>true, false, 1, 0, "true", "false"</td><td>true</td></tr>
+        <tr><td><code>Activo</code></td><td>Si el viaje está activo y visible</td><td>true, false, 1, 0, "true", "false"</td><td>true</td></tr>
+    </table>
+
+    <h3>📅 Campos de Fecha y Localización</h3>
+    <table>
+        <tr><th>Campo</th><th>Descripción</th><th>Formato</th><th>Ejemplo</th></tr>
+        <tr><td><code>publishedAt</code></td><td>Fecha de publicación</td><td>ISO 8601</td><td>"2024-09-25T15:50:00.000Z"</td></tr>
+        <tr><td><code>createdAt</code></td><td>Fecha de creación</td><td>ISO 8601</td><td>"2024-09-25T15:50:00.000Z"</td></tr>
+        <tr><td><code>updatedAt</code></td><td>Fecha de actualización</td><td>ISO 8601</td><td>"2024-09-25T15:50:00.000Z"</td></tr>
+        <tr><td><code>locale</code></td><td>Idioma del contenido</td><td>Código ISO</td><td>"es", "en", "fr", "de"</td></tr>
+    </table>
+
+    <h3>🧩 Componentes Complejos (JSON)</h3>
+    <div class="warning">
+        <p><strong>Importante:</strong> Los componentes deben enviarse como strings JSON válidos en el CSV.</p>
+    </div>
+    <table>
+        <tr><th>Campo</th><th>Descripción</th><th>Estructura JSON</th></tr>
+        <tr><td><code>Salidas</code></td><td>Fechas y precios de salida del viaje</td><td>Array de objetos con fecha_salida, fecha_regreso, precio, cupo_maximo, cupo_disponible</td></tr>
+        <tr><td><code>Itinerario</code></td><td>Programa día a día del viaje</td><td>Array de objetos con dia, titulo, descripcion</td></tr>
+        <tr><td><code>Preguntas</code></td><td>Preguntas frecuentes del viaje</td><td>Array de objetos con pregunta, respuesta</td></tr>
+        <tr><td><code>SEO</code></td><td>Metadatos para SEO del viaje</td><td>Objeto con metaTitle, metaDescription, keywords</td></tr>
+    </table>
+
+    <h3>🔗 Relaciones con Otros Modelos</h3>
+    <table>
+        <tr><th>Campo</th><th>Descripción</th><th>Formato</th><th>Ejemplo</th></tr>
+        <tr><td><code>Actividades</code></td><td>Actividades incluidas en el viaje</td><td>Array de IDs o string separado por comas</td><td>[1,2,3] o "1,2,3"</td></tr>
+        <tr><td><code>Alojamiento</code></td><td>Alojamientos del viaje</td><td>Array de IDs o string separado por comas</td><td>[5,6] o "5,6"</td></tr>
+        <tr><td><code>Transfer</code></td><td>Transfers incluidos</td><td>Array de IDs o string separado por comas</td><td>[8] o "8"</td></tr>
+        <tr><td><code>Seguros</code></td><td>Seguros disponibles</td><td>Array de IDs o string separado por comas</td><td>[10,11] o "10,11"</td></tr>
+        <tr><td><code>Descuento</code></td><td>Descuentos aplicables</td><td>Array de IDs o string separado por comas</td><td>[15] o "15"</td></tr>
+    </table>
+
+    <h2>📋 Ejemplos de Componentes JSON</h2>
+    
+    <div class="success">
+        <h4>✅ Ejemplo de Salidas (Campo: Salidas)</h4>
+        <div class="example">
+            <code>"[{""Fecha_salida"":""2024-12-15"",""Fecha_regreso"":""2024-12-22"",""Precio"":1200.50,""Cupo_maximo"":20,""Cupo_disponible"":15},{""Fecha_salida"":""2025-01-10"",""Fecha_regreso"":""2025-01-17"",""Precio"":1150.00,""Cupo_maximo"":20,""Cupo_disponible"":20}]"</code>
+        </div>
+    </div>
+
+    <div class="success">
+        <h4>✅ Ejemplo de Itinerario (Campo: Itinerario)</h4>
+        <div class="example">
+            <code>"[{""dia"":1,""titulo"":""Llegada a París"",""descripcion"":""Llegada al aeropuerto Charles de Gaulle y traslado al hotel""},{""dia"":2,""titulo"":""Tour por el centro"",""descripcion"":""Visita a la Torre Eiffel y crucero por el Sena""}]"</code>
+        </div>
+    </div>
+
+    <div class="success">
+        <h4>✅ Ejemplo de Preguntas FAQ (Campo: Preguntas)</h4>
+        <div class="example">
+            <code>"[{""pregunta"":""¿Incluye desayuno?"",""respuesta"":""Sí, desayuno incluido todos los días""},{""pregunta"":""¿Se requiere pasaporte?"",""respuesta"":""Sí, pasaporte vigente con al menos 6 meses""}]"</code>
+        </div>
+    </div>
+
+    <h2>🔍 Sistema de Validación</h2>
+    
+    <div class="error">
+        <h3>❌ Registros que se OMITEN automáticamente:</h3>
+        <ul>
+            <li><strong>Nombre vacío:</strong> Registros sin campo "Nombre" o con valor null, vacío o solo espacios</li>
+            <li><strong>Ejemplo de registro omitido:</strong> "Viaje Incompleto","","","","",null,null,null...</li>
+        </ul>
+    </div>
+
+    <div class="success">
+        <h3>✅ Registros que se IMPORTAN correctamente:</h3>
+        <ul>
+            <li><strong>Campo Nombre válido:</strong> Cualquier registro con nombre no vacío</li>
+            <li><strong>Limpieza automática:</strong> Campos vacíos ("", "null", null) se convierten en null</li>
+            <li><strong>Conversión automática:</strong> Números, booleanos y JSON se procesan automáticamente</li>
+            <li><strong>Valores por defecto:</strong> locale se establece como "es" si no se proporciona</li>
+        </ul>
+    </div>
+
+    <h2>📁 Archivos de Ejemplo Disponibles</h2>
+    <table>
+        <tr><th>Archivo</th><th>Descripción</th><th>Uso Recomendado</th></tr>
+        <tr><td><code>ejemplo-viajes-completo.csv</code></td><td>Ejemplo con todos los campos y componentes JSON</td><td>Para importaciones avanzadas con datos complejos</td></tr>
+        <tr><td><code>ejemplo-viajes.csv</code></td><td>Ejemplo básico con campos mínimos</td><td>Para importaciones rápidas de datos básicos</td></tr>
+    </table>
+
+    <h2>📊 Interpretación del Reporte de Importación</h2>
+    <div class="example">
+        <h4>Ejemplo de respuesta del sistema:</h4>
+        <code>
+        {<br>
+        &nbsp;&nbsp;"success": true,<br>
+        &nbsp;&nbsp;"message": "3 registros importados correctamente, 1 omitidos por estar incompletos",<br>
+        &nbsp;&nbsp;"created": 3,<br>
+        &nbsp;&nbsp;"skipped": 1,<br>
+        &nbsp;&nbsp;"errors": 0,<br>
+        &nbsp;&nbsp;"total": 4,<br>
+        &nbsp;&nbsp;"details": {<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;"created_records": 3,<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;"skipped_records": [<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"row": 4,<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"reason": "Campo obligatorio 'Nombre' está vacío o nulo",<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"data": {...}<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;],<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;"error_records": []<br>
+        &nbsp;&nbsp;}<br>
+        }
+        </code>
+    </div>
+
+    <div class="warning">
+        <h3>💡 Consejos para una Importación Exitosa</h3>
+        <ul>
+            <li><strong>Nombre obligatorio:</strong> Asegúrate de que todos los registros tengan un nombre válido</li>
+            <li><strong>JSON válido:</strong> Para componentes complejos, usa herramientas para validar el JSON</li>
+            <li><strong>Escapa las comillas:</strong> En CSV, usa dobles comillas ("") dentro de strings JSON</li>
+            <li><strong>Prueba con pocos registros:</strong> Haz pruebas con 2-3 registros antes de importar masivamente</li>
+            <li><strong>Revisa el reporte:</strong> Siempre revisa los detalles de registros omitidos o con errores</li>
+        </ul>
+    </div>
+
+</body>
+</html>

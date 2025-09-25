@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test de Funcionalidades - Sistema Manaslu</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; background: #f5f5f5; }
+        .container { max-width: 800px; margin: 0 auto; background: white; padding: 20px; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        .test-section { margin: 20px 0; padding: 15px; border: 1px solid #ddd; border-radius: 5px; }
+        .test-section h3 { color: #333; margin-top: 0; }
+        button { padding: 10px 15px; margin: 5px; background: #007bff; color: white; border: none; border-radius: 5px; cursor: pointer; }
+        button:hover { background: #0056b3; }
+        .btn-export { background: #28a745; }
+        .btn-export:hover { background: #1e7e34; }
+        .btn-duplicate { background: #ffc107; color: black; }
+        .btn-duplicate:hover { background: #e0a800; }
+        .result { margin: 10px 0; padding: 10px; border-radius: 5px; }
+        .success { background: #d4edda; color: #155724; border: 1px solid #c3e6cb; }
+        .error { background: #f8d7da; color: #721c24; border: 1px solid #f5c6cb; }
+        .info { background: #d1ecf1; color: #0c5460; border: 1px solid #bee5eb; }
+        input[type="text"], input[type="number"] { padding: 8px; margin: 5px; border: 1px solid #ddd; border-radius: 3px; width: 200px; }
+        textarea { width: 100%; height: 100px; padding: 8px; border: 1px solid #ddd; border-radius: 3px; }
+        .status { font-weight: bold; padding: 5px 10px; border-radius: 3px; display: inline-block; margin: 5px 0; }
+        .status.online { background: #d4edda; color: #155724; }
+        .status.offline { background: #f8d7da; color: #721c24; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🧪 Test de Funcionalidades - Sistema Manaslu</h1>
+        <p>Panel de pruebas para verificar que los botones de exportación, importación y duplicación funcionan correctamente.</p>
+
+        <!-- Estado del servidor -->
+        <div class="test-section">
+            <h3>📡 Estado del Servidor</h3>
+            <button onclick="checkServerStatus()">Verificar Conexión</button>
+            <div id="serverStatus" class="status offline">Desconectado</div>
+            <div id="serverInfo"></div>
+        </div>
+
+        <!-- Test de Exportación -->
+        <div class="test-section">
+            <h3>📤 Test de Exportación</h3>
+            <p>Probar la funcionalidad de exportación CSV de viajes:</p>
+            <button class="btn-export" onclick="testExport()">Exportar Viajes</button>
+            <div id="exportResult"></div>
+        </div>
+
+        <!-- Test de Duplicación -->
+        <div class="test-section">
+            <h3>🔄 Test de Duplicación de Viajes</h3>
+            <p>Probar la funcionalidad de duplicación con clonado de fechas:</p>
+            <div>
+                <input type="number" id="viajeId" placeholder="ID del viaje a duplicar" value="1">
+                <input type="text" id="newViajeName" placeholder="Nombre del viaje duplicado" value="Viaje Test Clonado">
+                <label><input type="checkbox" id="copyDates" checked> Clonar fechas</label>
+            </div>
+            <button class="btn-duplicate" onclick="testDuplicate()">Duplicar Viaje</button>
+            <div id="duplicateResult"></div>
+        </div>
+
+        <!-- Test de Clonado de Salidas -->
+        <div class="test-section">
+            <h3>📅 Test de Clonado de Salidas (Fechas)</h3>
+            <p>Clonar una salida específica de un viaje con nuevas fechas:</p>
+            <div>
+                <input type="number" id="viajeIdSalida" placeholder="ID del viaje" value="1">
+                <input type="number" id="salidaIndex" placeholder="Índice de salida (0, 1, 2...)" value="0">
+                <input type="date" id="nuevaFechaInicio" placeholder="Nueva fecha inicio">
+                <input type="date" id="nuevaFechaFin" placeholder="Nueva fecha fin (opcional)">
+            </div>
+            <button class="btn-duplicate" onclick="testCloneSalida()">Clonar Salida</button>
+            <div id="cloneSalidaResult"></div>
+        </div>
+
+        <!-- Test de Lista de Viajes -->
+        <div class="test-section">
+            <h3>📋 Lista de Viajes Disponibles</h3>
+            <button onclick="loadViajes()">Cargar Lista de Viajes</button>
+            <div id="viajesList"></div>
+        </div>
+
+        <!-- Consola de Debug -->
+        <div class="test-section">
+            <h3>🔧 Consola de Debug</h3>
+            <textarea id="debugConsole" readonly placeholder="Los logs de debug aparecerán aquí..."></textarea>
+            <button onclick="clearDebug()">Limpiar</button>
+        </div>
+    </div>
+
+    <script>
+        let debugText = '';
+
+        // Función para formatear fechas en formato español DD/MM/YYYY
+        function formatSpanishDate(dateString) {
+            if (!dateString) return 'N/A';
+            try {
+                const date = new Date(dateString);
+                return date.toLocaleDateString('es-ES', {
+                    day: '2-digit',
+                    month: '2-digit',
+                    year: 'numeric'
+                });
+            } catch (error) {
+                return dateString;
+            }
+        }
+
+        function log(message, type = 'info') {
+            const timestamp = new Date().toLocaleTimeString('es-ES');
+            debugText += `[${timestamp}] ${type.toUpperCase()}: ${message}\n`;
+            document.getElementById('debugConsole').value = debugText;
+            document.getElementById('debugConsole').scrollTop = document.getElementById('debugConsole').scrollHeight;
+            console.log(`[${type}]`, message);
+        }
+
+        function clearDebug() {
+            debugText = '';
+            document.getElementById('debugConsole').value = '';
+        }
+
+        function showResult(elementId, message, type) {
+            const element = document.getElementById(elementId);
+            element.innerHTML = `<div class="result ${type}">${message}</div>`;
+        }
+
+        async function checkServerStatus() {
+            log('Verificando estado del servidor...');
+            try {
+                const response = await fetch('/api/viajes');
+                const statusElement = document.getElementById('serverStatus');
+                const infoElement = document.getElementById('serverInfo');
+                
+                if (response.ok) {
+                    statusElement.textContent = 'Conectado';
+                    statusElement.className = 'status online';
+                    const data = await response.json();
+                    infoElement.innerHTML = `<div class="result success">✅ Servidor activo - ${data.data.length} viajes encontrados</div>`;
+                    log(`Servidor activo con ${data.data.length} viajes`);
+                } else {
+                    throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+                }
+            } catch (error) {
+                document.getElementById('serverStatus').textContent = 'Desconectado';
+                document.getElementById('serverStatus').className = 'status offline';
+                document.getElementById('serverInfo').innerHTML = `<div class="result error">❌ Error: ${error.message}</div>`;
+                log(`Error de conexión: ${error.message}`, 'error');
+            }
+        }
+
+        async function testExport() {
+            log('Iniciando test de exportación...');
+            showResult('exportResult', '⏳ Preparando exportación...', 'info');
+            
+            try {
+                const url = '/api/csv-manager/export?entity=viaje';
+                log(`Solicitando exportación: ${url}`);
+                
+                const response = await fetch(url);
+                log(`Respuesta recibida: ${response.status} ${response.statusText}`);
+                
+                if (!response.ok) {
+                    let errorMessage;
+                    try {
+                        const error = await response.json();
+                        errorMessage = error.message || error.error || 'Error desconocido';
+                    } catch (e) {
+                        errorMessage = `HTTP ${response.status}: ${response.statusText}`;
+                    }
+                    throw new Error(errorMessage);
+                }
+                
+                const blob = await response.blob();
+                log(`Archivo CSV generado: ${blob.size} bytes`);
+                
+                if (blob.size === 0) {
+                    throw new Error('El archivo exportado está vacío');
+                }
+                
+                // Descargar el archivo
+                const url2 = window.URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url2;
+                a.download = `viajes_export_test_${new Date().toISOString().split('T')[0]}.csv`;
+                document.body.appendChild(a);
+                a.click();
+                window.URL.revokeObjectURL(url2);
+                document.body.removeChild(a);
+                
+                showResult('exportResult', `✅ Exportación exitosa: ${blob.size} bytes descargados`, 'success');
+                log(`Exportación completada exitosamente - ${blob.size} bytes`, 'success');
+                
+            } catch (error) {
+                showResult('exportResult', `❌ Error en exportación: ${error.message}`, 'error');
+                log(`Error en exportación: ${error.message}`, 'error');
+            }
+        }
+
+        async function testDuplicate() {
+            const viajeId = document.getElementById('viajeId').value;
+            const newName = document.getElementById('newViajeName').value;
+            const copyDates = document.getElementById('copyDates').checked;
+            
+            if (!viajeId || !newName) {
+                showResult('duplicateResult', '❌ Por favor completa todos los campos', 'error');
+                return;
+            }
+            
+            log(`Iniciando duplicación - ID: ${viajeId}, Nombre: ${newName}, Clonar fechas: ${copyDates}`);
+            showResult('duplicateResult', '⏳ Duplicando viaje...', 'info');
+            
+            try {
+                const url = `/api/viajes/${viajeId}/duplicate`;
+                log(`URL de duplicación: ${url}`);
+                
+                const response = await fetch(url, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        newName: newName,
+                        copyDates: copyDates
+                    })
+                });
+                
+                log(`Respuesta de duplicación: ${response.status} ${response.statusText}`);
+                
+                if (!response.ok) {
+                    let errorMessage;
+                    try {
+                        const error = await response.json();
+                        errorMessage = error.message || error.error || 'Error desconocido';
+                    } catch (e) {
+                        errorMessage = `HTTP ${response.status}: ${response.statusText}`;
+                    }
+                    throw new Error(errorMessage);
+                }
+                
+                const result = await response.json();
+                log(`Duplicación exitosa: ${JSON.stringify(result)}`);
+                
+                showResult('duplicateResult', 
+                    `✅ Viaje duplicado exitosamente<br>
+                    <strong>Original:</strong> ${result.original.nombre} (ID: ${result.original.id})<br>
+                    <strong>Duplicado:</strong> ${result.duplicated.nombre} (ID: ${result.duplicated.id})<br>
+                    <strong>Salidas:</strong> ${result.duplicated.salidas}<br>
+                    <strong>Fechas clonadas:</strong> ${result.duplicated.fechasClonadas ? 'Sí' : 'No'}`, 
+                    'success'
+                );
+                
+                // Actualizar la lista de viajes
+                setTimeout(loadViajes, 1000);
+                
+            } catch (error) {
+                showResult('duplicateResult', `❌ Error en duplicación: ${error.message}`, 'error');
+                log(`Error en duplicación: ${error.message}`, 'error');
+            }
+        }
+
+        async function testCloneSalida() {
+            const viajeId = document.getElementById('viajeIdSalida').value;
+            const salidaIndex = document.getElementById('salidaIndex').value;
+            const fechaInicio = document.getElementById('nuevaFechaInicio').value;
+            const fechaFin = document.getElementById('nuevaFechaFin').value;
+            
+            if (!viajeId || salidaIndex === '' || !fechaInicio) {
+                showResult('cloneSalidaResult', '❌ Por favor completa los campos requeridos (ID viaje, índice salida, fecha inicio)', 'error');
+                return;
+            }
+            
+            log(`Iniciando clonado de salida - Viaje ID: ${viajeId}, Salida Index: ${salidaIndex}, Nueva fecha: ${fechaInicio}`);
+            showResult('cloneSalidaResult', '⏳ Clonando salida...', 'info');
+            
+            try {
+                const url = `/api/viajes/${viajeId}/salidas/${salidaIndex}/clone`;
+                log(`URL de clonado: ${url}`);
+                
+                const response = await fetch(url, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        fechaInicio: fechaInicio,
+                        fechaFin: fechaFin || fechaInicio
+                    })
+                });
+                
+                log(`Respuesta de clonado: ${response.status} ${response.statusText}`);
+                
+                if (!response.ok) {
+                    let errorMessage;
+                    try {
+                        const error = await response.json();
+                        errorMessage = error.message || error.error || 'Error desconocido';
+                    } catch (e) {
+                        errorMessage = `HTTP ${response.status}: ${response.statusText}`;
+                    }
+                    throw new Error(errorMessage);
+                }
+                
+                const result = await response.json();
+                log(`Clonado exitoso: ${JSON.stringify(result)}`);
+                
+                showResult('cloneSalidaResult', 
+                    `✅ Salida clonada exitosamente<br>
+                    <strong>Viaje:</strong> ${result.viaje.nombre} (ID: ${result.viaje.id})<br>
+                    <strong>Total Salidas:</strong> ${result.viaje.totalSalidas}<br>
+                    <strong>Nueva Fecha Inicio:</strong> ${formatSpanishDate(result.nuevaSalida.fechaInicio)}<br>
+                    <strong>Nueva Fecha Fin:</strong> ${formatSpanishDate(result.nuevaSalida.fechaFin)}<br>
+                    <strong>Precio:</strong> $${result.nuevaSalida.precio || 'N/A'}<br>
+                    <strong>Cupos:</strong> ${result.nuevaSalida.cupos}`, 
+                    'success'
+                );
+                
+                // Actualizar la lista de viajes
+                setTimeout(loadViajes, 1000);
+                
+            } catch (error) {
+                showResult('cloneSalidaResult', `❌ Error en clonado: ${error.message}`, 'error');
+                log(`Error en clonado de salida: ${error.message}`, 'error');
+            }
+        }
+
+        async function loadViajes() {
+            log('Cargando lista de viajes...');
+            try {
+                const response = await fetch('/api/viajes?populate=Salidas');
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+                }
+                
+                const data = await response.json();
+                log(`${data.data.length} viajes cargados`);
+                
+                let html = '<table style="width:100%; border-collapse: collapse; margin-top: 10px;">';
+                html += '<tr style="background: #f8f9fa;"><th style="border: 1px solid #ddd; padding: 8px;">ID</th><th style="border: 1px solid #ddd; padding: 8px;">Nombre</th><th style="border: 1px solid #ddd; padding: 8px;">Precio</th><th style="border: 1px solid #ddd; padding: 8px;">Salidas</th><th style="border: 1px solid #ddd; padding: 8px;">Fechas (DD/MM/YYYY)</th></tr>';
+                
+                data.data.forEach(viaje => {
+                    let fechasInfo = 'Sin fechas';
+                    if (viaje.Salidas && viaje.Salidas.length > 0) {
+                        const fechas = viaje.Salidas.map((salida, index) => {
+                            const inicio = formatSpanishDate(salida.Fecha_inicio);
+                            const fin = formatSpanishDate(salida.Fecha_fin);
+                            return `<span style="font-size:11px;color:#666;">[${index}]</span> ${inicio} - ${fin}`;
+                        }).join('<br>');
+                        fechasInfo = fechas || 'Sin fechas definidas';
+                    }
+                    
+                    html += `<tr>
+                        <td style="border: 1px solid #ddd; padding: 8px;">${viaje.id}</td>
+                        <td style="border: 1px solid #ddd; padding: 8px;">${viaje.Nombre || 'Sin nombre'}</td>
+                        <td style="border: 1px solid #ddd; padding: 8px;">$${viaje.Precio || 'N/A'}</td>
+                        <td style="border: 1px solid #ddd; padding: 8px;">${viaje.Salidas?.length || 0}</td>
+                        <td style="border: 1px solid #ddd; padding: 8px; font-size: 12px;">${fechasInfo}</td>
+                    </tr>`;
+                });
+                
+                html += '</table>';
+                html += '<p style="font-size: 12px; color: #666; margin-top: 10px;"><strong>Nota:</strong> Los números entre corchetes [0], [1], [2]... son los índices de las salidas para usar en el clonado.</p>';
+                document.getElementById('viajesList').innerHTML = html;
+                
+            } catch (error) {
+                document.getElementById('viajesList').innerHTML = `<div class="result error">❌ Error cargando viajes: ${error.message}</div>`;
+                log(`Error cargando viajes: ${error.message}`, 'error');
+            }
+        }
+
+        // Verificar conexión al cargar la página
+        window.onload = function() {
+            log('Iniciando panel de pruebas...');
+            checkServerStatus();
+        };
+    </script>
+</body>
+</html>

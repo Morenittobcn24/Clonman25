@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Debug Admin - Detector de Errores</title>
+    <style>
+        body {
+            font-family: 'Courier New', monospace;
+            background: #1a1a1a;
+            color: #00ff00;
+            padding: 20px;
+            margin: 0;
+        }
+        .console {
+            background: #000;
+            border: 1px solid #333;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+        .error {
+            color: #ff4444;
+        }
+        .warning {
+            color: #ffaa00;
+        }
+        .info {
+            color: #4444ff;
+        }
+        .success {
+            color: #00ff00;
+        }
+        button {
+            background: #333;
+            color: #00ff00;
+            border: 1px solid #666;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        button:hover {
+            background: #555;
+        }
+        .header {
+            text-align: center;
+            border-bottom: 2px solid #333;
+            padding-bottom: 20px;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>🔍 DEBUG ADMIN - DETECTOR DE ERRORES</h1>
+        <p>Herramienta para diagnosticar problemas del admin de Strapi</p>
+    </div>
+    
+    <div>
+        <button onclick="checkAdminHealth()">🏥 Verificar Salud del Admin</button>
+        <button onclick="checkAPIEndpoints()">🔗 Verificar Endpoints</button>
+        <button onclick="checkConsoleErrors()">❌ Detectar Errores</button>
+        <button onclick="fixCommonIssues()">🔧 Intentar Reparar</button>
+        <button onclick="clearLogs()">🧹 Limpiar Logs</button>
+    </div>
+    
+    <div class="console" id="console">
+        <div class="info">[INFO] Debug Admin iniciado - Esperando comandos...</div>
+    </div>
+
+    <script>
+        const console_div = document.getElementById('console');
+        
+        function log(message, type = 'info') {
+            const timestamp = new Date().toLocaleTimeString();
+            const div = document.createElement('div');
+            div.className = type;
+            div.innerHTML = `[${timestamp}] ${message}`;
+            console_div.appendChild(div);
+            console_div.scrollTop = console_div.scrollHeight;
+        }
+        
+        function clearLogs() {
+            console_div.innerHTML = '<div class="info">[INFO] Logs limpiados</div>';
+        }
+        
+        async function checkAdminHealth() {
+            log('🏥 Verificando salud del admin...', 'info');
+            
+            try {
+                // 1. Verificar acceso al admin
+                const adminResponse = await fetch('/admin');
+                if (adminResponse.ok) {
+                    log('✅ Admin accesible - Status: ' + adminResponse.status, 'success');
+                } else {
+                    log('❌ Admin no accesible - Status: ' + adminResponse.status, 'error');
+                }
+                
+                // 2. Verificar Content Manager
+                const cmResponse = await fetch('/admin/init');
+                if (cmResponse.ok) {
+                    log('✅ Admin Init OK', 'success');
+                } else {
+                    log('❌ Admin Init Error - Status: ' + cmResponse.status, 'error');
+                }
+                
+                // 3. Verificar si el botón CSV existe
+                if (window.opener) {
+                    const csvBtn = window.opener.document.querySelector('#csv-tools-btn');
+                    if (csvBtn) {
+                        log('✅ Botón CSV encontrado en admin', 'success');
+                    } else {
+                        log('⚠️ Botón CSV no encontrado', 'warning');
+                    }
+                }
+                
+                // 4. Verificar errores en localStorage
+                const errors = localStorage.getItem('admin-errors');
+                if (errors) {
+                    log('⚠️ Errores encontrados en localStorage: ' + errors, 'warning');
+                } else {
+                    log('✅ No hay errores almacenados', 'success');
+                }
+                
+            } catch (error) {
+                log('❌ Error verificando salud: ' + error.message, 'error');
+            }
+        }
+        
+        async function checkAPIEndpoints() {
+            log('🔗 Verificando endpoints API...', 'info');
+            
+            const endpoints = [
+                '/api/csv/stats',
+                '/api/csv/export',
+                '/api/csv/export/viaje',
+                '/admin/project-type',
+                '/admin/init'
+            ];
+            
+            for (const endpoint of endpoints) {
+                try {
+                    const response = await fetch(endpoint);
+                    if (response.ok) {
+                        log(`✅ ${endpoint} - Status: ${response.status}`, 'success');
+                    } else {
+                        log(`❌ ${endpoint} - Status: ${response.status}`, 'error');
+                    }
+                } catch (error) {
+                    log(`❌ ${endpoint} - Error: ${error.message}`, 'error');
+                }
+            }
+        }
+        
+        function checkConsoleErrors() {
+            log('❌ Verificando errores en consola...', 'info');
+            
+            // Capturar errores de consola
+            const originalError = console.error;
+            const originalWarn = console.warn;
+            
+            console.error = function(...args) {
+                log('🔴 CONSOLE ERROR: ' + args.join(' '), 'error');
+                originalError.apply(console, args);
+            };
+            
+            console.warn = function(...args) {
+                log('🟡 CONSOLE WARN: ' + args.join(' '), 'warning');
+                originalWarn.apply(console, args);
+            };
+            
+            log('✅ Monitor de errores activado', 'success');
+            
+            // Verificar errores comunes
+            setTimeout(() => {
+                try {
+                    // Intentar acceder al admin en iframe
+                    const adminFrame = document.createElement('iframe');
+                    adminFrame.src = '/admin';
+                    adminFrame.style.display = 'none';
+                    adminFrame.onload = function() {
+                        log('✅ Admin carga correctamente en iframe', 'success');
+                        document.body.removeChild(adminFrame);
+                    };
+                    adminFrame.onerror = function() {
+                        log('❌ Error cargando admin en iframe', 'error');
+                        document.body.removeChild(adminFrame);
+                    };
+                    document.body.appendChild(adminFrame);
+                } catch (error) {
+                    log('❌ Error creando iframe de prueba: ' + error.message, 'error');
+                }
+            }, 2000);
+        }
+        
+        async function fixCommonIssues() {
+            log('🔧 Intentando reparar problemas comunes...', 'info');
+            
+            try {
+                // 1. Limpiar localStorage
+                localStorage.removeItem('admin-errors');
+                localStorage.removeItem('strapi-cache');
+                log('✅ LocalStorage limpiado', 'success');
+                
+                // 2. Limpiar sessionStorage
+                sessionStorage.clear();
+                log('✅ SessionStorage limpiado', 'success');
+                
+                // 3. Intentar recargar el admin (si está en iframe)
+                if (window.opener) {
+                    window.opener.location.reload();
+                    log('✅ Admin recargado', 'success');
+                }
+                
+                // 4. Verificar y reparar CSP
+                const meta = document.querySelector('meta[http-equiv="Content-Security-Policy"]');
+                if (meta) {
+                    log('⚠️ CSP meta tag encontrado, puede causar problemas', 'warning');
+                }
+                
+                // 5. Verificar cookies
+                if (document.cookie.includes('strapi')) {
+                    log('✅ Cookies de Strapi encontradas', 'success');
+                } else {
+                    log('⚠️ No se encontraron cookies de Strapi', 'warning');
+                }
+                
+                log('🎉 Reparación completada', 'success');
+                
+            } catch (error) {
+                log('❌ Error durante reparación: ' + error.message, 'error');
+            }
+        }
+        
+        // Auto-inicialización
+        log('🚀 Debug Admin cargado correctamente', 'success');
+        log('💡 Usa los botones para diagnosticar problemas', 'info');
+        
+        // Monitor automático cada 30 segundos
+        setInterval(() => {
+            log('⏰ Monitor automático ejecutándose...', 'info');
+            
+            // Verificar si el admin sigue respondiendo
+            fetch('/admin/project-type')
+                .then(response => {
+                    if (response.ok) {
+                        log('💚 Admin sigue respondiendo correctamente', 'success');
+                    } else {
+                        log('🔴 Admin no responde correctamente - Status: ' + response.status, 'error');
+                    }
+                })
+                .catch(error => {
+                    log('🔴 Error conectando con admin: ' + error.message, 'error');
+                });
+        }, 30000);
+    </script>
+</body>
+</html>

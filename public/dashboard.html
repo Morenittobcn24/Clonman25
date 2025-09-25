@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel de Control - Strapi Manaslu</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .dashboard {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 20px;
+        }
+        
+        .header-card {
+            background: white;
+            border-radius: 15px;
+            padding: 40px;
+            text-align: center;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+        }
+        
+        .header-card h1 {
+            color: #333;
+            font-size: 3em;
+            font-weight: 300;
+            margin-bottom: 10px;
+        }
+        
+        .header-card p {
+            color: #6c757d;
+            font-size: 1.2em;
+        }
+        
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 20px;
+        }
+        
+        .feature-card {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .card-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        
+        .card-icon {
+            font-size: 3em;
+            margin-right: 15px;
+        }
+        
+        .card-title {
+            font-size: 1.5em;
+            font-weight: 600;
+            color: #333;
+        }
+        
+        .card-description {
+            color: #6c757d;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+        
+        .card-buttons {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        
+        .btn {
+            padding: 12px 20px;
+            border: none;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            text-align: center;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            display: inline-block;
+        }
+        
+        .btn-primary {
+            background: #007bff;
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background: #0056b3;
+            transform: translateY(-2px);
+            text-decoration: none;
+            color: white;
+        }
+        
+        .btn-success {
+            background: #28a745;
+            color: white;
+        }
+        
+        .btn-success:hover {
+            background: #218838;
+            transform: translateY(-2px);
+            text-decoration: none;
+            color: white;
+        }
+        
+        .btn-warning {
+            background: #ffc107;
+            color: #212529;
+        }
+        
+        .btn-warning:hover {
+            background: #e0a800;
+            transform: translateY(-2px);
+            text-decoration: none;
+            color: #212529;
+        }
+        
+        .btn-info {
+            background: #17a2b8;
+            color: white;
+        }
+        
+        .btn-info:hover {
+            background: #138496;
+            transform: translateY(-2px);
+            text-decoration: none;
+            color: white;
+        }
+        
+        .status-indicator {
+            display: inline-block;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+        
+        .status-active {
+            background: #d4edda;
+            color: #155724;
+        }
+        
+        .highlight-box {
+            background: linear-gradient(135deg, #28a745, #20c997);
+            color: white;
+            border-radius: 15px;
+            padding: 25px;
+            text-align: center;
+            margin: 20px 0;
+        }
+        
+        .highlight-box h2 {
+            margin: 0 0 10px 0;
+            font-size: 1.8em;
+            font-weight: 400;
+        }
+        
+        .url-display {
+            background: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 5px;
+            padding: 10px;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            color: #495057;
+            margin: 10px 0;
+            word-break: break-all;
+        }
+    </style>
+</head>
+<body>
+    <div class="dashboard">
+        <div class="header-card">
+            <h1>🚀 Panel de Control Strapi</h1>
+            <p>Manaslu - Sistema de Gestión de Viajes</p>
+            <div class="status-indicator status-active">✅ Sistema Activo</div>
+        </div>
+        
+        <div class="highlight-box">
+            <h2>🔄 ¡NUEVA FUNCIONALIDAD ACTIVADA!</h2>
+            <p>El Duplicador Automático de Salidas está funcionando. Cuando hagas clic en "Add an entry" en las salidas de un viaje, automáticamente se copiará toda la información de la salida anterior, incluyendo relaciones con proveedores.</p>
+        </div>
+        
+        <div class="cards-grid">
+            <div class="feature-card">
+                <div class="card-header">
+                    <div class="card-icon">🏛️</div>
+                    <div class="card-title">Administración</div>
+                </div>
+                <div class="card-description">
+                    Panel principal de administración de Strapi con duplicador automático de salidas integrado.
+                </div>
+                <div class="card-buttons">
+                    <a href="/admin" class="btn btn-primary" target="_blank">Abrir Admin</a>
+                </div>
+                <div class="url-display">http://automatic-train-5g4pv6xq6x5p34764-1337.app.github.dev/admin</div>
+            </div>
+            
+            <div class="feature-card">
+                <div class="card-header">
+                    <div class="card-icon">📊</div>
+                    <div class="card-title">Herramientas CSV</div>
+                </div>
+                <div class="card-description">
+                    Exportar e importar datos CSV para todos los modelos. Interfaz completa con URLs directas.
+                </div>
+                <div class="card-buttons">
+                    <a href="/admin-csv-tools.html" class="btn btn-success" target="_blank">Abrir CSV Tools</a>
+                </div>
+                <div class="url-display">http://automatic-train-5g4pv6xq6x5p34764-1337.app.github.dev/admin-csv-tools.html</div>
+            </div>
+            
+            <div class="feature-card">
+                <div class="card-header">
+                    <div class="card-icon">🔄</div>
+                    <div class="card-title">Duplicador Automático</div>
+                </div>
+                <div class="card-description">
+                    Documentación y pruebas del duplicador automático de salidas. Funciona automáticamente al hacer clic en "Add an entry".
+                </div>
+                <div class="card-buttons">
+                    <a href="/duplicador-automatico.html" class="btn btn-info" target="_blank">Ver Documentación</a>
+                </div>
+                <div class="url-display">http://automatic-train-5g4pv6xq6x5p34764-1337.app.github.dev/duplicador-automatico.html</div>
+            </div>
+            
+            <div class="feature-card">
+                <div class="card-header">
+                    <div class="card-icon">🧪</div>
+                    <div class="card-title">Página de Pruebas</div>
+                </div>
+                <div class="card-description">
+                    Página de pruebas para el duplicador de salidas con instrucciones detalladas y solución de problemas.
+                </div>
+                <div class="card-buttons">
+                    <a href="/test-salida-duplicator.html" class="btn btn-warning" target="_blank">Ir a Pruebas</a>
+                </div>
+                <div class="url-display">http://automatic-train-5g4pv6xq6x5p34764-1337.app.github.dev/test-salida-duplicator.html</div>
+            </div>
+        </div>
+        
+        <div class="feature-card">
+            <div class="card-header">
+                <div class="card-icon">⚡</div>
+                <div class="card-title">Funcionalidades Activas</div>
+            </div>
+            <div class="card-description">
+                <h4>✅ Duplicador Automático de Salidas</h4>
+                <ul style="margin: 15px 0; padding-left: 20px; color: #495057;">
+                    <li><strong>Automático:</strong> No necesitas botones adicionales</li>
+                    <li><strong>Completo:</strong> Copia fechas, precios, cupos, estados</li>
+                    <li><strong>Relaciones:</strong> Incluye proveedores y otras relaciones</li>
+                    <li><strong>Inteligente:</strong> Solo copia a campos vacíos</li>
+                    <li><strong>Visual:</strong> Indicador 🔄 en botones "Add an entry"</li>
+                </ul>
+                
+                <h4>✅ Herramientas CSV</h4>
+                <ul style="margin: 15px 0; padding-left: 20px; color: #495057;">
+                    <li><strong>Exportar:</strong> Todos los modelos disponibles</li>
+                    <li><strong>Importar:</strong> Funcionalidad completa</li>
+                    <li><strong>URLs directas:</strong> Para integración externa</li>
+                </ul>
+                
+                <h4>✅ Formato de Fechas</h4>
+                <ul style="margin: 15px 0; padding-left: 20px; color: #495057;">
+                    <li><strong>DD/MM/YYYY:</strong> Formato español</li>
+                    <li><strong>Visual:</strong> Indicadores verdes junto a campos de fecha</li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="feature-card">
+            <div class="card-header">
+                <div class="card-icon">🔧</div>
+                <div class="card-title">Información Técnica</div>
+            </div>
+            <div class="card-description">
+                <strong>Servidor:</strong> Strapi v5.15.1<br>
+                <strong>Base de Datos:</strong> SQLite<br>
+                <strong>Puerto:</strong> 1337<br>
+                <strong>PID:</strong> 133230<br>
+                <strong>Estado:</strong> <span class="status-indicator status-active">Funcionando</span>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // Actualizar URLs con la URL actual
+        document.addEventListener('DOMContentLoaded', function() {
+            const baseUrl = window.location.origin;
+            const urlDisplays = document.querySelectorAll('.url-display');
+            
+            urlDisplays.forEach(display => {
+                const currentText = display.textContent;
+                const path = currentText.split('/').slice(-1)[0];
+                if (path.includes('.html') || path === 'admin') {
+                    display.textContent = `${baseUrl}/${path}`;
+                }
+            });
+            
+            // Agregar información de estado en tiempo real
+            const statusCard = document.createElement('div');
+            statusCard.className = 'feature-card';
+            statusCard.innerHTML = `
+                <div class="card-header">
+                    <div class="card-icon">🌐</div>
+                    <div class="card-title">Estado en Tiempo Real</div>
+                </div>
+                <div class="card-description">
+                    <strong>URL Base:</strong> ${baseUrl}<br>
+                    <strong>Tiempo de Carga:</strong> ${new Date().toLocaleString('es-ES')}<br>
+                    <strong>Navegador:</strong> ${navigator.userAgent.split(' ')[0]}
+                </div>
+            `;
+            
+            document.querySelector('.cards-grid').appendChild(statusCard);
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Tools - SIMPLE</title>
+    <style>
+        body { font-family: Arial, sans-serif; max-width: 600px; margin: 50px auto; padding: 20px; }
+        h1 { color: #333; }
+        .tool { border: 1px solid #ddd; padding: 20px; margin: 20px 0; border-radius: 5px; }
+        button { background: #007cba; color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer; margin: 5px; }
+        button:hover { background: #005a8b; }
+        .export { background: #28a745; }
+        .import { background: #ffc107; color: black; }
+        input[type="file"] { margin: 10px 0; }
+        .result { margin: 10px 0; padding: 10px; border-radius: 5px; }
+        .success { background: #d4edda; color: #155724; }
+        .error { background: #f8d7da; color: #721c24; }
+    </style>
+</head>
+<body>
+    <h1>🛠️ Admin Tools - SIMPLE</h1>
+    
+    <!-- PUNTO 2: BOTONES CSV -->
+    <div class="tool">
+        <h3>📊 Export/Import CSV</h3>
+        
+        <select id="modelo">
+            <option value="viaje">Viajes</option>
+            <option value="reserva">Reservas</option>
+            <option value="actividad">Actividades</option>
+        </select>
+        
+        <br><br>
+        
+        <button class="export" onclick="exportarCSV()">📤 EXPORTAR CSV</button>
+        
+        <br><br>
+        
+        <input type="file" id="archivoCSV" accept=".csv">
+        <button class="import" onclick="importarCSV()">📥 IMPORTAR CSV</button>
+        
+        <div id="resultado"></div>
+    </div>
+    
+    <!-- PUNTO 1: INFO ADMIN -->
+    <div class="tool">
+        <h3>🎛️ Admin Panel</h3>
+        <p><strong>PUNTO 1:</strong> El duplicador está activo en el admin. Cuando hagas "Add an entry" en Salidas, se copiará automáticamente la última salida.</p>
+        <button onclick="abrirAdmin()">🚀 ABRIR ADMIN</button>
+    </div>
+
+    <script>
+        function mostrarResultado(mensaje, tipo = 'success') {
+            const div = document.getElementById('resultado');
+            div.innerHTML = mensaje;
+            div.className = `result ${tipo}`;
+        }
+
+        async function exportarCSV() {
+            const modelo = document.getElementById('modelo').value;
+            mostrarResultado('🔄 Exportando...', 'success');
+            
+            try {
+                const response = await fetch(`/api/csvs/export/${modelo}`);
+                
+                if (response.ok) {
+                    const blob = await response.blob();
+                    const url = URL.createObjectURL(blob);
+                    const a = document.createElement('a');
+                    a.href = url;
+                    a.download = `${modelo}_${new Date().toISOString().split('T')[0]}.csv`;
+                    a.click();
+                    URL.revokeObjectURL(url);
+                    
+                    mostrarResultado('✅ CSV exportado y descargado', 'success');
+                } else {
+                    throw new Error(`Error ${response.status}`);
+                }
+            } catch (error) {
+                mostrarResultado(`❌ Error: ${error.message}`, 'error');
+            }
+        }
+
+        async function importarCSV() {
+            const modelo = document.getElementById('modelo').value;
+            const archivo = document.getElementById('archivoCSV').files[0];
+            
+            if (!archivo) {
+                mostrarResultado('❌ Selecciona un archivo CSV', 'error');
+                return;
+            }
+            
+            mostrarResultado('🔄 Importando...', 'success');
+            
+            try {
+                const formData = new FormData();
+                formData.append('file', archivo);
+                
+                const response = await fetch(`/api/csvs/import/${modelo}`, {
+                    method: 'POST',
+                    body: formData
+                });
+                
+                const result = await response.json();
+                
+                if (response.ok) {
+                    mostrarResultado(`✅ Importado: ${result.processed || 'N/A'} registros`, 'success');
+                } else {
+                    throw new Error(result.error || result.message || 'Error desconocido');
+                }
+            } catch (error) {
+                mostrarResultado(`❌ Error: ${error.message}`, 'error');
+            }
+        }
+
+        function abrirAdmin() {
+            window.open('/admin', '_blank');
+        }
+    </script>
+</body>
+</html>

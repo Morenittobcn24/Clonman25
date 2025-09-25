@@ -1,0 +1,12 @@
+{
+  "name": "csv-actions",
+  "version": "1.0.0",
+  "description": "Plugin para acciones CSV en el panel de administración",
+  "strapi": {
+    "name": "csv-actions",
+    "displayName": "Acciones CSV",
+    "description": "Exportar e importar datos CSV directamente desde el admin",
+    "kind": "plugin"
+  },
+  "dependencies": {}
+}

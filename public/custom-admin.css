@@ -1,0 +1,40 @@
+/* Estilos personalizados para formato de fecha español */
+input[type="date"] {
+  position: relative;
+}
+
+input[type="date"]::-webkit-calendar-picker-indicator {
+  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"><path fill="%23666" d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11zM7 10h5v5H7z"/></svg>');
+}
+
+/* Mostrar formato DD/MM/YYYY cuando el campo está vacío */
+input[type="date"]:invalid:before {
+  content: "DD/MM/YYYY";
+  color: #999;
+  position: absolute;
+  left: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  pointer-events: none;
+}
+
+input[type="date"]:focus:invalid:before {
+  display: none;
+}
+
+/* Estilo para el botón de clonar fecha */
+.clone-date-button {
+  background: #4945ff !important;
+  color: white !important;
+  border: none !important;
+  padding: 8px 16px !important;
+  border-radius: 4px !important;
+  margin: 8px 0 !important;
+  cursor: pointer !important;
+  font-size: 14px !important;
+  font-weight: 500 !important;
+}
+
+.clone-date-button:hover {
+  background: #3b37e0 !important;
+}

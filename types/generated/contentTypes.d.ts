@@ -507,6 +507,85 @@ export interface ApiAlojamientoAlojamiento extends Struct.CollectionTypeSchema {
   };
 }
 
+export interface ApiBeneficioBeneficio extends Struct.CollectionTypeSchema {
+  collectionName: 'beneficios';
+  info: {
+    description: 'Sistema de beneficios y descuentos para clientes';
+    displayName: 'Beneficio';
+    pluralName: 'beneficios';
+    singularName: 'beneficio';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    Activo: Schema.Attribute.Boolean &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<true>;
+    Clientes_elegibles: Schema.Attribute.Enumeration<
+      ['Todos', 'Nuevos', 'Recurrentes', 'VIP', 'Especifico']
+    > &
+      Schema.Attribute.DefaultTo<'Todos'>;
+    Codigo: Schema.Attribute.String &
+      Schema.Attribute.Unique &
+      Schema.Attribute.SetMinMaxLength<{
+        maxLength: 50;
+      }>;
+    Condiciones: Schema.Attribute.Text;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    Descripcion: Schema.Attribute.Text;
+    Fecha_fin: Schema.Attribute.Date;
+    Fecha_inicio: Schema.Attribute.Date;
+    Imagen: Schema.Attribute.Media<'images'>;
+    Limite_uso: Schema.Attribute.Integer &
+      Schema.Attribute.SetMinMax<
+        {
+          min: 0;
+        },
+        number
+      >;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::beneficio.beneficio'
+    > &
+      Schema.Attribute.Private;
+    Nombre: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.SetMinMaxLength<{
+        maxLength: 255;
+      }>;
+    Porcentaje: Schema.Attribute.Integer &
+      Schema.Attribute.SetMinMax<
+        {
+          max: 100;
+          min: 0;
+        },
+        number
+      >;
+    publishedAt: Schema.Attribute.DateTime;
+    Tipo: Schema.Attribute.Enumeration<
+      ['Descuento', 'Puntos', 'Regalo', 'Experiencia', 'Upgrade', 'Otro']
+    > &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<'Descuento'>;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    Usado_veces: Schema.Attribute.Integer &
+      Schema.Attribute.SetMinMax<
+        {
+          min: 0;
+        },
+        number
+      > &
+      Schema.Attribute.DefaultTo<0>;
+    Valor: Schema.Attribute.Decimal;
+  };
+}
+
 export interface ApiClienteCliente extends Struct.CollectionTypeSchema {
   collectionName: 'clientes';
   info: {
@@ -538,6 +617,30 @@ export interface ApiClienteCliente extends Struct.CollectionTypeSchema {
     Notas: Schema.Attribute.RichText;
     publishedAt: Schema.Attribute.DateTime;
     Telefono: Schema.Attribute.String & Schema.Attribute.Required;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
+export interface ApiCsvCsv extends Struct.SingleTypeSchema {
+  collectionName: 'csvs';
+  info: {
+    displayName: 'CSV';
+    pluralName: 'csvs';
+    singularName: 'csv';
+  };
+  options: {
+    draftAndPublish: false;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<'oneToMany', 'api::csv.csv'> &
+      Schema.Attribute.Private;
+    publishedAt: Schema.Attribute.DateTime;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -2109,7 +2212,9 @@ declare module '@strapi/strapi' {
       'admin::user': AdminUser;
       'api::actividad.actividad': ApiActividadActividad;
       'api::alojamiento.alojamiento': ApiAlojamientoAlojamiento;
+      'api::beneficio.beneficio': ApiBeneficioBeneficio;
       'api::cliente.cliente': ApiClienteCliente;
+      'api::csv.csv': ApiCsvCsv;
       'api::descuento.descuento': ApiDescuentoDescuento;
       'api::global.global': ApiGlobalGlobal;
       'api::proveedor.proveedor': ApiProveedorProveedor;

@@ -1,0 +1,11 @@
+{
+  "csv-actions.plugin.name": "CSV Actions",
+  "csv-actions.plugin.description": "Export and import data in CSV format",
+  "csv-actions.page.title": "CSV Management",
+  "csv-actions.export.title": "Export Data",
+  "csv-actions.import.title": "Import Data",
+  "csv-actions.select.entity": "Select Entity",
+  "csv-actions.export.success": "Export completed successfully",
+  "csv-actions.import.success": "Import completed successfully",
+  "csv-actions.error.general": "An error has occurred"
+}

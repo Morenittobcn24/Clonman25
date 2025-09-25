@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Duplicador de Salidas</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            margin: 0;
+            padding: 20px;
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .header h1 {
+            color: #333;
+            margin: 0;
+            font-size: 2.5em;
+        }
+        
+        .test-section {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-left: 5px solid #FF6B35;
+        }
+        
+        .test-section h3 {
+            color: #FF6B35;
+            margin-top: 0;
+        }
+        
+        .salida-form {
+            background: white;
+            border: 2px solid #e9ecef;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 15px 0;
+        }
+        
+        .salida-form h4 {
+            color: #495057;
+            margin-top: 0;
+            font-size: 1.2em;
+        }
+        
+        .form-group {
+            margin-bottom: 15px;
+        }
+        
+        .form-group label {
+            display: block;
+            font-weight: 600;
+            color: #495057;
+            margin-bottom: 5px;
+        }
+        
+        .form-group input, .form-group select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ced4da;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+        
+        .buttons-container {
+            text-align: center;
+            margin: 20px 0;
+        }
+        
+        .btn {
+            padding: 12px 20px;
+            border: none;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            margin: 0 10px;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-add {
+            background: #28a745;
+            color: white;
+        }
+        
+        .btn-add:hover {
+            background: #218838;
+            transform: translateY(-2px);
+        }
+        
+        .btn-duplicate {
+            background: linear-gradient(135deg, #FF8C00, #FF6B35);
+            color: white;
+        }
+        
+        .btn-duplicate:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(255, 107, 53, 0.4);
+        }
+        
+        .instructions {
+            background: #d4edda;
+            border: 1px solid #c3e6cb;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        
+        .instructions h3 {
+            color: #155724;
+            margin-top: 0;
+        }
+        
+        .instructions ol {
+            color: #155724;
+            line-height: 1.6;
+        }
+        
+        .admin-link {
+            background: #007bff;
+            color: white;
+            padding: 15px 25px;
+            text-decoration: none;
+            border-radius: 8px;
+            display: inline-block;
+            font-weight: 600;
+            text-align: center;
+            margin: 10px 5px;
+            transition: all 0.3s ease;
+        }
+        
+        .admin-link:hover {
+            background: #0056b3;
+            transform: translateY(-2px);
+            text-decoration: none;
+            color: white;
+        }
+        
+        .csv-link {
+            background: #28a745;
+            color: white;
+            padding: 15px 25px;
+            text-decoration: none;
+            border-radius: 8px;
+            display: inline-block;
+            font-weight: 600;
+            text-align: center;
+            margin: 10px 5px;
+            transition: all 0.3s ease;
+        }
+        
+        .csv-link:hover {
+            background: #218838;
+            transform: translateY(-2px);
+            text-decoration: none;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🔄 Test Duplicador de Salidas</h1>
+            <p>Prueba la funcionalidad de duplicar fechas de salida específicamente</p>
+        </div>
+        
+        <div class="instructions">
+            <h3>📋 Instrucciones para Probar el Duplicador</h3>
+            <ol>
+                <li><strong>Ve al admin de Strapi</strong> usando el botón de abajo</li>
+                <li><strong>Abre un viaje existente</strong> o crea uno nuevo</li>
+                <li><strong>Ve a la sección "Salidas"</strong> del viaje</li>
+                <li><strong>Si hay salidas existentes</strong>, verás un botón naranja "🔄 DUPLICAR ÚLTIMA SALIDA"</li>
+                <li><strong>Agrega una nueva salida vacía</strong> usando "Add an entry"</li>
+                <li><strong>Haz clic en "DUPLICAR ÚLTIMA SALIDA"</strong> para copiar los datos de la salida anterior</li>
+                <li><strong>Los campos que se copian son</strong>:
+                    <ul>
+                        <li>Fecha de inicio</li>
+                        <li>Cupo disponible</li>
+                        <li>Estado</li>
+                        <li>Precio por persona</li>
+                    </ul>
+                </li>
+            </ol>
+        </div>
+        
+        <div class="test-section">
+            <h3>🎯 Funcionalidades Implementadas</h3>
+            <ul>
+                <li>✅ <strong>Duplicador específico de salidas</strong> - Solo copia datos de fecha/salida, no el viaje completo</li>
+                <li>✅ <strong>Botón visual naranja</strong> - Aparece automáticamente junto a "Add an entry"</li>
+                <li>✅ <strong>Detección inteligente</strong> - Encuentra la última salida con datos</li>
+                <li>✅ <strong>Campos específicos</strong> - Solo duplica fecha, cupo, estado y precio</li>
+                <li>✅ <strong>Feedback visual</strong> - Confirma cuántos campos se copiaron</li>
+                <li>✅ <strong>No duplica campos llenos</strong> - Respeta datos existentes</li>
+            </ul>
+        </div>
+        
+        <div class="test-section">
+            <h3>🔧 Archivos Modificados</h3>
+            <ul>
+                <li><code>/src/admin/app.js</code> - Admin personalizado con duplicador integrado</li>
+                <li><code>/public/salida-duplicator.js</code> - Script específico para duplicar salidas</li>
+                <li><code>/public/admin-csv-tools.html</code> - Herramientas CSV mejoradas</li>
+            </ul>
+        </div>
+        
+        <div class="buttons-container">
+            <a href="/admin" class="admin-link" target="_blank">
+                🏛️ Ir al Admin Panel
+            </a>
+            
+            <a href="/admin-csv-tools.html" class="csv-link" target="_blank">
+                📊 Herramientas CSV
+            </a>
+        </div>
+        
+        <div class="test-section">
+            <h3>🐛 Solución de Problemas</h3>
+            <ul>
+                <li><strong>No veo el botón duplicador</strong>: Asegúrate de estar en un viaje con salidas</li>
+                <li><strong>No funciona la duplicación</strong>: Verifica que haya al menos 2 salidas (una con datos)</li>
+                <li><strong>Se duplica todo el viaje</strong>: El nuevo código solo duplica campos de salida específicos</li>
+                <li><strong>No se guardan los cambios</strong>: El script dispara eventos de Strapi automáticamente</li>
+            </ul>
+        </div>
+        
+        <div class="test-section">
+            <h3>🔍 Logs de Consola</h3>
+            <p>Abre las herramientas de desarrollador (F12) para ver los logs:</p>
+            <ul>
+                <li><code>🚀 ADMIN SUPER SIMPLE CON DUPLICADOR DE SALIDAS CARGADO</code></li>
+                <li><code>🔧 Cargando duplicador de salidas...</code></li>
+                <li><code>✅ Botón duplicador de salida agregado</code></li>
+                <li><code>🔄 Salida duplicada: [detalles]</code></li>
+            </ul>
+        </div>
+    </div>
+    
+    <script>
+        // Mostrar información del servidor
+        document.addEventListener('DOMContentLoaded', function() {
+            const serverInfo = document.createElement('div');
+            serverInfo.className = 'test-section';
+            serverInfo.innerHTML = `
+                <h3>🌐 Información del Servidor</h3>
+                <p><strong>URL Base:</strong> ${window.location.origin}</p>
+                <p><strong>Admin Panel:</strong> <a href="${window.location.origin}/admin">${window.location.origin}/admin</a></p>
+                <p><strong>CSV Tools:</strong> <a href="${window.location.origin}/admin-csv-tools.html">${window.location.origin}/admin-csv-tools.html</a></p>
+            `;
+            document.querySelector('.container').appendChild(serverInfo);
+        });
+    </script>
+</body>
+</html>

@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Gestión CSV - Sistema Manaslu</title>
+  <title>Gestión CSV y Duplicar Viajes - Sistema Manaslu</title>
   <style>
     * { box-sizing: border-box; }
     body { 
@@ -39,7 +39,7 @@
       display: block; margin-bottom: 8px; 
       font-weight: 600; color: #34495e; 
     }
-    select, input[type="file"] { 
+    select, input[type="file"], input[type="text"] { 
       width: 100%; max-width: 300px; padding: 12px; 
       border: 2px solid #e3e8ee; border-radius: 8px; 
       font-size: 14px; background: white; 
@@ -51,22 +51,38 @@
     
     .btn { 
       background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); 
-      color: white; border: none; padding: 12px 24px; 
-      border-radius: 8px; cursor: pointer; font-size: 14px; 
-      font-weight: 600; transition: all 0.3s ease; 
+      color: white; border: none; padding: 15px 30px; 
+      border-radius: 12px; cursor: pointer; font-size: 16px; 
+      font-weight: 700; transition: all 0.3s ease; 
+      text-transform: uppercase; letter-spacing: 0.5px;
+      box-shadow: 0 4px 15px rgba(79, 172, 254, 0.3);
+      margin: 10px 5px;
     }
     .btn:hover { 
-      transform: translateY(-2px); 
-      box-shadow: 0 5px 15px rgba(79, 172, 254, 0.4); 
+      transform: translateY(-3px); 
+      box-shadow: 0 8px 25px rgba(79, 172, 254, 0.5); 
     }
     .btn:disabled {
-      background: #ccc;
+      background: #cccccc;
       cursor: not-allowed;
       transform: none;
       box-shadow: none;
+      opacity: 0.6;
     }
-    .btn-success { background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%); }
-    .btn-danger { background: linear-gradient(135deg, #fc4a1a 0%, #f7b733 100%); }
+    .btn-success { 
+      background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%); 
+      box-shadow: 0 4px 15px rgba(56, 239, 125, 0.3);
+    }
+    .btn-success:hover {
+      box-shadow: 0 8px 25px rgba(56, 239, 125, 0.5);
+    }
+    .btn-warning { 
+      background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); 
+      box-shadow: 0 4px 15px rgba(245, 87, 108, 0.3);
+    }
+    .btn-warning:hover {
+      box-shadow: 0 8px 25px rgba(245, 87, 108, 0.5);
+    }
     
     .field-selector { 
       margin: 20px 0; padding: 20px; 
@@ -144,25 +160,37 @@
       background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
       transition: width 0.3s ease;
     }
+
+    .button-container {
+      text-align: center; 
+      margin-top: 25px; 
+      padding: 20px; 
+      background: linear-gradient(135deg, #f8f9ff 0%, #e8f5e8 100%); 
+      border-radius: 12px;
+    }
+
+    .duplicate-section {
+      background: linear-gradient(135deg, #fff8e8 0%, #ffe8f8 100%);
+    }
     
     @media (max-width: 768px) {
       .container { margin: 10px; }
       .content { padding: 20px; }
-      .header { padding: 20px; }
-      .header h1 { font-size: 2rem; }
+      .header h1 { font-size: 1.8rem; }
+      .btn { padding: 12px 20px; font-size: 14px; }
     }
   </style>
 </head>
 <body>
   <div class="container">
     <div class="header">
-      <h1>🔄 Gestión CSV</h1>
-      <p>Sistema completo de importación y exportación de datos</p>
+      <h1>🏔️ Sistema Manaslu</h1>
+      <p>Gestión CSV y Duplicar Viajes</p>
     </div>
     
     <div class="content">
       <!-- Estadísticas -->
-      <div class="stats" id="stats">
+      <div class="stats">
         <div class="stat-card">
           <div class="stat-number" id="statViajes">-</div>
           <div class="stat-label">Viajes</div>
@@ -179,6 +207,10 @@
           <div class="stat-number" id="statReservas">-</div>
           <div class="stat-label">Reservas</div>
         </div>
+        <div class="stat-card">
+          <div class="stat-number" id="statBeneficios">-</div>
+          <div class="stat-label">Beneficios</div>
+        </div>
       </div>
       
       <!-- Exportación -->
@@ -192,15 +224,27 @@
             <option value="proveedor">Proveedores</option>
             <option value="cliente">Clientes</option>
             <option value="reserva">Reservas</option>
+            <option value="beneficio">Beneficios</option>
           </select>
+        </div>
+
+        <!-- Botón siempre visible para exportación rápida -->
+        <div class="button-container">
+          <button class="btn btn-success" onclick="quickExport()" id="quickExportBtn">
+            📥 EXPORTAR TODOS LOS CAMPOS
+          </button>
+          <p style="margin-top: 10px; color: #6c757d; font-size: 14px;">Exporta todos los campos de la entidad seleccionada</p>
         </div>
         
         <div id="exportFields" class="field-selector">
-          <h4>Seleccionar campos a exportar:</h4>
+          <h4>Seleccionar campos específicos a exportar:</h4>
           <div id="exportFieldList" class="field-grid"></div>
-          <button class="btn btn-success" onclick="exportData()" style="margin-top: 15px;">
-            📥 Descargar CSV
-          </button>
+          <div class="button-container">
+            <button class="btn btn-success" onclick="exportData()">
+              📥 EXPORTAR CAMPOS SELECCIONADOS
+            </button>
+            <p style="margin-top: 15px; color: #6c757d; font-size: 14px;">Exporta solo los campos que hayas seleccionado</p>
+          </div>
         </div>
         
         <div id="exportExample" class="examples">
@@ -220,6 +264,7 @@
             <option value="proveedor">Proveedores</option>
             <option value="cliente">Clientes</option>
             <option value="reserva">Reservas</option>
+            <option value="beneficio">Beneficios</option>
           </select>
         </div>
         
@@ -240,9 +285,37 @@
           <p id="progressText" style="text-align: center;">Procesando... 0%</p>
         </div>
         
-        <button class="btn" onclick="importData()" id="importBtn" disabled>
-          📤 Importar CSV
-        </button>
+        <div class="button-container">
+          <button class="btn" onclick="importData()" id="importBtn" disabled>
+            📤 IMPORTAR CSV
+          </button>
+          <p style="margin-top: 15px; color: #6c757d; font-size: 14px;">Selecciona un archivo CSV para importar datos</p>
+        </div>
+      </div>
+
+      <!-- Duplicar Viajes -->
+      <div class="section duplicate-section">
+        <h2>🔄 Duplicar Viajes</h2>
+        <div class="form-group">
+          <label for="viajeId">ID del viaje a duplicar:</label>
+          <input type="text" id="viajeId" placeholder="Ingresa el ID del viaje">
+        </div>
+        <div class="form-group">
+          <label for="newViajeName">Nuevo nombre del viaje:</label>
+          <input type="text" id="newViajeName" placeholder="Nombre para el viaje duplicado">
+        </div>
+        <div class="form-group">
+          <label>
+            <input type="checkbox" id="copyDates" checked> 
+            Clonar fechas de salida (recomendado)
+          </label>
+        </div>
+        <div class="button-container">
+          <button class="btn btn-warning" onclick="duplicateViaje()">
+            🔄 DUPLICAR VIAJE
+          </button>
+          <p style="margin-top: 15px; color: #6c757d; font-size: 14px;">Crea una copia exacta del viaje con sus fechas</p>
+        </div>
       </div>
       
       <!-- Resultados -->
@@ -255,19 +328,23 @@
     const entityFields = {
       viaje: {
         fields: ['id', 'Nombre', 'Slug', 'Precio', 'Dificultad', 'Duracion', 'Descripcion_corta', 'Descripcion_larga', 'Incluye', 'No_incluye'],
-        example: 'Nombre,Precio,Dificultad,Duracion,Descripcion_corta\n"Camino Santiago",850,"Moderado",10,"Camino francés completo"\n"Picos Europa",650,"Difícil",7,"Trekking en los Picos"'
+        example: 'Nombre,Precio,Dificultad,Duracion,Descripcion_corta\\n"Camino Santiago",850,"Moderado",10,"Camino francés completo"\\n"Picos Europa",650,"Difícil",7,"Trekking en los Picos"'
       },
       proveedor: {
         fields: ['id', 'Nombre', 'Contacto', 'Telefono', 'Email', 'Direccion'],
-        example: 'Nombre,Contacto,Telefono,Email,Direccion\n"Viajes Norte","Juan Pérez","912345678","info@viajes.com","Madrid, España"\n"Aventuras SA","María García","934567890","contacto@aventuras.com","Barcelona, España"'
+        example: 'Nombre,Contacto,Telefono,Email,Direccion\\n"Viajes Norte","Juan Pérez","912345678","info@viajes.com","Madrid, España"\\n"Aventuras SA","María García","934567890","contacto@aventuras.com","Barcelona, España"'
       },
       cliente: {
         fields: ['id', 'Nombre', 'Apellidos', 'Email', 'Telefono', 'Direccion'],
-        example: 'Nombre,Apellidos,Email,Telefono,Direccion\n"María","García López","maria@email.com","666123456","Barcelona, España"\n"Juan","Pérez Martín","juan@email.com","677987654","Madrid, España"'
+        example: 'Nombre,Apellidos,Email,Telefono,Direccion\\n"María","García López","maria@email.com","666123456","Barcelona, España"\\n"Juan","Pérez Martín","juan@email.com","677987654","Madrid, España"'
       },
       reserva: {
         fields: ['id', 'Fecha_reserva', 'Estado', 'Numero_personas', 'Precio_total'],
-        example: 'Fecha_reserva,Estado,Numero_personas,Precio_total\n"2024-03-15","Confirmada",2,1700\n"2024-04-20","Pendiente",4,2600'
+        example: 'Fecha_reserva,Estado,Numero_personas,Precio_total\\n"2024-03-15","Confirmada",2,1700\\n"2024-04-20","Pendiente",4,2600'
+      },
+      beneficio: {
+        fields: ['id', 'Nombre', 'Descripcion', 'Tipo', 'Valor', 'Porcentaje', 'Fecha_inicio', 'Fecha_fin', 'Activo', 'Codigo', 'Condiciones', 'Limite_uso', 'Usado_veces', 'Clientes_elegibles'],
+        example: 'Nombre,Tipo,Porcentaje,Activo,Codigo,Clientes_elegibles\\n"Descuento Verano","Descuento",20,true,"VERANO20","Todos"\\n"Regalo VIP","Regalo",0,true,"VIP2024","VIP"'
       }
     };
 
@@ -282,6 +359,7 @@
         document.getElementById('statProveedores').textContent = stats.proveedores || 0;
         document.getElementById('statClientes').textContent = stats.clientes || 0;
         document.getElementById('statReservas').textContent = stats.reservas || 0;
+        document.getElementById('statBeneficios').textContent = stats.beneficios || 0;
       } catch (error) {
         console.error('Error cargando estadísticas:', error);
         showAlert('Error al cargar estadísticas', 'error');
@@ -347,10 +425,62 @@
       }
     }
 
+    async function quickExport() {
+      const entity = document.getElementById('exportEntity').value;
+      console.log('Quick Export - Entity:', entity);
+      
+      if (!entity) {
+        showAlert('Por favor selecciona una entidad antes de exportar', 'error');
+        return;
+      }
+      
+      try {
+        showAlert('Preparando exportación completa...', 'info');
+        const url = `/api/csv-manager/export?entity=${entity}`;
+        console.log('Fetching URL:', url);
+        
+        const response = await fetch(url);
+        console.log('Response status:', response.status);
+        console.log('Response headers:', response.headers);
+        
+        if (!response.ok) {
+          let errorMessage;
+          try {
+            const error = await response.json();
+            errorMessage = error.message || error.error || 'Error en la exportación';
+          } catch (e) {
+            errorMessage = `Error HTTP ${response.status}: ${response.statusText}`;
+          }
+          throw new Error(errorMessage);
+        }
+        
+        const blob = await response.blob();
+        console.log('Blob size:', blob.size);
+        
+        if (blob.size === 0) {
+          throw new Error('El archivo exportado está vacío');
+        }
+        
+        const url2 = window.URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url2;
+        a.download = `${entity}_export_complete_${new Date().toISOString().split('T')[0]}.csv`;
+        document.body.appendChild(a);
+        a.click();
+        window.URL.revokeObjectURL(url2);
+        document.body.removeChild(a);
+        
+        showAlert('✅ Exportación completa exitosa', 'success');
+      } catch (error) {
+        console.error('Export error:', error);
+        showAlert(`❌ Error: ${error.message}`, 'error');
+      }
+    }
+
     async function exportData() {
       const entity = document.getElementById('exportEntity').value;
-      const selectedFields = Array.from(document.querySelectorAll('#exportFieldList input:checked'))
-        .map(cb => cb.value);
+      const checkboxes = document.querySelectorAll('#exportFieldList input[type="checkbox"]:checked');
+      const selectedFields = Array.from(checkboxes).map(cb => cb.value);
       
       if (!entity) {
         showAlert('Por favor selecciona una entidad', 'error');
@@ -386,9 +516,9 @@
         window.URL.revokeObjectURL(url);
         document.body.removeChild(a);
         
-        showAlert('Exportación completada con éxito', 'success');
+        showAlert('✅ Exportación completada con éxito', 'success');
       } catch (error) {
-        showAlert(`Error: ${error.message}`, 'error');
+        showAlert(`❌ Error: ${error.message}`, 'error');
       }
     }
 
@@ -399,8 +529,16 @@
       const progressFill = document.getElementById('progressBarFill');
       const progressText = document.getElementById('progressText');
       
+      console.log('Import Data - Entity:', entity, 'File:', file ? file.name : 'none');
+      
       if (!entity || !file) {
         showAlert('Por favor selecciona una entidad y un archivo CSV', 'error');
+        return;
+      }
+      
+      // Validar que sea un archivo CSV
+      if (!file.name.toLowerCase().endsWith('.csv')) {
+        showAlert('Por favor selecciona un archivo CSV válido', 'error');
         return;
       }
       
@@ -408,16 +546,38 @@
       formData.append('csv', file);
       formData.append('entity', entity);
       
+      console.log('FormData created with entity:', entity, 'and file:', file.name);
+      
       progressBar.style.display = 'block';
+      progressFill.style.width = '20%';
+      progressText.textContent = 'Preparando archivo... 20%';
       showAlert('Iniciando importación...', 'info');
       
       try {
+        progressFill.style.width = '40%';
+        progressText.textContent = 'Enviando datos... 40%';
+        
         const response = await fetch('/api/csv-manager/import', {
           method: 'POST',
           body: formData
         });
         
-        const result = await response.json();
+        console.log('Import response status:', response.status);
+        
+        progressFill.style.width = '70%';
+        progressText.textContent = 'Procesando respuesta... 70%';
+        
+        let result;
+        try {
+          result = await response.json();
+          console.log('Import result:', result);
+        } catch (e) {
+          console.error('Error parsing JSON:', e);
+          throw new Error('Error en la respuesta del servidor');
+        }
+        
+        progressFill.style.width = '100%';
+        progressText.textContent = 'Completado... 100%';
         
         if (response.ok) {
           showAlert(`✅ ${result.message}. Importados: ${result.imported || 0} registros. ${result.errors ? `Errores: ${result.errors}` : ''}`, 'success');
@@ -428,14 +588,65 @@
           document.getElementById('csvFile').value = '';
           document.getElementById('importBtn').disabled = true;
         } else {
+          throw new Error(result.message || result.error || `Error HTTP ${response.status}`);
+        }
+      } catch (error) {
+        console.error('Import error:', error);
+        showAlert(`❌ Error: ${error.message}`, 'error');
+      } finally {
+        setTimeout(() => {
+          progressBar.style.display = 'none';
+          progressFill.style.width = '0%';
+          progressText.textContent = 'Procesando... 0%';
+        }, 2000);
+      }
+    }
+
+    async function duplicateViaje() {
+      const viajeId = document.getElementById('viajeId').value.trim();
+      const newName = document.getElementById('newViajeName').value.trim();
+      const copyDates = document.getElementById('copyDates').checked;
+      
+      if (!viajeId) {
+        showAlert('Por favor ingresa el ID del viaje a duplicar', 'error');
+        return;
+      }
+      
+      if (!newName) {
+        showAlert('Por favor ingresa un nombre para el viaje duplicado', 'error');
+        return;
+      }
+      
+      try {
+        showAlert('Duplicando viaje...', 'info');
+        
+        const response = await fetch(`/api/viajes/${viajeId}/duplicate`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            newName: newName,
+            copyDates: copyDates
+          })
+        });
+        
+        const result = await response.json();
+        
+        if (response.ok) {
+          showAlert(`✅ ${result.message}. Nuevo viaje ID: ${result.duplicated.id}. Fechas copiadas: ${result.duplicated.fechas_copiadas}`, 'success');
+          
+          // Limpiar formulario
+          document.getElementById('viajeId').value = '';
+          document.getElementById('newViajeName').value = '';
+          
+          // Actualizar estadísticas
+          loadStats();
+        } else {
           showAlert(`❌ Error: ${result.message || result.error}`, 'error');
         }
       } catch (error) {
         showAlert(`❌ Error de conexión: ${error.message}`, 'error');
-      } finally {
-        progressBar.style.display = 'none';
-        progressFill.style.width = '0%';
-        progressText.textContent = 'Procesando... 0%';
       }
     }
 
@@ -453,7 +664,7 @@
       }
     }
 
-    // Actualizar validación cuando cambie la entidad
+    // Eventos
     document.getElementById('importEntity').addEventListener('change', validateFile);
   </script>
 </body>

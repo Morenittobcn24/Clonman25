@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex, nofollow">
+    <meta name="googlebot" content="noindex, nofollow">
+    <meta name="google" content="notranslate">
+    <title>Admin Estable - Manaslu</title>
+    <style>
+        /* Botón CSV estático */
+        .csv-button {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: #28a745;
+            color: white;
+            padding: 10px 15px;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: bold;
+            z-index: 9999;
+            text-decoration: none;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+            transition: background-color 0.2s;
+        }
+        
+        .csv-button:hover {
+            background: #218838;
+        }
+        
+        /* Anti-traducir y anti-popup */
+        * {
+            translate: no;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: #f8f9fa;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        h1 {
+            color: #495057;
+            margin-bottom: 20px;
+        }
+        
+        .status {
+            background: #d4edda;
+            color: #155724;
+            padding: 15px;
+            border: 1px solid #c3e6cb;
+            border-radius: 4px;
+            margin-bottom: 20px;
+        }
+        
+        .links {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+        
+        .link-card {
+            background: #007bff;
+            color: white;
+            padding: 15px 20px;
+            border-radius: 6px;
+            text-decoration: none;
+            transition: background-color 0.2s;
+            font-weight: 500;
+        }
+        
+        .link-card:hover {
+            background: #0056b3;
+            color: white;
+        }
+        
+        .csv-card {
+            background: #28a745;
+        }
+        
+        .csv-card:hover {
+            background: #218838;
+        }
+    </style>
+</head>
+<body translate="no">
+    <a href="/csv-tools-advanced.html" target="_blank" class="csv-button">📊 CSV Tools</a>
+    
+    <div class="container">
+        <h1>🚀 Admin Estable - Manaslu</h1>
+        
+        <div class="status">
+            ✅ Sistema funcionando correctamente - Versión estable sin autorecargas
+        </div>
+        
+        <div class="links">
+            <a href="/admin" target="_blank" class="link-card">
+                🔧 Admin Panel de Strapi
+            </a>
+            
+            <a href="/csv-tools-advanced.html" target="_blank" class="link-card csv-card">
+                📊 Herramientas CSV Avanzadas
+            </a>
+            
+            <a href="/api/csv/export" target="_blank" class="link-card">
+                📥 Exportar Todos los Datos
+            </a>
+        </div>
+        
+        <h3>📋 Funcionalidades Disponibles:</h3>
+        <ul>
+            <li>✅ Exportar datos CSV por modelo</li>
+            <li>✅ Importar datos CSV con selector de campos</li>
+            <li>✅ Duplicador de salidas en viajes</li>
+            <li>✅ Interfaz administrativa estable</li>
+            <li>✅ Sin autorecargas automáticas</li>
+        </ul>
+    </div>
+    
+    <script>
+        // Script mínimo para evitar interferencias
+        document.addEventListener('DOMContentLoaded', function() {
+            // Desactivar traducción automática
+            document.documentElement.setAttribute('translate', 'no');
+            document.documentElement.setAttribute('class', 'notranslate');
+            
+            // Evitar popups de guardar contraseña
+            const inputs = document.querySelectorAll('input[type="password"]');
+            inputs.forEach(input => {
+                input.setAttribute('autocomplete', 'new-password');
+            });
+        });
+    </script>
+</body>
+</html>

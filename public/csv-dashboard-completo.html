@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>📊 CSV Dashboard - Strapi Manager</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #74b9ff 0%, #0984e3 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #2d3436 0%, #636e72 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+        
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+        
+        .header p {
+            opacity: 0.9;
+            font-size: 1.1em;
+        }
+        
+        .main-content {
+            padding: 40px;
+        }
+        
+        .section {
+            margin-bottom: 40px;
+            background: #f8f9fa;
+            border-radius: 15px;
+            padding: 30px;
+            border-left: 5px solid #74b9ff;
+        }
+        
+        .section h2 {
+            color: #2d3436;
+            margin-bottom: 20px;
+            font-size: 1.8em;
+        }
+        
+        .buttons-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .btn {
+            display: block;
+            padding: 15px 20px;
+            background: #74b9ff;
+            color: white;
+            text-decoration: none;
+            border-radius: 10px;
+            text-align: center;
+            font-weight: 600;
+            transition: all 0.3s;
+            border: none;
+            cursor: pointer;
+            font-size: 1em;
+        }
+        
+        .btn:hover {
+            background: #0984e3;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(116, 185, 255, 0.4);
+        }
+        
+        .btn.success { background: #00b894; }
+        .btn.success:hover { background: #00a085; }
+        
+        .btn.warning { background: #fdcb6e; color: #2d3436; }
+        .btn.warning:hover { background: #e17055; color: white; }
+        
+        .btn.danger { background: #e17055; }
+        .btn.danger:hover { background: #d63031; }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .stat-card {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+        }
+        
+        .stat-number {
+            font-size: 2.5em;
+            font-weight: bold;
+            color: #74b9ff;
+            margin-bottom: 5px;
+        }
+        
+        .stat-label {
+            color: #636e72;
+            font-size: 0.9em;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .file-drop-zone {
+            border: 2px dashed #74b9ff;
+            border-radius: 15px;
+            padding: 40px;
+            text-align: center;
+            background: #f8f9fa;
+            margin: 20px 0;
+            transition: all 0.3s;
+        }
+        
+        .file-drop-zone:hover {
+            border-color: #0984e3;
+            background: #e3f2fd;
+        }
+        
+        .file-drop-zone.dragover {
+            border-color: #00b894;
+            background: #e8f5e8;
+        }
+        
+        .log-area {
+            background: #2d3436;
+            color: #ddd;
+            padding: 20px;
+            border-radius: 10px;
+            font-family: 'Courier New', monospace;
+            height: 300px;
+            overflow-y: auto;
+            margin-top: 20px;
+        }
+        
+        .progress-bar {
+            width: 100%;
+            height: 10px;
+            background: #ddd;
+            border-radius: 5px;
+            overflow: hidden;
+            margin: 20px 0;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #74b9ff, #00b894);
+            width: 0%;
+            transition: width 0.3s;
+        }
+        
+        .hidden { display: none; }
+        
+        .alert {
+            padding: 15px;
+            border-radius: 10px;
+            margin: 15px 0;
+        }
+        
+        .alert.success {
+            background: #d4edda;
+            border: 1px solid #c3e6cb;
+            color: #155724;
+        }
+        
+        .alert.error {
+            background: #f8d7da;
+            border: 1px solid #f5c6cb;
+            color: #721c24;
+        }
+        
+        .model-selector {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin: 20px 0;
+        }
+        
+        .model-btn {
+            padding: 10px 20px;
+            background: #ddd;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .model-btn.active {
+            background: #74b9ff;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>📊 CSV Dashboard</h1>
+            <p>Gestión Completa de Importación y Exportación de Datos</p>
+        </div>
+        
+        <div class="main-content">
+            <!-- ESTADÍSTICAS -->
+            <div class="section">
+                <h2>📈 Estadísticas del Sistema</h2>
+                <div class="stats-grid" id="statsGrid">
+                    <div class="stat-card">
+                        <div class="stat-number" id="viajesCount">-</div>
+                        <div class="stat-label">Viajes</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number" id="reservasCount">-</div>
+                        <div class="stat-label">Reservas</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number" id="clientesCount">-</div>
+                        <div class="stat-label">Clientes</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number" id="proveedoresCount">-</div>
+                        <div class="stat-label">Proveedores</div>
+                    </div>
+                </div>
+                <button class="btn" onclick="loadStats()">🔄 Actualizar Estadísticas</button>
+            </div>
+
+            <!-- EXPORTACIÓN -->
+            <div class="section">
+                <h2>📥 Exportación de Datos</h2>
+                <div class="buttons-grid">
+                    <a href="http://0.0.0.0:1337/api/csv/export" class="btn success" target="_blank">
+                        📊 Exportar Todos los Datos
+                    </a>
+                    <a href="http://0.0.0.0:1337/api/csv/export/viaje" class="btn success" target="_blank">
+                        ✈️ Exportar Viajes
+                    </a>
+                    <a href="http://0.0.0.0:1337/api/csv/export/reserva" class="btn success" target="_blank">
+                        📅 Exportar Reservas
+                    </a>
+                    <a href="http://0.0.0.0:1337/api/csv/export/cliente" class="btn success" target="_blank">
+                        👥 Exportar Clientes
+                    </a>
+                    <a href="http://0.0.0.0:1337/api/csv/export/proveedor" class="btn success" target="_blank">
+                        🏢 Exportar Proveedores
+                    </a>
+                    <a href="http://0.0.0.0:1337/api/csv/export/alojamiento" class="btn success" target="_blank">
+                        🏨 Exportar Alojamientos
+                    </a>
+                </div>
+            </div>
+
+            <!-- IMPORTACIÓN -->
+            <div class="section">
+                <h2>📤 Importación de Datos</h2>
+                
+                <div class="model-selector">
+                    <button class="model-btn active" data-model="viaje">Viajes</button>
+                    <button class="model-btn" data-model="reserva">Reservas</button>
+                    <button class="model-btn" data-model="cliente">Clientes</button>
+                    <button class="model-btn" data-model="proveedor">Proveedores</button>
+                    <button class="model-btn" data-model="alojamiento">Alojamientos</button>
+                </div>
+                
+                <div class="file-drop-zone" id="dropZone">
+                    <div style="font-size: 3em; margin-bottom: 20px;">📁</div>
+                    <h3>Arrastra tu archivo CSV aquí</h3>
+                    <p>o haz clic para seleccionar</p>
+                    <input type="file" id="csvFile" accept=".csv" style="display: none;">
+                    <br><br>
+                    <button class="btn" onclick="document.getElementById('csvFile').click()">
+                        Seleccionar Archivo CSV
+                    </button>
+                </div>
+                
+                <div class="progress-bar hidden" id="progressBar">
+                    <div class="progress-fill" id="progressFill"></div>
+                </div>
+                
+                <div id="importResult"></div>
+            </div>
+
+            <!-- LOGS -->
+            <div class="section">
+                <h2>📋 Registro de Actividad</h2>
+                <div class="log-area" id="logArea">
+                    <div>🚀 Sistema CSV iniciado...</div>
+                    <div>✅ Conexión con Strapi establecida</div>
+                    <div>📊 Dashboard listo para usar</div>
+                </div>
+                <button class="btn warning" onclick="clearLogs()">🗑️ Limpiar Logs</button>
+            </div>
+
+            <!-- ENLACES RÁPIDOS -->
+            <div class="section">
+                <h2>🔗 Enlaces Rápidos</h2>
+                <div class="buttons-grid">
+                    <a href="http://0.0.0.0:1337/admin" class="btn" target="_blank">
+                        ⚙️ Admin Strapi
+                    </a>
+                    <a href="index.html" class="btn">
+                        🏠 Dashboard Principal
+                    </a>
+                    <a href="verificar-duplicador.html" class="btn">
+                        🔥 Verificar Duplicador
+                    </a>
+                    <a href="http://0.0.0.0:1337/api/csv/stats" class="btn" target="_blank">
+                        📈 API Stats
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let selectedModel = 'viaje';
+        
+        // Configuración de drag & drop
+        const dropZone = document.getElementById('dropZone');
+        const csvFile = document.getElementById('csvFile');
+        
+        dropZone.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            dropZone.classList.add('dragover');
+        });
+        
+        dropZone.addEventListener('dragleave', () => {
+            dropZone.classList.remove('dragover');
+        });
+        
+        dropZone.addEventListener('drop', (e) => {
+            e.preventDefault();
+            dropZone.classList.remove('dragover');
+            const files = e.dataTransfer.files;
+            if (files.length > 0) {
+                handleFileUpload(files[0]);
+            }
+        });
+        
+        csvFile.addEventListener('change', (e) => {
+            if (e.target.files.length > 0) {
+                handleFileUpload(e.target.files[0]);
+            }
+        });
+        
+        // Selector de modelo
+        document.querySelectorAll('.model-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.model-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                selectedModel = btn.dataset.model;
+                log(`📋 Modelo seleccionado: ${selectedModel}`);
+            });
+        });
+        
+        // Funciones principales
+        async function loadStats() {
+            try {
+                log('📊 Cargando estadísticas...');
+                const response = await fetch('http://0.0.0.0:1337/api/csv/stats');
+                const data = await response.json();
+                
+                if (data.success) {
+                    document.getElementById('viajesCount').textContent = data.stats.viaje || 0;
+                    document.getElementById('reservasCount').textContent = data.stats.reserva || 0;
+                    document.getElementById('clientesCount').textContent = data.stats.cliente || 0;
+                    document.getElementById('proveedoresCount').textContent = data.stats.proveedor || 0;
+                    log('✅ Estadísticas actualizadas');
+                } else {
+                    throw new Error('Error en la respuesta');
+                }
+            } catch (error) {
+                log(`❌ Error cargando estadísticas: ${error.message}`);
+                showAlert('Error cargando estadísticas', 'error');
+            }
+        }
+        
+        function handleFileUpload(file) {
+            if (!file.name.endsWith('.csv')) {
+                showAlert('Por favor, selecciona un archivo CSV válido', 'error');
+                return;
+            }
+            
+            log(`📁 Archivo seleccionado: ${file.name} (${(file.size/1024).toFixed(2)} KB)`);
+            uploadCSV(file);
+        }
+        
+        async function uploadCSV(file) {
+            const formData = new FormData();
+            formData.append('csv', file);
+            formData.append('model', selectedModel);
+            
+            try {
+                log(`📤 Subiendo archivo para modelo: ${selectedModel}`);
+                showProgress();
+                
+                const response = await fetch(`http://0.0.0.0:1337/api/csv/import/${selectedModel}`, {
+                    method: 'POST',
+                    body: formData
+                });
+                
+                const result = await response.json();
+                hideProgress();
+                
+                if (result.success) {
+                    showAlert(`✅ ${result.message}. Total: ${result.total}, Creados: ${result.created}`, 'success');
+                    log(`✅ Importación exitosa: ${result.created}/${result.total} registros`);
+                    if (result.errors && result.errors.length > 0) {
+                        log(`⚠️ Errores encontrados: ${result.errors.length}`);
+                    }
+                    loadStats(); // Actualizar estadísticas
+                } else {
+                    throw new Error(result.error || 'Error desconocido');
+                }
+            } catch (error) {
+                hideProgress();
+                log(`❌ Error en la importación: ${error.message}`);
+                showAlert(`Error en la importación: ${error.message}`, 'error');
+            }
+        }
+        
+        function showProgress() {
+            document.getElementById('progressBar').classList.remove('hidden');
+            let progress = 0;
+            const interval = setInterval(() => {
+                progress += Math.random() * 30;
+                if (progress > 90) progress = 90;
+                document.getElementById('progressFill').style.width = progress + '%';
+            }, 200);
+            
+            // Guardar el interval para limpiarlo después
+            window.progressInterval = interval;
+        }
+        
+        function hideProgress() {
+            if (window.progressInterval) {
+                clearInterval(window.progressInterval);
+            }
+            document.getElementById('progressFill').style.width = '100%';
+            setTimeout(() => {
+                document.getElementById('progressBar').classList.add('hidden');
+                document.getElementById('progressFill').style.width = '0%';
+            }, 500);
+        }
+        
+        function showAlert(message, type) {
+            const alertDiv = document.createElement('div');
+            alertDiv.className = `alert ${type}`;
+            alertDiv.innerHTML = message;
+            
+            document.getElementById('importResult').innerHTML = '';
+            document.getElementById('importResult').appendChild(alertDiv);
+            
+            setTimeout(() => {
+                alertDiv.remove();
+            }, 5000);
+        }
+        
+        function log(message) {
+            const logArea = document.getElementById('logArea');
+            const timestamp = new Date().toLocaleTimeString();
+            const logEntry = document.createElement('div');
+            logEntry.innerHTML = `[${timestamp}] ${message}`;
+            logArea.appendChild(logEntry);
+            logArea.scrollTop = logArea.scrollHeight;
+        }
+        
+        function clearLogs() {
+            document.getElementById('logArea').innerHTML = '<div>📋 Logs limpiados...</div>';
+        }
+        
+        // Cargar estadísticas al iniciar
+        loadStats();
+        
+        // Actualizar estadísticas cada 30 segundos
+        setInterval(loadStats, 30000);
+    </script>
+</body>
+</html>

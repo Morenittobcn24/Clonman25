@@ -1,0 +1,13 @@
+{
+  "kind": "singleType",
+  "collectionName": "csvs",
+  "info": {
+    "singularName": "csv",
+    "pluralName": "csvs",
+    "displayName": "CSV"
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "attributes": {}
+}

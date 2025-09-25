@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSV Manager - FUNCIONANDO</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; max-width: 800px; margin: 0 auto; background-color: #f5f5f5; }
+        .container { background: white; padding: 30px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        h1 { color: #333; text-align: center; }
+        .section { margin: 25px 0; padding: 20px; border: 2px solid #4945ff; border-radius: 8px; background: #f8f9ff; }
+        button { background: #4945ff; color: white; border: none; padding: 12px 24px; border-radius: 4px; cursor: pointer; margin: 10px 0; font-size: 16px; }
+        button:hover { background: #3b37e0; }
+        select, input { padding: 10px; margin: 10px 0; border: 1px solid #ddd; border-radius: 4px; width: 100%; max-width: 300px; }
+        .success { color: #28a745; font-weight: bold; padding: 10px; background: #d4edda; border-radius: 4px; margin: 10px 0; }
+        .error { color: #dc3545; font-weight: bold; padding: 10px; background: #f8d7da; border-radius: 4px; margin: 10px 0; }
+        .info { background: #e3f2fd; padding: 15px; border-radius: 5px; margin: 20px 0; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>📊 CSV Manager - Exportar/Importar</h1>
+        
+        <div class="section">
+            <h2>📤 Exportar Datos CSV</h2>
+            <select id="exportEntity">
+                <option value="viaje">Viajes</option>
+                <option value="cliente">Clientes</option>
+                <option value="reserva">Reservas</option>
+                <option value="proveedor">Proveedores</option>
+            </select>
+            <br>
+            <button onclick="exportarViajesDirecto()">📥 Exportar CSV con Formato DD/MM/YYYY</button>
+            <div id="exportResult"></div>
+        </div>
+
+        <div class="section">
+            <h2>📥 Importar Datos CSV</h2>
+            <p><strong>Nota:</strong> Usa formato DD/MM/YYYY para fechas</p>
+            <select id="importEntity">
+                <option value="viaje">Viajes</option>
+                <option value="cliente">Clientes</option>
+                <option value="reserva">Reservas</option>
+                <option value="proveedor">Proveedores</option>
+            </select>
+            <br>
+            <input type="file" id="csvFile" accept=".csv">
+            <br>
+            <button onclick="importarCSVDirecto()">📤 Importar CSV</button>
+            <div id="importResult"></div>
+        </div>
+
+        <div class="info">
+            <h3>ℹ️ Información Importante</h3>
+            <p><strong>✅ Formato de fechas:</strong> DD/MM/YYYY (25/12/2025)</p>
+            <p><strong>✅ Separador:</strong> Coma (,)</p>
+            <p><strong>✅ Codificación:</strong> UTF-8</p>
+            <p><strong>✅ Estado del sistema:</strong> <span id="serverStatus">Verificando...</span></p>
+        </div>
+
+        <div class="section">
+            <h2>🔄 Clonar Fechas de Viajes</h2>
+            <p>Para clonar fechas, ve al Admin Panel:</p>
+            <a href="/admin" target="_blank" style="background: #28a745; color: white; padding: 10px 20px; text-decoration: none; border-radius: 4px;">
+                🔗 Abrir Admin Panel
+            </a>
+            <p><small>Dentro del admin, edita cualquier viaje y busca el botón "📅 Clonar Fecha"</small></p>
+        </div>
+    </div>
+
+    <script>
+        // Verificar estado del servidor
+        fetch('/api/viajes').then(r => {
+            document.getElementById('serverStatus').innerHTML = '🟢 Servidor funcionando';
+            document.getElementById('serverStatus').style.color = 'green';
+        }).catch(e => {
+            document.getElementById('serverStatus').innerHTML = '🔴 Error en servidor';
+            document.getElementById('serverStatus').style.color = 'red';
+        });
+
+        // Función directa para exportar viajes
+        async function exportarViajesDirecto() {
+            const entity = document.getElementById('exportEntity').value;
+            const resultDiv = document.getElementById('exportResult');
+            
+            try {
+                resultDiv.innerHTML = '⏳ Exportando...';
+                
+                // Obtener datos directamente de la API de viajes
+                const response = await fetch(`/api/${entity}s?populate=*`);
+                
+                if (!response.ok) {
+                    throw new Error(`Error ${response.status}: ${response.statusText}`);
+                }
+                
+                const data = await response.json();
+                
+                if (!data.data || data.data.length === 0) {
+                    throw new Error('No hay datos para exportar');
+                }
+                
+                // Convertir a CSV con fechas en formato español
+                const csvData = convertirACSV(data.data);
+                
+                // Descargar archivo
+                descargarCSV(csvData, `${entity}_${new Date().toISOString().split('T')[0]}.csv`);
+                
+                resultDiv.innerHTML = `<div class="success">✅ ${entity} exportado correctamente (${data.data.length} registros)</div>`;
+                
+            } catch (error) {
+                console.error('Error exportando:', error);
+                resultDiv.innerHTML = `<div class="error">❌ Error: ${error.message}</div>`;
+            }
+        }
+
+        // Función para convertir datos a CSV
+        function convertirACSV(data) {
+            if (!data || data.length === 0) return '';
+            
+            // Obtener todas las claves
+            const headers = new Set();
+            data.forEach(item => {
+                Object.keys(item.attributes || item).forEach(key => headers.add(key));
+            });
+            
+            const csvHeaders = Array.from(headers).join(',');
+            
+            // Convertir datos
+            const csvRows = data.map(item => {
+                const attrs = item.attributes || item;
+                return Array.from(headers).map(header => {
+                    let value = attrs[header];
+                    
+                    // Convertir fechas a formato español DD/MM/YYYY
+                    if (typeof value === 'string' && /^\d{4}-\d{2}-\d{2}/.test(value)) {
+                        const date = new Date(value);
+                        value = date.toLocaleDateString('es-ES');
+                    } else if (value instanceof Date) {
+                        value = value.toLocaleDateString('es-ES');
+                    } else if (typeof value === 'object' && value !== null) {
+                        value = JSON.stringify(value);
+                    }
+                    
+                    // Escapar comillas y comas
+                    if (typeof value === 'string' && (value.includes(',') || value.includes('"'))) {
+                        value = `"${value.replace(/"/g, '""')}"`;
+                    }
+                    
+                    return value || '';
+                }).join(',');
+            });
+            
+            return [csvHeaders, ...csvRows].join('\\n');
+        }
+
+        // Función para descargar CSV
+        function descargarCSV(csvData, filename) {
+            const BOM = '\\uFEFF'; // BOM para Excel
+            const blob = new Blob([BOM + csvData], { type: 'text/csv;charset=utf-8;' });
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = filename;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            window.URL.revokeObjectURL(url);
+        }
+
+        // Función directa para importar
+        async function importarCSVDirecto() {
+            const entity = document.getElementById('importEntity').value;
+            const fileInput = document.getElementById('csvFile');
+            const resultDiv = document.getElementById('importResult');
+            
+            if (!fileInput.files[0]) {
+                resultDiv.innerHTML = '<div class="error">❌ Selecciona un archivo CSV</div>';
+                return;
+            }
+
+            try {
+                resultDiv.innerHTML = '⏳ Importando...';
+                
+                const file = fileInput.files[0];
+                const text = await file.text();
+                const lines = text.split('\\n').filter(line => line.trim());
+                
+                if (lines.length < 2) {
+                    throw new Error('El archivo CSV debe tener al menos una fila de datos');
+                }
+                
+                const headers = lines[0].split(',').map(h => h.trim().replace(/"/g, ''));
+                let created = 0;
+                let errors = 0;
+                
+                for (let i = 1; i < lines.length; i++) {
+                    try {
+                        const values = lines[i].split(',').map(v => v.trim().replace(/"/g, ''));
+                        const rowData = {};
+                        
+                        headers.forEach((header, index) => {
+                            let value = values[index] || '';
+                            
+                            // Convertir fechas de DD/MM/YYYY a formato ISO
+                            if (typeof value === 'string' && /^\d{1,2}\/\d{1,2}\/\d{4}$/.test(value)) {
+                                const [day, month, year] = value.split('/');
+                                value = new Date(year, month - 1, day).toISOString().split('T')[0];
+                            }
+                            
+                            rowData[header] = value;
+                        });
+                        
+                        // Crear registro
+                        const response = await fetch(`/api/${entity}s`, {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                            },
+                            body: JSON.stringify({ data: rowData }),
+                        });
+                        
+                        if (response.ok) {
+                            created++;
+                        } else {
+                            errors++;
+                            console.error(`Error en fila ${i + 1}:`, await response.text());
+                        }
+                        
+                    } catch (error) {
+                        errors++;
+                        console.error(`Error procesando fila ${i + 1}:`, error);
+                    }
+                }
+                
+                resultDiv.innerHTML = `<div class="success">✅ Importación completada: ${created} registros creados${errors > 0 ? `, ${errors} errores` : ''}</div>`;
+                fileInput.value = '';
+                
+            } catch (error) {
+                console.error('Error importando:', error);
+                resultDiv.innerHTML = `<div class="error">❌ Error: ${error.message}</div>`;
+            }
+        }
+    </script>
+</body>
+</html>

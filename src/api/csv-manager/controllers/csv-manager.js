@@ -29,6 +29,12 @@ const entityConfig = {
     numberFields: ['Numero_personas', 'Precio_total'],
     requiredFields: ['Fecha_reserva', 'Estado', 'Numero_personas'],
     maxRecords: 1000
+  },
+  beneficio: {
+    model: 'api::beneficio.beneficio',
+    numberFields: ['Valor', 'Porcentaje', 'Limite_uso', 'Usado_veces'],
+    requiredFields: ['Nombre', 'Tipo', 'Activo'],
+    maxRecords: 1000
   }
 };
 

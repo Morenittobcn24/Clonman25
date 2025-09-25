@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSV - Exportar/Importar</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; max-width: 800px; margin: 0 auto; }
+        .section { margin: 20px 0; padding: 20px; border: 1px solid #ddd; border-radius: 8px; }
+        button { background: #4945ff; color: white; border: none; padding: 12px 24px; border-radius: 4px; cursor: pointer; margin: 10px 0; }
+        button:hover { background: #3b37e0; }
+        select, input { padding: 8px; margin: 10px 0; border: 1px solid #ddd; border-radius: 4px; }
+        .success { color: green; font-weight: bold; }
+        .error { color: red; font-weight: bold; }
+    </style>
+</head>
+<body>
+    <h1>📊 Exportar/Importar CSV</h1>
+    
+    <div class="section">
+        <h2>📤 Exportar Datos</h2>
+        <select id="exportEntity">
+            <option value="viaje">Viajes</option>
+            <option value="cliente">Clientes</option>
+            <option value="reserva">Reservas</option>
+            <option value="proveedor">Proveedores</option>
+        </select>
+        <br>
+        <button onclick="exportarCSV()">Exportar CSV</button>
+        <div id="exportResult"></div>
+    </div>
+
+    <div class="section">
+        <h2>📥 Importar Datos</h2>
+        <select id="importEntity">
+            <option value="viaje">Viajes</option>
+            <option value="cliente">Clientes</option>
+            <option value="reserva">Reservas</option>
+            <option value="proveedor">Proveedores</option>
+        </select>
+        <br>
+        <input type="file" id="csvFile" accept=".csv">
+        <br>
+        <button onclick="importarCSV()">Importar CSV</button>
+        <div id="importResult"></div>
+    </div>
+
+    <div class="section">
+        <h3>ℹ️ Información</h3>
+        <p><strong>Formato de fechas:</strong> DD/MM/YYYY (español)</p>
+        <p><strong>Separador:</strong> Coma (,)</p>
+        <p><strong>Codificación:</strong> UTF-8</p>
+    </div>
+
+    <script>
+        async function exportarCSV() {
+            const entity = document.getElementById('exportEntity').value;
+            const resultDiv = document.getElementById('exportResult');
+            
+            try {
+                resultDiv.innerHTML = 'Exportando...';
+                const response = await fetch(`/api/csvs/exportCSV?entity=${entity}`);
+                
+                if (!response.ok) {
+                    const errorText = await response.text();
+                    throw new Error(`Error ${response.status}: ${errorText}`);
+                }
+                
+                const blob = await response.blob();
+                const url = window.URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = `${entity}_${new Date().toISOString().split('T')[0]}.csv`;
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                window.URL.revokeObjectURL(url);
+                
+                resultDiv.innerHTML = `<span class="success">✅ ${entity} exportado correctamente</span>`;
+            } catch (error) {
+                console.error('Error exportando:', error);
+                resultDiv.innerHTML = `<span class="error">❌ Error: ${error.message}</span>`;
+            }
+        }
+
+        async function importarCSV() {
+            const entity = document.getElementById('importEntity').value;
+            const fileInput = document.getElementById('csvFile');
+            const resultDiv = document.getElementById('importResult');
+            
+            if (!fileInput.files[0]) {
+                resultDiv.innerHTML = '<span class="error">❌ Selecciona un archivo CSV</span>';
+                return;
+            }
+
+            try {
+                resultDiv.innerHTML = 'Importando...';
+                const formData = new FormData();
+                formData.append('file', fileInput.files[0]);
+                formData.append('entity', entity);
+
+                const response = await fetch('/api/csvs/importCSV', {
+                    method: 'POST',
+                    body: formData,
+                });
+
+                const result = await response.json();
+                
+                if (!response.ok) {
+                    throw new Error(result.message || `Error ${response.status}`);
+                }
+                
+                resultDiv.innerHTML = `<span class="success">✅ ${result.created} registros importados</span>`;
+                fileInput.value = '';
+            } catch (error) {
+                console.error('Error importando:', error);
+                resultDiv.innerHTML = `<span class="error">❌ Error: ${error.message}</span>`;
+            }
+        }
+    </script>
+</body>
+</html>

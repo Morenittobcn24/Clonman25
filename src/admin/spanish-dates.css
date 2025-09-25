@@ -1,0 +1,85 @@
+/* Configuración de formato de fecha español para Strapi Admin */
+
+/* Personalizar los inputs de fecha para mostrar placeholder en español */
+input[type="date"] {
+  position: relative;
+}
+
+input[type="date"]:before {
+  content: attr(placeholder) !important;
+  color: #aaa;
+  margin-right: 0.5em;
+}
+
+input[type="date"]:focus:before,
+input[type="date"]:valid:before {
+  display: none;
+}
+
+/* Forzar formato DD/MM/YYYY en inputs de fecha */
+input[type="date"] {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+}
+
+/* Estilo para campos de fecha en español */
+.date-input-spanish {
+  position: relative;
+}
+
+.date-input-spanish::after {
+  content: "DD/MM/YYYY";
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #666;
+  font-size: 12px;
+  pointer-events: none;
+}
+
+/* Personalización para el componente de salidas */
+[data-strapi-field="Salidas"] input[type="date"] {
+  border: 2px solid #4945ff;
+  border-radius: 4px;
+  padding: 8px 12px;
+}
+
+[data-strapi-field="Salidas"] input[type="date"]:focus {
+  outline: none;
+  border-color: #7b79ff;
+  box-shadow: 0 0 0 2px rgba(73, 69, 255, 0.1);
+}
+
+/* Indicador visual para fechas clonadas */
+.cloned-date {
+  background: linear-gradient(90deg, #e8f5e8 0%, #ffffff 100%);
+  border-left: 3px solid #28a745;
+}
+
+/* Botón para clonar fechas */
+.clone-date-btn {
+  background: #28a745;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 6px 12px;
+  font-size: 12px;
+  cursor: pointer;
+  margin-left: 8px;
+}
+
+.clone-date-btn:hover {
+  background: #218838;
+}
+
+/* Formato de fecha en listas */
+.date-display-spanish {
+  font-family: monospace;
+  font-weight: 500;
+}
+
+/* Personalización del calendario del navegador */
+input[type="date"]::-webkit-calendar-picker-indicator {
+  cursor: pointer;
+  filter: invert(0.5);
+}

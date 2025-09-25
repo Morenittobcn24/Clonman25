@@ -1,11 +1,24 @@
 module.exports = ({ env }) => ({
-  flags: {
-    noBuild: true,
-  },
-  watchIgnoreFiles: ['**/data/**', '**/config/**', '**/package.json', '**/package-lock.json'],
+  host: env('HOST', '0.0.0.0'),
+  port: env.int('PORT', 1337),
   admin: {
     autoOpen: false,
-    watchIgnoreFiles: ['**/data/**', '**/config/**'],
+    watchIgnoreFiles: [
+      '**/node_modules/**',
+      '**/build/**',
+      '**/dist/**',
+      '**/.tmp/**',
+      '**/public/**'
+    ]
   },
-  typescript: false,
+  // Deshabilitar completamente el auto-reload
+  autoReload: false,
+  watchIgnoreFiles: [
+    '**/node_modules/**',
+    '**/build/**',
+    '**/dist/**',
+    '**/.tmp/**',
+    '**/public/**',
+    '**/config/**'
+  ]
 });

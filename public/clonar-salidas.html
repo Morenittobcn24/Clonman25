@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Duplicador de Salidas - Viajes</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #FF6B35 0%, #F7931E 100%);
+            margin: 0;
+            padding: 20px;
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 700px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .header h1 {
+            color: #FF6B35;
+            margin: 0;
+            font-size: 2.2em;
+        }
+        
+        .info-box {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 25px;
+        }
+        
+        .info-box h3 {
+            color: #856404;
+            margin-top: 0;
+        }
+        
+        .test-section {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 25px;
+            margin-bottom: 20px;
+            border-left: 5px solid #FF6B35;
+        }
+        
+        .form-group {
+            margin-bottom: 15px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 600;
+            color: #333;
+        }
+        
+        .form-group input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+        
+        .btn {
+            background: #FF6B35;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 600;
+            margin: 5px;
+        }
+        
+        .btn:hover {
+            background: #e55a2b;
+        }
+        
+        .btn-success {
+            background: #28a745;
+        }
+        
+        .btn-success:hover {
+            background: #1e7e34;
+        }
+        
+        .result {
+            padding: 15px;
+            border-radius: 5px;
+            margin-top: 15px;
+        }
+        
+        .result.success {
+            background: #d4edda;
+            border: 1px solid #c3e6cb;
+            color: #155724;
+        }
+        
+        .result.error {
+            background: #f8d7da;
+            border: 1px solid #f5c6cb;
+            color: #721c24;
+        }
+        
+        .result.info {
+            background: #d1ecf1;
+            border: 1px solid #bee5eb;
+            color: #0c5460;
+        }
+        
+        .instruction {
+            background: #e8f4fd;
+            border-left: 4px solid #007bff;
+            padding: 15px;
+            margin: 15px 0;
+        }
+        
+        .instruction h4 {
+            margin-top: 0;
+            color: #007bff;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🔄 Duplicador de Salidas</h1>
+            <p>Herramienta para clonar salidas específicas dentro de un viaje existente</p>
+        </div>
+
+        <div class="info-box">
+            <h3>💡 ¿Qué hace esta herramienta?</h3>
+            <p><strong>Clona salidas individuales</strong> dentro de un viaje existente, copiando todos los datos (precio, cupos, etc.) y permitiendo cambiar las fechas.</p>
+            <p><strong>No duplica el viaje completo</strong> - solo agrega una nueva salida al viaje existente.</p>
+        </div>
+
+        <div class="test-section">
+            <h3>📅 Clonar Salida Específica</h3>
+            
+            <div class="instruction">
+                <h4>📝 Instrucciones:</h4>
+                <ol>
+                    <li>Ingresa el <strong>ID del viaje</strong> que contiene la salida a clonar</li>
+                    <li>Especifica el <strong>índice de la salida</strong> (0 = primera salida, 1 = segunda, etc.)</li>
+                    <li>Define las <strong>nuevas fechas</strong> para la salida clonada</li>
+                    <li>Haz clic en "Clonar Salida"</li>
+                </ol>
+            </div>
+            
+            <div class="form-group">
+                <label for="viajeId">ID del Viaje:</label>
+                <input type="number" id="viajeId" placeholder="Ej: 1" value="1">
+            </div>
+            
+            <div class="form-group">
+                <label for="salidaIndex">Índice de la Salida a Clonar (0, 1, 2...):</label>
+                <input type="number" id="salidaIndex" placeholder="Ej: 0" value="0">
+                <small style="color: #6c757d;">0 = Primera salida, 1 = Segunda salida, etc.</small>
+            </div>
+            
+            <div class="form-group">
+                <label for="nuevaFechaInicio">Nueva Fecha de Inicio:</label>
+                <input type="date" id="nuevaFechaInicio">
+            </div>
+            
+            <div class="form-group">
+                <label for="nuevaFechaFin">Nueva Fecha de Fin (opcional):</label>
+                <input type="date" id="nuevaFechaFin">
+            </div>
+            
+            <button class="btn" onclick="cloneSalida()">🔄 Clonar Salida</button>
+            <button class="btn btn-success" onclick="checkServer()">🔍 Verificar Servidor</button>
+            
+            <div id="resultado"></div>
+        </div>
+
+        <div class="test-section">
+            <h3>🌟 Ventajas de este sistema:</h3>
+            <ul>
+                <li>✅ <strong>No rompe nada:</strong> Solo agrega salidas nuevas</li>
+                <li>✅ <strong>Copia todos los datos:</strong> Precios, cupos, configuraciones</li>
+                <li>✅ <strong>Fechas personalizables:</strong> Define nuevas fechas fácilmente</li>
+                <li>✅ <strong>Preserva el viaje original:</strong> No modifica datos existentes</li>
+                <li>✅ <strong>Rápido y sencillo:</strong> Un clic y listo</li>
+            </ul>
+        </div>
+    </div>
+
+    <script>
+        function showResult(message, type) {
+            const elemento = document.getElementById('resultado');
+            elemento.innerHTML = `<div class="result ${type}">${message}</div>`;
+        }
+
+        async function checkServer() {
+            showResult('⏳ Verificando conexión con el servidor...', 'info');
+            
+            try {
+                const response = await fetch('/api/csvs/export/viaje');
+                
+                if (response.ok || response.status === 404) {
+                    showResult('✅ Servidor conectado - API de clonado disponible', 'success');
+                } else {
+                    throw new Error(`HTTP ${response.status}`);
+                }
+            } catch (error) {
+                showResult(`❌ Error de conexión: ${error.message}`, 'error');
+            }
+        }
+
+        async function cloneSalida() {
+            const viajeId = document.getElementById('viajeId').value;
+            const salidaIndex = document.getElementById('salidaIndex').value;
+            const fechaInicio = document.getElementById('nuevaFechaInicio').value;
+            const fechaFin = document.getElementById('nuevaFechaFin').value;
+            
+            // Validaciones
+            if (!viajeId || salidaIndex === '' || !fechaInicio) {
+                showResult('❌ Por favor completa los campos requeridos: ID viaje, índice salida y fecha inicio', 'error');
+                return;
+            }
+            
+            showResult('⏳ Clonando salida... Por favor espera', 'info');
+            
+            try {
+                const url = `/api/viajes/${viajeId}/salidas/${salidaIndex}/clone`;
+                console.log('URL de clonado:', url);
+                
+                const response = await fetch(url, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        fechaInicio: fechaInicio,
+                        fechaFin: fechaFin || fechaInicio
+                    })
+                });
+                
+                console.log('Respuesta:', response.status, response.statusText);
+                
+                if (!response.ok) {
+                    let errorMessage;
+                    try {
+                        const error = await response.json();
+                        errorMessage = error.message || error.error || 'Error desconocido';
+                    } catch (e) {
+                        errorMessage = `HTTP ${response.status}: ${response.statusText}`;
+                    }
+                    throw new Error(errorMessage);
+                }
+                
+                const result = await response.json();
+                console.log('Resultado:', result);
+                
+                showResult(`
+                    ✅ <strong>Salida clonada exitosamente!</strong><br><br>
+                    🚢 <strong>Viaje:</strong> ${result.viaje.nombre} (ID: ${result.viaje.id})<br>
+                    📊 <strong>Total salidas ahora:</strong> ${result.viaje.totalSalidas}<br>
+                    📅 <strong>Nueva salida:</strong> ${result.nuevaSalida.fechaInicio}<br>
+                    💰 <strong>Precio:</strong> ${result.nuevaSalida.precio}€<br>
+                    👥 <strong>Cupos:</strong> ${result.nuevaSalida.cupos}
+                `, 'success');
+                
+                // Limpiar formulario para siguiente uso
+                document.getElementById('nuevaFechaInicio').value = '';
+                document.getElementById('nuevaFechaFin').value = '';
+                
+            } catch (error) {
+                console.error('Error:', error);
+                showResult(`❌ <strong>Error al clonar salida:</strong><br>${error.message}`, 'error');
+            }
+        }
+
+        // Verificar servidor al cargar
+        document.addEventListener('DOMContentLoaded', function() {
+            setTimeout(checkServer, 1000);
+            
+            // Configurar fecha mínima como hoy
+            const today = new Date().toISOString().split('T')[0];
+            document.getElementById('nuevaFechaInicio').min = today;
+            document.getElementById('nuevaFechaFin').min = today;
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🎯 Dashboard Principal - Strapi CSV & Duplicador</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            padding: 40px;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding-bottom: 30px;
+            border-bottom: 3px solid #667eea;
+        }
+        
+        .header h1 {
+            color: #2c3e50;
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+        
+        .header p {
+            color: #7f8c8d;
+            font-size: 1.2em;
+        }
+        
+        .server-status {
+            background: #e8f5e8;
+            border: 2px solid #27ae60;
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+        
+        .server-status h3 {
+            color: #27ae60;
+            margin-bottom: 10px;
+        }
+        
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 25px;
+            margin-bottom: 30px;
+        }
+        
+        .card {
+            background: #f8f9fa;
+            border-radius: 15px;
+            padding: 25px;
+            border-left: 5px solid;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+        }
+        
+        .card.primary { border-left-color: #3498db; }
+        .card.success { border-left-color: #27ae60; }
+        .card.warning { border-left-color: #f39c12; }
+        .card.danger { border-left-color: #e74c3c; }
+        .card.info { border-left-color: #9b59b6; }
+        
+        .card h3 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+            font-size: 1.3em;
+        }
+        
+        .card p {
+            color: #7f8c8d;
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 12px 24px;
+            background: #3498db;
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            transition: background 0.3s;
+            font-weight: 600;
+            margin-right: 10px;
+            margin-bottom: 10px;
+        }
+        
+        .btn:hover {
+            background: #2980b9;
+        }
+        
+        .btn.success { background: #27ae60; }
+        .btn.success:hover { background: #219a52; }
+        
+        .btn.warning { background: #f39c12; }
+        .btn.warning:hover { background: #d68910; }
+        
+        .btn.danger { background: #e74c3c; }
+        .btn.danger:hover { background: #c0392b; }
+        
+        .quick-links {
+            background: #2c3e50;
+            color: white;
+            border-radius: 15px;
+            padding: 30px;
+            margin-top: 30px;
+        }
+        
+        .quick-links h3 {
+            margin-bottom: 20px;
+            color: #ecf0f1;
+        }
+        
+        .quick-links .btn {
+            background: #34495e;
+            color: #ecf0f1;
+        }
+        
+        .quick-links .btn:hover {
+            background: #4a6741;
+        }
+        
+        .status-indicator {
+            display: inline-block;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            margin-right: 8px;
+        }
+        
+        .status-online { background: #27ae60; }
+        .status-offline { background: #e74c3c; }
+        
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+        
+        .feature-item {
+            background: white;
+            border: 2px solid #ecf0f1;
+            border-radius: 10px;
+            padding: 20px;
+            text-align: center;
+        }
+        
+        .feature-icon {
+            font-size: 3em;
+            margin-bottom: 15px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🎯 Dashboard Principal</h1>
+            <p>Control Total de Strapi CSV & Duplicador de Salidas</p>
+        </div>
+        
+        <div class="server-status">
+            <h3><span class="status-indicator status-online"></span>Servidor Strapi Activo</h3>
+            <p><strong>URL:</strong> <a href="http://0.0.0.0:1337" target="_blank">http://0.0.0.0:1337</a></p>
+            <p><strong>Admin:</strong> <a href="http://0.0.0.0:1337/admin" target="_blank">http://0.0.0.0:1337/admin</a></p>
+        </div>
+
+        <div class="grid">
+            <!-- CSV TOOLS -->
+            <div class="card primary">
+                <h3>📊 Herramientas CSV</h3>
+                <p>Exporta e importa datos en formato CSV con interfaz amigable</p>
+                <a href="dashboard.html" class="btn">Dashboard CSV Completo</a>
+                <a href="csv-manager.html" class="btn">CSV Manager</a>
+                <a href="csv-simple.html" class="btn">CSV Simple</a>
+            </div>
+
+            <!-- DUPLICADOR DE SALIDAS -->
+            <div class="card success">
+                <h3>🔥 Duplicador de Salidas</h3>
+                <p>Sistema automático para duplicar salidas de viajes</p>
+                <a href="verificar-duplicador.html" class="btn success">Verificar Duplicador</a>
+                <a href="duplicador-automatico.html" class="btn success">Documentación</a>
+                <a href="test-duplicacion.html" class="btn success">Test Duplicación</a>
+            </div>
+
+            <!-- ADMIN TOOLS -->
+            <div class="card warning">
+                <h3>⚙️ Panel de Administración</h3>
+                <p>Herramientas avanzadas de administración y configuración</p>
+                <a href="admin-panel-estable.html" class="btn warning">Panel Estable</a>
+                <a href="admin-csv-tools.html" class="btn warning">Admin CSV Tools</a>
+                <a href="admin-simple.html" class="btn warning">Admin Simple</a>
+            </div>
+
+            <!-- DEBUG & TEST -->
+            <div class="card danger">
+                <h3>🐛 Debug & Testing</h3>
+                <p>Herramientas de depuración y testing</p>
+                <a href="debug-duplicador.html" class="btn danger">Debug Duplicador</a>
+                <a href="debug-admin.html" class="btn danger">Debug Admin</a>
+                <a href="test-functionality.html" class="btn danger">Test Functionality</a>
+            </div>
+
+            <!-- DOCUMENTACIÓN -->
+            <div class="card info">
+                <h3>📚 Documentación</h3>
+                <p>Guías y documentación del sistema</p>
+                <a href="codespace-urls.html" class="btn">URLs del Codespace</a>
+                <a href="clonar-salidas.html" class="btn">Clonar Salidas</a>
+            </div>
+
+            <!-- UTILIDADES -->
+            <div class="card primary">
+                <h3>🛠️ Utilidades</h3>
+                <p>Herramientas adicionales y utilidades</p>
+                <a href="csv-tools-advanced.html" class="btn">CSV Avanzado</a>
+                <a href="csv-tools-fixed.html" class="btn">CSV Fixed</a>
+                <a href="csv-basico.html" class="btn">CSV Básico</a>
+            </div>
+        </div>
+
+        <div class="quick-links">
+            <h3>🚀 Enlaces Rápidos de API</h3>
+            <a href="http://0.0.0.0:1337/api/csv/export" class="btn" target="_blank">Exportar Todos los Datos</a>
+            <a href="http://0.0.0.0:1337/api/csv/export/viaje" class="btn" target="_blank">Exportar Viajes</a>
+            <a href="http://0.0.0.0:1337/api/csv/export/reserva" class="btn" target="_blank">Exportar Reservas</a>
+            <a href="http://0.0.0.0:1337/api/csv/export/cliente" class="btn" target="_blank">Exportar Clientes</a>
+            <a href="http://0.0.0.0:1337/api/csv/stats" class="btn" target="_blank">Estadísticas</a>
+        </div>
+
+        <div class="feature-grid">
+            <div class="feature-item">
+                <div class="feature-icon">📥</div>
+                <h4>Exportación CSV</h4>
+                <p>Exporta todos tus datos a CSV con formato español</p>
+            </div>
+            <div class="feature-item">
+                <div class="feature-icon">📤</div>
+                <h4>Importación CSV</h4>
+                <p>Importa datos desde CSV con validación automática</p>
+            </div>
+            <div class="feature-item">
+                <div class="feature-icon">🔄</div>
+                <h4>Duplicador Automático</h4>
+                <p>Duplica salidas automáticamente al hacer clic</p>
+            </div>
+            <div class="feature-item">
+                <div class="feature-icon">⚡</div>
+                <h4>Interface Rápida</h4>
+                <p>Acceso rápido a todas las funcionalidades</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Verificar estado del servidor
+        async function checkServerStatus() {
+            try {
+                const response = await fetch('http://0.0.0.0:1337/api/csv/stats');
+                if (response.ok) {
+                    console.log('✅ Servidor Online');
+                    document.querySelector('.status-indicator').className = 'status-indicator status-online';
+                } else {
+                    throw new Error('Server not responding');
+                }
+            } catch (error) {
+                console.log('❌ Servidor Offline');
+                document.querySelector('.status-indicator').className = 'status-indicator status-offline';
+                document.querySelector('.server-status').innerHTML = `
+                    <h3><span class="status-indicator status-offline"></span>Servidor Strapi Desconectado</h3>
+                    <p>Por favor, inicia el servidor con: <code>npm run develop</code></p>
+                `;
+            }
+        }
+
+        // Verificar estado al cargar
+        checkServerStatus();
+        
+        // Verificar cada 30 segundos
+        setInterval(checkServerStatus, 30000);
+    </script>
+</body>
+</html>
