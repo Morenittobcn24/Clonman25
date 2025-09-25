@@ -269,6 +269,7 @@ async function main() {
 }
 
 
-module.exports = async () => {
-  await seedExampleApp();
+module.exports = async ({ strapi }) => {
+  // Bootstrap disabled to avoid errors with example data
+  console.log('Bootstrap: Skipping seed data to avoid errors');
 };

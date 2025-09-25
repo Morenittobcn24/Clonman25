@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gestión CSV - Sistema Manaslu</title>
+  <style>
+    * { box-sizing: border-box; }
+    body { 
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+      margin: 0; padding: 20px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
+    }
+    .container { 
+      max-width: 1200px; margin: 0 auto; 
+      background: white; border-radius: 15px; 
+      box-shadow: 0 10px 30px rgba(0,0,0,0.2); 
+      overflow: hidden;
+    }
+    .header { 
+      background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); 
+      color: white; padding: 30px; text-align: center; 
+    }
+    .header h1 { margin: 0; font-size: 2.5rem; font-weight: 300; }
+    .header p { margin: 10px 0 0; opacity: 0.9; }
+    
+    .content { padding: 40px; }
+    .section { 
+      background: #f8f9ff; margin: 30px 0; padding: 30px; 
+      border-radius: 12px; border-left: 5px solid #4facfe; 
+    }
+    .section h2 { 
+      color: #2c3e50; margin: 0 0 20px; 
+      display: flex; align-items: center; gap: 10px; 
+    }
+    
+    .form-group { margin: 20px 0; }
+    .form-group label { 
+      display: block; margin-bottom: 8px; 
+      font-weight: 600; color: #34495e; 
+    }
+    select, input[type="file"] { 
+      width: 100%; max-width: 300px; padding: 12px; 
+      border: 2px solid #e3e8ee; border-radius: 8px; 
+      font-size: 14px; background: white; 
+    }
+    select:focus, input:focus { 
+      outline: none; border-color: #4facfe; 
+      box-shadow: 0 0 0 3px rgba(79, 172, 254, 0.1); 
+    }
+    
+    .btn { 
+      background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); 
+      color: white; border: none; padding: 12px 24px; 
+      border-radius: 8px; cursor: pointer; font-size: 14px; 
+      font-weight: 600; transition: all 0.3s ease; 
+    }
+    .btn:hover { 
+      transform: translateY(-2px); 
+      box-shadow: 0 5px 15px rgba(79, 172, 254, 0.4); 
+    }
+    .btn:disabled {
+      background: #ccc;
+      cursor: not-allowed;
+      transform: none;
+      box-shadow: none;
+    }
+    .btn-success { background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%); }
+    .btn-danger { background: linear-gradient(135deg, #fc4a1a 0%, #f7b733 100%); }
+    
+    .field-selector { 
+      margin: 20px 0; padding: 20px; 
+      background: white; border-radius: 8px; 
+      border: 1px solid #e3e8ee; display: none; 
+    }
+    .field-grid { 
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); 
+      gap: 12px; margin-top: 15px; 
+    }
+    .field-item { 
+      display: flex; align-items: center; gap: 8px; 
+      padding: 8px; background: #f8f9fa; border-radius: 6px; 
+    }
+    .field-item input[type="checkbox"] { 
+      width: auto; transform: scale(1.2); 
+    }
+    
+    .examples { 
+      margin: 20px 0; padding: 20px; 
+      background: #fff3cd; border-radius: 8px; 
+      border-left: 4px solid #ffc107; display: none; 
+    }
+    .examples h4 { color: #856404; margin: 0 0 10px; }
+    .examples code { 
+      display: block; background: #f8f9fa; 
+      padding: 10px; border-radius: 4px; 
+      font-family: 'Courier New', monospace; 
+      white-space: pre-wrap; word-break: break-all; 
+    }
+    
+    .alert { 
+      padding: 15px; margin: 20px 0; border-radius: 8px; 
+      font-weight: 500; 
+    }
+    .alert-success { 
+      background: #d4edda; color: #155724; 
+      border: 1px solid #c3e6cb; 
+    }
+    .alert-error { 
+      background: #f8d7da; color: #721c24; 
+      border: 1px solid #f5c6cb; 
+    }
+    .alert-info { 
+      background: #d1ecf1; color: #0c5460; 
+      border: 1px solid #bee5eb; 
+    }
+    
+    .stats { 
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); 
+      gap: 20px; margin: 30px 0; 
+    }
+    .stat-card { 
+      text-align: center; padding: 20px; 
+      background: white; border-radius: 10px; 
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1); 
+    }
+    .stat-number { 
+      font-size: 2rem; font-weight: bold; 
+      color: #4facfe; margin: 10px 0; 
+    }
+    .stat-label { color: #6c757d; font-size: 0.9rem; }
+    
+    .progress-bar {
+      width: 100%;
+      height: 20px;
+      background-color: #f0f0f0;
+      border-radius: 10px;
+      overflow: hidden;
+      margin: 10px 0;
+    }
+    
+    .progress-bar-fill {
+      height: 100%;
+      background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+      transition: width 0.3s ease;
+    }
+    
+    @media (max-width: 768px) {
+      .container { margin: 10px; }
+      .content { padding: 20px; }
+      .header { padding: 20px; }
+      .header h1 { font-size: 2rem; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <h1>🔄 Gestión CSV</h1>
+      <p>Sistema completo de importación y exportación de datos</p>
+    </div>
+    
+    <div class="content">
+      <!-- Estadísticas -->
+      <div class="stats" id="stats">
+        <div class="stat-card">
+          <div class="stat-number" id="statViajes">-</div>
+          <div class="stat-label">Viajes</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number" id="statProveedores">-</div>
+          <div class="stat-label">Proveedores</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number" id="statClientes">-</div>
+          <div class="stat-label">Clientes</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number" id="statReservas">-</div>
+          <div class="stat-label">Reservas</div>
+        </div>
+      </div>
+      
+      <!-- Exportación -->
+      <div class="section">
+        <h2>📤 Exportar a CSV</h2>
+        <div class="form-group">
+          <label for="exportEntity">Seleccionar entidad:</label>
+          <select id="exportEntity" onchange="showExportFields()">
+            <option value="">-- Seleccionar entidad --</option>
+            <option value="viaje">Viajes</option>
+            <option value="proveedor">Proveedores</option>
+            <option value="cliente">Clientes</option>
+            <option value="reserva">Reservas</option>
+          </select>
+        </div>
+        
+        <div id="exportFields" class="field-selector">
+          <h4>Seleccionar campos a exportar:</h4>
+          <div id="exportFieldList" class="field-grid"></div>
+          <button class="btn btn-success" onclick="exportData()" style="margin-top: 15px;">
+            📥 Descargar CSV
+          </button>
+        </div>
+        
+        <div id="exportExample" class="examples">
+          <h4>Ejemplo de archivo CSV que se generará:</h4>
+          <code id="exportExampleCode"></code>
+        </div>
+      </div>
+      
+      <!-- Importación -->
+      <div class="section">
+        <h2>📥 Importar desde CSV</h2>
+        <div class="form-group">
+          <label for="importEntity">Seleccionar entidad:</label>
+          <select id="importEntity" onchange="showImportExample()">
+            <option value="">-- Seleccionar entidad --</option>
+            <option value="viaje">Viajes</option>
+            <option value="proveedor">Proveedores</option>
+            <option value="cliente">Clientes</option>
+            <option value="reserva">Reservas</option>
+          </select>
+        </div>
+        
+        <div id="importExample" class="examples">
+          <h4>Formato CSV requerido:</h4>
+          <code id="importExampleCode"></code>
+        </div>
+        
+        <div class="form-group">
+          <label for="csvFile">Seleccionar archivo CSV:</label>
+          <input type="file" id="csvFile" accept=".csv" onchange="validateFile()">
+        </div>
+        
+        <div id="importProgress" style="display: none;">
+          <div class="progress-bar">
+            <div class="progress-bar-fill" id="progressBarFill" style="width: 0%"></div>
+          </div>
+          <p id="progressText" style="text-align: center;">Procesando... 0%</p>
+        </div>
+        
+        <button class="btn" onclick="importData()" id="importBtn" disabled>
+          📤 Importar CSV
+        </button>
+      </div>
+      
+      <!-- Resultados -->
+      <div id="results"></div>
+    </div>
+  </div>
+
+  <script>
+    // Configuración de campos por entidad
+    const entityFields = {
+      viaje: {
+        fields: ['id', 'Nombre', 'Slug', 'Precio', 'Dificultad', 'Duracion', 'Descripcion_corta', 'Descripcion_larga', 'Incluye', 'No_incluye'],
+        example: 'Nombre,Precio,Dificultad,Duracion,Descripcion_corta\n"Camino Santiago",850,"Moderado",10,"Camino francés completo"\n"Picos Europa",650,"Difícil",7,"Trekking en los Picos"'
+      },
+      proveedor: {
+        fields: ['id', 'Nombre', 'Contacto', 'Telefono', 'Email', 'Direccion'],
+        example: 'Nombre,Contacto,Telefono,Email,Direccion\n"Viajes Norte","Juan Pérez","912345678","info@viajes.com","Madrid, España"\n"Aventuras SA","María García","934567890","contacto@aventuras.com","Barcelona, España"'
+      },
+      cliente: {
+        fields: ['id', 'Nombre', 'Apellidos', 'Email', 'Telefono', 'Direccion'],
+        example: 'Nombre,Apellidos,Email,Telefono,Direccion\n"María","García López","maria@email.com","666123456","Barcelona, España"\n"Juan","Pérez Martín","juan@email.com","677987654","Madrid, España"'
+      },
+      reserva: {
+        fields: ['id', 'Fecha_reserva', 'Estado', 'Numero_personas', 'Precio_total'],
+        example: 'Fecha_reserva,Estado,Numero_personas,Precio_total\n"2024-03-15","Confirmada",2,1700\n"2024-04-20","Pendiente",4,2600'
+      }
+    };
+
+    // Cargar estadísticas al inicio
+    loadStats();
+
+    async function loadStats() {
+      try {
+        const response = await fetch('/api/csv-manager/stats');
+        const stats = await response.json();
+        document.getElementById('statViajes').textContent = stats.viajes || 0;
+        document.getElementById('statProveedores').textContent = stats.proveedores || 0;
+        document.getElementById('statClientes').textContent = stats.clientes || 0;
+        document.getElementById('statReservas').textContent = stats.reservas || 0;
+      } catch (error) {
+        console.error('Error cargando estadísticas:', error);
+        showAlert('Error al cargar estadísticas', 'error');
+      }
+    }
+
+    function showExportFields() {
+      const entity = document.getElementById('exportEntity').value;
+      const fieldsContainer = document.getElementById('exportFields');
+      const fieldsList = document.getElementById('exportFieldList');
+      const exampleContainer = document.getElementById('exportExample');
+      const exampleCode = document.getElementById('exportExampleCode');
+      
+      if (!entity) {
+        fieldsContainer.style.display = 'none';
+        exampleContainer.style.display = 'none';
+        return;
+      }
+      
+      // Mostrar campos
+      fieldsContainer.style.display = 'block';
+      fieldsList.innerHTML = '';
+      
+      entityFields[entity].fields.forEach(field => {
+        const div = document.createElement('div');
+        div.className = 'field-item';
+        div.innerHTML = `
+          <input type="checkbox" id="field_${field}" value="${field}" checked>
+          <label for="field_${field}">${field}</label>
+        `;
+        fieldsList.appendChild(div);
+      });
+      
+      // Mostrar ejemplo
+      exampleContainer.style.display = 'block';
+      exampleCode.textContent = entityFields[entity].example;
+    }
+
+    function showImportExample() {
+      const entity = document.getElementById('importEntity').value;
+      const exampleContainer = document.getElementById('importExample');
+      const exampleCode = document.getElementById('importExampleCode');
+      
+      if (!entity) {
+        exampleContainer.style.display = 'none';
+        return;
+      }
+      
+      exampleContainer.style.display = 'block';
+      exampleCode.textContent = entityFields[entity].example;
+    }
+
+    function validateFile() {
+      const file = document.getElementById('csvFile').files[0];
+      const importBtn = document.getElementById('importBtn');
+      const entity = document.getElementById('importEntity').value;
+      
+      importBtn.disabled = !file || !entity;
+      
+      if (file && !file.name.toLowerCase().endsWith('.csv')) {
+        showAlert('Por favor selecciona un archivo CSV válido', 'error');
+        importBtn.disabled = true;
+      }
+    }
+
+    async function exportData() {
+      const entity = document.getElementById('exportEntity').value;
+      const selectedFields = Array.from(document.querySelectorAll('#exportFieldList input:checked'))
+        .map(cb => cb.value);
+      
+      if (!entity) {
+        showAlert('Por favor selecciona una entidad', 'error');
+        return;
+      }
+      
+      if (selectedFields.length === 0) {
+        showAlert('Por favor selecciona al menos un campo', 'error');
+        return;
+      }
+      
+      const params = new URLSearchParams({
+        entity: entity,
+        fields: selectedFields.join(',')
+      });
+      
+      try {
+        showAlert('Preparando exportación...', 'info');
+        const response = await fetch(`/api/csv-manager/export?${params}`);
+        
+        if (!response.ok) {
+          const error = await response.json();
+          throw new Error(error.message || 'Error en la exportación');
+        }
+        
+        const blob = await response.blob();
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `${entity}_export_${new Date().toISOString().split('T')[0]}.csv`;
+        document.body.appendChild(a);
+        a.click();
+        window.URL.revokeObjectURL(url);
+        document.body.removeChild(a);
+        
+        showAlert('Exportación completada con éxito', 'success');
+      } catch (error) {
+        showAlert(`Error: ${error.message}`, 'error');
+      }
+    }
+
+    async function importData() {
+      const entity = document.getElementById('importEntity').value;
+      const file = document.getElementById('csvFile').files[0];
+      const progressBar = document.getElementById('importProgress');
+      const progressFill = document.getElementById('progressBarFill');
+      const progressText = document.getElementById('progressText');
+      
+      if (!entity || !file) {
+        showAlert('Por favor selecciona una entidad y un archivo CSV', 'error');
+        return;
+      }
+      
+      const formData = new FormData();
+      formData.append('csv', file);
+      formData.append('entity', entity);
+      
+      progressBar.style.display = 'block';
+      showAlert('Iniciando importación...', 'info');
+      
+      try {
+        const response = await fetch('/api/csv-manager/import', {
+          method: 'POST',
+          body: formData
+        });
+        
+        const result = await response.json();
+        
+        if (response.ok) {
+          showAlert(`✅ ${result.message}. Importados: ${result.imported || 0} registros. ${result.errors ? `Errores: ${result.errors}` : ''}`, 'success');
+          if (result.errorDetails && result.errorDetails.length > 0) {
+            console.error('Detalles de errores:', result.errorDetails);
+          }
+          loadStats();
+          document.getElementById('csvFile').value = '';
+          document.getElementById('importBtn').disabled = true;
+        } else {
+          showAlert(`❌ Error: ${result.message || result.error}`, 'error');
+        }
+      } catch (error) {
+        showAlert(`❌ Error de conexión: ${error.message}`, 'error');
+      } finally {
+        progressBar.style.display = 'none';
+        progressFill.style.width = '0%';
+        progressText.textContent = 'Procesando... 0%';
+      }
+    }
+
+    function showAlert(message, type) {
+      const results = document.getElementById('results');
+      const alertClass = type === 'success' ? 'alert-success' : 
+                        type === 'error' ? 'alert-error' : 'alert-info';
+      
+      results.innerHTML = `<div class="alert ${alertClass}">${message}</div>`;
+      
+      if (type !== 'info') {
+        setTimeout(() => {
+          results.innerHTML = '';
+        }, 8000);
+      }
+    }
+
+    // Actualizar validación cuando cambie la entidad
+    document.getElementById('importEntity').addEventListener('change', validateFile);
+  </script>
+</body>
+</html>
