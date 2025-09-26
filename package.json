@@ -1,23 +1,23 @@
 {
-  "name": "Manaslu",
+  "name": "manaslu",
   "version": "0.1.0",
   "private": true,
-  "description": "Back Manaslu",
+  "description": "Back Manaslu - Sistema de gestión de viajes con funcionalidades CSV",
   "scripts": {
     "build": "strapi build",
-    "deploy": "strapi deploy",
+    "deploy": "strapi deploy", 
     "develop": "strapi develop",
-    "develop:stable": "NODE_ENV=production STRAPI_DISABLE_UPDATE_NOTIFICATION=true STRAPI_ADMIN_AUTO_RELOAD=false strapi develop",
+    "production": "NODE_ENV=production strapi start",
     "seed:example": "node ./scripts/seed.js",
     "start": "strapi start",
     "strapi": "strapi"
   },
   "dependencies": {
-    "@strapi/design-system": "^2.0.0-rc.25",
+    "@strapi/strapi": "5.15.1",
+    "@strapi/plugin-users-permissions": "5.15.1",
     "@strapi/plugin-cloud": "5.15.1",
     "@strapi/plugin-documentation": "5.15.1",
-    "@strapi/plugin-users-permissions": "5.15.1",
-    "@strapi/strapi": "5.15.1",
+    "@strapi/design-system": "^2.0.0-rc.25",
     "axios": "^1.12.2",
     "better-sqlite3": "11.3.0",
     "csv-parser": "^3.2.0",
@@ -36,7 +36,7 @@
     "styled-components": "^6.0.0"
   },
   "engines": {
-    "node": "22.x",
+    "node": "20.x",
     "npm": ">=10.0.0"
   }
 }

@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Duplicador de Salidas - Strapi</title>
+    <style>
+        body { 
+            font-family: Arial, sans-serif; 
+            max-width: 800px; 
+            margin: 0 auto; 
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .container { 
+            background: white; 
+            padding: 20px; 
+            border-radius: 8px; 
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .test-section { 
+            margin: 20px 0; 
+            padding: 15px; 
+            border: 1px solid #ddd; 
+            border-radius: 5px;
+            background-color: #f9f9f9;
+        }
+        .success { border-color: #4CAF50; background-color: #e8f5e9; }
+        .error { border-color: #f44336; background-color: #ffebee; }
+        .warning { border-color: #ff9800; background-color: #fff3e0; }
+        button { 
+            background: #4CAF50; 
+            color: white; 
+            border: none; 
+            padding: 10px 20px; 
+            border-radius: 4px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        button:hover { background: #45a049; }
+        #results { 
+            white-space: pre-wrap; 
+            background: #f4f4f4; 
+            padding: 10px; 
+            border-radius: 4px;
+            font-family: monospace;
+            max-height: 400px; 
+            overflow-y: auto;
+        }
+        .viaje-item {
+            background: white;
+            margin: 10px 0;
+            padding: 15px;
+            border-radius: 5px;
+            border-left: 4px solid #2196F3;
+        }
+        .duplicate-button {
+            background: #ff9800;
+            margin-top: 10px;
+        }
+        .duplicate-button:hover { background: #f57c00; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🧪 Test del Sistema Duplicador - Strapi CMS</h1>
+        
+        <div class="test-section">
+            <h3>📊 Estado del Sistema</h3>
+            <button onclick="checkSystemStatus()">Verificar Estado del Sistema</button>
+            <div id="status-results"></div>
+        </div>
+
+        <div class="test-section">
+            <h3>📋 Listar Viajes Existentes</h3>
+            <button onclick="listViajes()">Obtener Lista de Viajes</button>
+            <div id="viajes-list"></div>
+        </div>
+
+        <div class="test-section">
+            <h3>🔄 Test del Duplicador</h3>
+            <button onclick="testDuplicador()">Probar Función de Duplicado</button>
+            <p><strong>Instrucciones:</strong></p>
+            <ol>
+                <li>Primero lista los viajes existentes</li>
+                <li>Selecciona un viaje para duplicar</li>
+                <li>El sistema creará una copia con sufijo "_copy_[timestamp]"</li>
+                <li>Verificará que los campos se copiaron correctamente</li>
+            </ol>
+            <div id="duplicador-results"></div>
+        </div>
+
+        <div class="test-section">
+            <h3>📝 Logs de Pruebas</h3>
+            <div id="results"></div>
+        </div>
+    </div>
+
+    <script>
+        const API_BASE = 'http://localhost:1337/api';
+        
+        function log(message, type = 'info') {
+            const timestamp = new Date().toLocaleTimeString();
+            const results = document.getElementById('results');
+            const color = type === 'error' ? 'red' : type === 'success' ? 'green' : type === 'warning' ? 'orange' : 'black';
+            results.innerHTML += `[${timestamp}] <span style="color: ${color};">${message}</span>\n`;
+            results.scrollTop = results.scrollHeight;
+        }
+
+        async function checkSystemStatus() {
+            const statusDiv = document.getElementById('status-results');
+            statusDiv.innerHTML = '<p>🔍 Verificando estado del sistema...</p>';
+            
+            try {
+                // Test básico de conectividad
+                const response = await fetch(`${API_BASE}/viajes?pagination[pageSize]=1`);
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+                }
+                
+                const data = await response.json();
+                const totalViajes = data.meta.pagination.total;
+                
+                statusDiv.innerHTML = `
+                    <div class="success">
+                        <h4>✅ Sistema Operativo</h4>
+                        <p><strong>API:</strong> Conectada correctamente</p>
+                        <p><strong>Viajes en BD:</strong> ${totalViajes}</p>
+                        <p><strong>URL Base:</strong> ${API_BASE}</p>
+                        <p><strong>Estado:</strong> Listo para duplicar</p>
+                    </div>
+                `;
+                
+                log(`Sistema verificado - ${totalViajes} viajes disponibles`, 'success');
+                
+            } catch (error) {
+                statusDiv.innerHTML = `
+                    <div class="error">
+                        <h4>❌ Error del Sistema</h4>
+                        <p><strong>Error:</strong> ${error.message}</p>
+                        <p><strong>Verificar:</strong> ¿Está el servidor funcionando en puerto 1337?</p>
+                    </div>
+                `;
+                log(`Error verificando sistema: ${error.message}`, 'error');
+            }
+        }
+
+        async function listViajes() {
+            const listDiv = document.getElementById('viajes-list');
+            listDiv.innerHTML = '<p>📋 Cargando viajes...</p>';
+            
+            try {
+                const response = await fetch(`${API_BASE}/viajes?populate=*`);
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+                }
+                
+                const data = await response.json();
+                const viajes = data.data;
+                
+                if (viajes.length === 0) {
+                    listDiv.innerHTML = '<div class="warning"><p>⚠️ No hay viajes en la base de datos</p></div>';
+                    return;
+                }
+                
+                let html = '<h4>📋 Viajes Disponibles:</h4>';
+                viajes.forEach(viaje => {
+                    html += `
+                        <div class="viaje-item">
+                            <h5>🧳 ${viaje.titulo || 'Sin título'}</h5>
+                            <p><strong>ID:</strong> ${viaje.id}</p>
+                            <p><strong>Destino:</strong> ${viaje.destino || 'No especificado'}</p>
+                            <p><strong>Días:</strong> ${viaje.dias || 'N/A'}</p>
+                            <p><strong>Precio:</strong> ${viaje.precio || 'N/A'}€</p>
+                            <button class="duplicate-button" onclick="duplicateViaje(${viaje.id})">
+                                🔄 Duplicar este viaje
+                            </button>
+                        </div>
+                    `;
+                });
+                
+                listDiv.innerHTML = html;
+                log(`Listados ${viajes.length} viajes disponibles`, 'success');
+                
+            } catch (error) {
+                listDiv.innerHTML = `<div class="error"><p>❌ Error: ${error.message}</p></div>`;
+                log(`Error listando viajes: ${error.message}`, 'error');
+            }
+        }
+
+        async function duplicateViaje(viajeId) {
+            const resultsDiv = document.getElementById('duplicador-results');
+            resultsDiv.innerHTML = '<p>🔄 Duplicando viaje...</p>';
+            
+            try {
+                log(`Iniciando duplicación del viaje ID: ${viajeId}`, 'info');
+                
+                // 1. Obtener datos del viaje original
+                const originalResponse = await fetch(`${API_BASE}/viajes/${viajeId}?populate=*`);
+                if (!originalResponse.ok) {
+                    throw new Error(`Error obteniendo viaje original: ${originalResponse.status}`);
+                }
+                
+                const originalData = await originalResponse.json();
+                const original = originalData.data;
+                
+                log(`Viaje original obtenido: "${original.titulo}"`, 'success');
+                
+                // 2. Preparar datos para duplicar
+                const timestamp = Date.now();
+                const duplicateData = {
+                    data: {
+                        titulo: `${original.titulo || 'Viaje'}_copy_${timestamp}`,
+                        destino: original.destino,
+                        dias: original.dias,
+                        precio: original.precio,
+                        descripcion: original.descripcion,
+                        incluye: original.incluye,
+                        no_incluye: original.no_incluye,
+                        destacado: false, // Los duplicados no son destacados por defecto
+                        categoria: original.categoria,
+                        // Copiar campos adicionales si existen
+                        ...Object.keys(original).reduce((copyFields, key) => {
+                            if (!['id', 'createdAt', 'updatedAt', 'publishedAt', 'titulo', 'destacado'].includes(key)) {
+                                copyFields[key] = original[key];
+                            }
+                            return copyFields;
+                        }, {})
+                    }
+                };
+                
+                log(`Datos preparados para duplicar`, 'info');
+                
+                // 3. Crear el duplicado
+                const createResponse = await fetch(`${API_BASE}/viajes`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(duplicateData)
+                });
+                
+                if (!createResponse.ok) {
+                    const errorText = await createResponse.text();
+                    throw new Error(`Error creando duplicado: ${createResponse.status} - ${errorText}`);
+                }
+                
+                const newViajeData = await createResponse.json();
+                const newViaje = newViajeData.data;
+                
+                // 4. Mostrar resultados
+                resultsDiv.innerHTML = `
+                    <div class="success">
+                        <h4>✅ Duplicación Exitosa</h4>
+                        <div style="display: flex; gap: 20px;">
+                            <div style="flex: 1;">
+                                <h5>📋 Original</h5>
+                                <p><strong>ID:</strong> ${original.id}</p>
+                                <p><strong>Título:</strong> ${original.titulo}</p>
+                            </div>
+                            <div style="flex: 1;">
+                                <h5>🆕 Duplicado</h5>
+                                <p><strong>ID:</strong> ${newViaje.id}</p>
+                                <p><strong>Título:</strong> ${newViaje.titulo}</p>
+                            </div>
+                        </div>
+                        <p><strong>✅ Verificación:</strong> Nuevo viaje creado con ID ${newViaje.id}</p>
+                        <button onclick="listViajes()">🔄 Actualizar Lista</button>
+                    </div>
+                `;
+                
+                log(`¡Duplicación exitosa! Nuevo viaje ID: ${newViaje.id}`, 'success');
+                
+            } catch (error) {
+                resultsDiv.innerHTML = `
+                    <div class="error">
+                        <h4>❌ Error en Duplicación</h4>
+                        <p><strong>Error:</strong> ${error.message}</p>
+                        <p>Revisa la consola del navegador para más detalles</p>
+                    </div>
+                `;
+                log(`Error duplicando viaje: ${error.message}`, 'error');
+                console.error('Error completo:', error);
+            }
+        }
+
+        async function testDuplicador() {
+            log('Iniciando test completo del duplicador...', 'info');
+            
+            // Verificar sistema primero
+            await checkSystemStatus();
+            
+            // Esperar un poco
+            setTimeout(async () => {
+                // Listar viajes
+                await listViajes();
+                
+                log('Test del duplicador preparado. Selecciona un viaje para duplicar.', 'warning');
+            }, 1000);
+        }
+
+        // Auto-verificar al cargar
+        window.onload = function() {
+            log('Página de test cargada', 'info');
+            checkSystemStatus();
+        };
+    </script>
+</body>
+</html>

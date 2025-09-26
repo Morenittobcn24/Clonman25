@@ -1057,11 +1057,6 @@ export interface ApiViajeViaje extends Struct.CollectionTypeSchema {
   options: {
     draftAndPublish: true;
   };
-  pluginOptions: {
-    i18n: {
-      localized: true;
-    };
-  };
   attributes: {
     Actividades: Schema.Attribute.Relation<
       'manyToMany',
@@ -1277,8 +1272,9 @@ export interface ApiViajeViaje extends Struct.CollectionTypeSchema {
           localized: true;
         };
       }>;
-    locale: Schema.Attribute.String;
-    localizations: Schema.Attribute.Relation<'oneToMany', 'api::viaje.viaje'>;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<'oneToMany', 'api::viaje.viaje'> &
+      Schema.Attribute.Private;
     Mapa: Schema.Attribute.RichText &
       Schema.Attribute.SetPluginOptions<{
         i18n: {

@@ -1,35 +1,13 @@
 module.exports = [
-  'strapi::logger',
   'strapi::errors',
-  {
-    name: 'strapi::security',
-    config: {
-      contentSecurityPolicy: {
-        useDefaults: true,
-        directives: {
-          'script-src': ["'self'", "'unsafe-inline'", "'unsafe-hashes'"],
-          'script-src-attr': ["'unsafe-inline'", "'unsafe-hashes'"],
-          'connect-src': ["'self'", 'https:', 'wss:'],
-        },
-      },
-    },
-  },
+  'strapi::security',
   'strapi::cors',
   'strapi::poweredBy',
   'strapi::query',
-  {
-    name: 'strapi::body',
-    config: {
-      formLimit: '256mb',
-      jsonLimit: '256mb',
-      textLimit: '256mb',
-      formidable: {
-        maxFileSize: 200 * 1024 * 1024, // 200mb
-      },
-    },
-  },
+  'strapi::body',
   'strapi::session',
   'strapi::favicon',
   'strapi::public',
+  // Middleware CSV personalizado (necesario para funcionalidad que funcionaba ayer)
   'global::csv-export',
 ];

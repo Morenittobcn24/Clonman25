@@ -4,7 +4,7 @@ module.exports = {
   routes: [
     {
       method: 'GET',
-      path: '/csv/export',
+      path: '/csvs/export',
       handler: 'csv.export',
       config: {
         auth: false,
@@ -12,7 +12,7 @@ module.exports = {
     },
     {
       method: 'GET',
-      path: '/csv/export/:model',
+      path: '/csvs/export/:model',
       handler: 'csv.exportModel',
       config: {
         auth: false,
@@ -20,7 +20,7 @@ module.exports = {
     },
     {
       method: 'POST',
-      path: '/csv/import',
+      path: '/csvs/import',
       handler: 'csv.import',
       config: {
         auth: false,
@@ -28,7 +28,7 @@ module.exports = {
     },
     {
       method: 'POST',
-      path: '/csv/import/:model',
+      path: '/csvs/import/:model',
       handler: 'csv.import',
       config: {
         auth: false,
@@ -36,7 +36,7 @@ module.exports = {
     },
     {
       method: 'GET',
-      path: '/csv/stats',
+      path: '/csvs/stats',
       handler: 'csv.stats',
       config: {
         auth: false,

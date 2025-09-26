@@ -1,24 +1,25 @@
 module.exports = ({ env }) => ({
-  host: env('HOST', '0.0.0.0'),
-  port: env.int('PORT', 1337),
   admin: {
     autoOpen: false,
-    watchIgnoreFiles: [
-      '**/node_modules/**',
-      '**/build/**',
-      '**/dist/**',
-      '**/.tmp/**',
-      '**/public/**'
-    ]
+    serveAdminPanel: true,
   },
-  // Deshabilitar completamente el auto-reload
+  // Deshabilitar completamente el auto-reload y file watching en desarrollo
   autoReload: false,
   watchIgnoreFiles: [
     '**/node_modules/**',
     '**/build/**',
     '**/dist/**',
+    '**/.strapi/**',
     '**/.tmp/**',
     '**/public/**',
-    '**/config/**'
-  ]
+    '**/scripts/**',
+    '**/data/**',
+    '**/*.log',
+    '**/*.csv',
+    '**/uploads/**'
+  ],
+  logger: {
+    updates: { enabled: false },
+    level: 'error',
+  },
 });

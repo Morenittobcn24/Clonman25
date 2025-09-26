@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Test Duplicador Strapi</title>
+    <style>
+        .test-container {
+            padding: 20px;
+            margin: 20px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+        }
+        .test-salida {
+            border: 2px dashed #007cba;
+            padding: 15px;
+            margin: 10px 0;
+            background: #f9f9f9;
+        }
+        .test-button {
+            background: #007cba;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin: 10px 0;
+        }
+        input, select {
+            margin: 5px 0;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            width: 200px;
+        }
+        label {
+            display: block;
+            margin: 10px 0 5px 0;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <h1>🔥 Prueba del Duplicador de Salidas</h1>
+    
+    <div class="test-container">
+        <h2>Formulario de Viaje de Prueba</h2>
+        
+        <!-- Salida 1 (con datos) -->
+        <div class="test-salida" data-strapi-field-name="Salidas">
+            <h3>Salida 1 (Con datos)</h3>
+            <label>Fecha inicio:</label>
+            <input type="date" value="2025-10-15">
+            
+            <label>Fecha fin:</label>
+            <input type="date" value="2025-10-20">
+            
+            <label>Precio por persona:</label>
+            <input type="number" value="1200">
+            
+            <label>Cupo total:</label>
+            <input type="number" value="15">
+            
+            <label>Estado:</label>
+            <select>
+                <option value="confirmado" selected>Confirmado</option>
+                <option value="pendiente">Pendiente</option>
+            </select>
+        </div>
+        
+        <!-- Salida 2 (vacía para duplicar) -->
+        <div class="test-salida" data-strapi-field-name="Salidas">
+            <h3>Salida 2 (Vacía - para duplicar)</h3>
+            <label>Fecha inicio:</label>
+            <input type="date">
+            
+            <label>Fecha fin:</label>
+            <input type="date">
+            
+            <label>Precio por persona:</label>
+            <input type="number">
+            
+            <label>Cupo total:</label>
+            <input type="number">
+            
+            <label>Estado:</label>
+            <select>
+                <option value="">Seleccionar...</option>
+                <option value="confirmado">Confirmado</option>
+                <option value="pendiente">Pendiente</option>
+            </select>
+        </div>
+        
+        <!-- Botón para añadir nueva salida -->
+        <button class="test-button" type="button">Add entry</button>
+        
+        <h3>Instrucciones de prueba:</h3>
+        <p>1. Abrir las herramientas de desarrollador (F12)</p>
+        <p>2. Hacer clic en el botón "Add entry"</p>
+        <p>3. Ver en la consola los logs del duplicador</p>
+        <p>4. Verificar que los datos de la Salida 1 se copian a la Salida 2</p>
+    </div>
+
+    <script>
+        // Código del duplicador (simplificado)
+        console.log('🔥 DUPLICADOR DE SALIDAS ACTIVADO');
+        
+        function activarDuplicadorSalidas() {
+            const addButtons = document.querySelectorAll('button[type="button"], button');
+            
+            addButtons.forEach(btn => {
+                if (btn.textContent && 
+                    (btn.textContent.includes('Add') || btn.textContent.includes('Añadir') || btn.textContent.includes('entry')) && 
+                    !btn.dataset.duplicadorSalidas) {
+                    
+                    const esSalidaBoton = 
+                        btn.closest('[data-strapi-field-name*="alida"]') ||
+                        btn.closest('[data-strapi-field-name*="Salida"]') ||
+                        btn.closest('[data-strapi-field-name*="salida"]') ||
+                        btn.closest('div').querySelector('input[type="date"]');
+                    
+                    if (esSalidaBoton) {
+                        btn.dataset.duplicadorSalidas = 'true';
+                        btn.style.backgroundColor = '#28a745';
+                        btn.style.color = 'white';
+                        btn.style.fontWeight = 'bold';
+                        btn.style.border = '2px solid #1e7e34';
+                        
+                        console.log('✅ BOTÓN SALIDA INTERCEPTADO:', btn.textContent);
+                        
+                        btn.addEventListener('click', function(e) {
+                            console.log('🔥 CLIC EN BOTÓN SALIDA DETECTADO');
+                            setTimeout(() => duplicarUltimaSalida(), 1500);
+                        }, true);
+                    }
+                }
+            });
+        }
+        
+        function duplicarUltimaSalida() {
+            console.log('🔄 INICIANDO DUPLICACIÓN DE SALIDA...');
+            
+            const salidas = document.querySelectorAll('[data-strapi-field-name*="alida"], [data-strapi-field-name*="Salida"], [data-strapi-field-name*="salida"]');
+            console.log('📦 Contenedores de salidas encontrados:', salidas.length);
+            
+            if (salidas.length >= 2) {
+                const ultimaSalida = salidas[salidas.length - 2];
+                const nuevaSalida = salidas[salidas.length - 1];
+                
+                console.log('🎯 Copiando desde última salida completa');
+                
+                const inputsOrigen = ultimaSalida.querySelectorAll('input, select, textarea');
+                const inputsDestino = nuevaSalida.querySelectorAll('input, select, textarea');
+                
+                console.log(`🔍 Inputs encontrados - Origen: ${inputsOrigen.length}, Destino: ${inputsDestino.length}`);
+                
+                let fechaIndex = 0, numeroIndex = 0, selectIndex = 0, copiados = 0;
+                
+                inputsOrigen.forEach((inputOrigen) => {
+                    if (!inputOrigen.value && inputOrigen.type !== 'checkbox') return;
+                    
+                    let inputDestino = null;
+                    
+                    if (inputOrigen.type === 'date') {
+                        const fechasDestino = Array.from(inputsDestino).filter(input => input.type === 'date');
+                        inputDestino = fechasDestino[fechaIndex];
+                        fechaIndex++;
+                    } else if (inputOrigen.type === 'number') {
+                        const numerosDestino = Array.from(inputsDestino).filter(input => input.type === 'number');
+                        inputDestino = numerosDestino[numeroIndex];
+                        numeroIndex++;
+                    } else if (inputOrigen.tagName === 'SELECT') {
+                        const selectsDestino = Array.from(inputsDestino).filter(input => input.tagName === 'SELECT');
+                        inputDestino = selectsDestino[selectIndex];
+                        selectIndex++;
+                    }
+                    
+                    if (inputDestino && inputOrigen.value) {
+                        inputDestino.value = inputOrigen.value;
+                        inputDestino.dispatchEvent(new Event('input', { bubbles: true }));
+                        inputDestino.dispatchEvent(new Event('change', { bubbles: true }));
+                        
+                        copiados++;
+                        console.log(`✅ COPIADO ${inputOrigen.type || inputOrigen.tagName}: "${inputOrigen.value}" -> "${inputDestino.value}"`);
+                    }
+                });
+                
+                console.log(`🎉 DUPLICACIÓN COMPLETADA: ${copiados} campos copiados`);
+                
+                // Mostrar notificación
+                const notif = document.createElement('div');
+                notif.innerHTML = `
+                    <div style="display: flex; align-items: center; gap: 10px;">
+                        <span style="font-size: 20px;">🔥</span>
+                        <div>
+                            <div style="font-weight: bold;">¡SALIDA DUPLICADA!</div>
+                            <div style="font-size: 12px; opacity: 0.9;">${copiados} campos copiados correctamente</div>
+                        </div>
+                    </div>
+                `;
+                notif.style.cssText = `
+                    position: fixed;
+                    top: 20px;
+                    right: 20px;
+                    background: linear-gradient(135deg, #28a745, #20c997);
+                    color: white;
+                    padding: 15px 20px;
+                    border-radius: 12px;
+                    z-index: 999999;
+                    font-family: Arial, sans-serif;
+                    box-shadow: 0 8px 25px rgba(40, 167, 69, 0.4);
+                `;
+                document.body.appendChild(notif);
+                setTimeout(() => notif.remove(), 4000);
+            }
+        }
+        
+        // Activar cada 2 segundos
+        setInterval(activarDuplicadorSalidas, 2000);
+        setTimeout(activarDuplicadorSalidas, 1000);
+    </script>
+</body>
+</html>
